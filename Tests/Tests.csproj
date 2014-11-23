@@ -52,6 +52,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Reflection\ReflectionTest.cs" />
     <Compile Include="Repository\ExecutableRepositoryTest.cs" />
     <Compile Include="Repository\HandlerRepositoryTest.cs" />
     <Compile Include="Repository\Tree\TreeTest.cs" />
@@ -66,6 +67,7 @@
       <Name>Qvc</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
