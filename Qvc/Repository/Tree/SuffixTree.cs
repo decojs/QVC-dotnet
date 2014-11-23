@@ -1,23 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Qvc.Executables;
 
 namespace Qvc.Repository.Tree
 {
-    public class SuffixTree<TExecutable> where TExecutable : IExecutable
+    public class SuffixTree
     {
-        private readonly Branch<TExecutable> _trunk = new Branch<TExecutable>("ROOT");
+        private readonly Branch _trunk = new Branch("ROOT");
 
-        public void Add(string name, TExecutable fruit)
+        public void Add(string name, Type fruit)
         {
             var pathArray = Split(name);
             for (var start = 0; start < pathArray.Count(); start++)
             {
-                _trunk.Add(pathArray.Skip(start).ToList(), new Seed<TExecutable>(name, fruit));
+                _trunk.Add(pathArray.Skip(start).ToList(), new Seed(name, fruit));
             }
         }
 
-        public TExecutable Find(string name)
+        public Type Find(string name)
         {
             return _trunk.FindFruit(Split(name));
         }

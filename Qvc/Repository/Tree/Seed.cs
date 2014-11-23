@@ -1,13 +1,13 @@
-﻿using Qvc.Executables;
+﻿using System;
 
 namespace Qvc.Repository.Tree
 {
-    internal class Seed<TExecutable> where TExecutable : IExecutable
+    internal class Seed
     {
-        public readonly TExecutable Value;
+        public readonly Type Value;
         public readonly string Name;
 
-        public Seed(string name, TExecutable value)
+        public Seed(string name, Type value)
         {
             Name = name;
             Value = value;

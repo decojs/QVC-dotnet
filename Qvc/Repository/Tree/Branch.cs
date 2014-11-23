@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using Qvc.Exceptions;
-using Qvc.Executables;
 
 namespace Qvc.Repository.Tree
 {
-    internal class Branch<TExecutable> where TExecutable : IExecutable
+    internal class Branch
     {
-        private readonly IDictionary<string, Branch<TExecutable>> _branches = new Dictionary<string, Branch<TExecutable>>();
-        private readonly Fruit<TExecutable> _fruit = new Fruit<TExecutable>();
+        private readonly IDictionary<string, Branch> _branches = new Dictionary<string, Branch>();
+        private readonly Fruit _fruit = new Fruit();
 
         public Branch(string name)
         {
             Name = name;
         }
 
-        public Branch(string name, IList<string> path, Seed<TExecutable> seed)
+        public Branch(string name, IList<string> path, Seed seed)
         {
             Name = name;
             Add(path, seed);
@@ -24,7 +23,7 @@ namespace Qvc.Repository.Tree
 
         public string Name { get; private set; }
 
-        public void Add(IList<string> path, Seed<TExecutable> seed)
+        public void Add(IList<string> path, Seed seed)
         {
             var isLeaf = path.Count == 0;
 
@@ -38,7 +37,7 @@ namespace Qvc.Repository.Tree
             }
         }
 
-        public TExecutable FindFruit(IList<string> path)
+        public Type FindFruit(IList<string> path)
         {
             if (!path.Any())
             {
@@ -61,7 +60,7 @@ namespace Qvc.Repository.Tree
             _branches.Values.ToList().ForEach(branch => branch.DrawTree(depth + 1));
         }
         
-        private void AddBranch(string name, IList<string> path, Seed<TExecutable> seed)
+        private void AddBranch(string name, IList<string> path, Seed seed)
         {
             if (_branches.ContainsKey(name))
             {
@@ -69,7 +68,7 @@ namespace Qvc.Repository.Tree
             }
             else
             {
-                _branches[name] = new Branch<TExecutable>(name, path, seed);
+                _branches[name] = new Branch(name, path, seed);
             }
         }
     }

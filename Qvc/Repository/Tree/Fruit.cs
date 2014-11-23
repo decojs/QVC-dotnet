@@ -1,15 +1,15 @@
+using System;
 using Qvc.Exceptions;
-using Qvc.Executables;
 
 namespace Qvc.Repository.Tree
 {
-    internal class Fruit<TExecutable> where TExecutable : IExecutable
+    internal class Fruit
     {
         private string _fullName = string.Empty;
         private bool _isDuplicate;
-        private TExecutable _seed;
+        private Type _seed;
 
-        public void SetSeed(Seed<TExecutable> seed)
+        public void SetSeed(Seed seed)
         {
             if (_seed != null)
             {
@@ -23,7 +23,7 @@ namespace Qvc.Repository.Tree
             }
         }
 
-        public TExecutable GetSeed()
+        public Type GetSeed()
         {
             if (_isDuplicate)
             {
