@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using Qvc.Exceptions;
+using Qvc.Executables;
 
 namespace Qvc.Repository.Tree
 {
-    public class Branch<T> where T : class
+    internal class Branch<TExecutable> where TExecutable : IExecutable
     {
-        private readonly IDictionary<string, Branch<T>> _branches = new Dictionary<string, Branch<T>>();
-        private readonly Fruit _fruit = new Fruit();
+        private readonly IDictionary<string, Branch<TExecutable>> _branches = new Dictionary<string, Branch<TExecutable>>();
+        private readonly Fruit<TExecutable> _fruit = new Fruit<TExecutable>();
 
         public Branch(string name)
         {
             Name = name;
         }
 
-        public Branch(string name, IList<string> path, Seed<T> seed)
+        public Branch(string name, IList<string> path, Seed<TExecutable> seed)
         {
             Name = name;
             Add(path, seed);
@@ -23,7 +24,7 @@ namespace Qvc.Repository.Tree
 
         public string Name { get; private set; }
 
-        public void Add(IList<string> path, Seed<T> seed)
+        public void Add(IList<string> path, Seed<TExecutable> seed)
         {
             var isLeaf = path.Count == 0;
 
@@ -37,7 +38,7 @@ namespace Qvc.Repository.Tree
             }
         }
 
-        public T FindFruit(IList<string> path)
+        public TExecutable FindFruit(IList<string> path)
         {
             if (!path.Any())
             {
@@ -60,7 +61,7 @@ namespace Qvc.Repository.Tree
             _branches.Values.ToList().ForEach(branch => branch.DrawTree(depth + 1));
         }
         
-        private void AddBranch(string name, IList<string> path, Seed<T> seed)
+        private void AddBranch(string name, IList<string> path, Seed<TExecutable> seed)
         {
             if (_branches.ContainsKey(name))
             {
@@ -68,65 +69,7 @@ namespace Qvc.Repository.Tree
             }
             else
             {
-                _branches[name] = new Branch<T>(name, path, seed);
-            }
-        }
-
-        public class Seed<TSeed>
-        {
-            public readonly TSeed Value;
-            public readonly string Name;
-
-            public Seed(string name, TSeed value)
-            {
-                Name = name;
-                Value = value;
-            }
-        }
-
-        public class Fruit
-        {
-            private string _fullName = string.Empty;
-            private bool _isDuplicate;
-            private T _seed;
-
-            public void SetSeed(Seed<T> seed)
-            {
-                if (_seed != null)
-                {
-                    _isDuplicate = true;
-                    SetDuplicateMessage(seed.Name);
-                }
-                else
-                {
-                    _seed = seed.Value;
-                    _fullName = seed.Name;
-                }
-            }
-
-            public T GetSeed()
-            {
-                if (_isDuplicate)
-                {
-                    throw new DuplicateExecutableException("Multiple Executables with that Name, use " + _fullName);
-                }
-                
-                return _seed;
-            }
-
-            public void SetDuplicateMessage(string otherName)
-            {
-                if (_fullName == otherName)
-                {
-                    throw new DuplicateExecutableException("Cannot have two Executables with the same Name: " + _fullName);
-                }
-                
-                _fullName += " or " + otherName;
-            }
-
-            public override string ToString()
-            {
-                return _seed != null ? " Fruit: " + _fullName : "";
+                _branches[name] = new Branch<TExecutable>(name, path, seed);
             }
         }
     }
