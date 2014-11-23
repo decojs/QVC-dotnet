@@ -98,6 +98,15 @@ namespace Tests.Repository.Tree
             tree.Find("second.second").ShouldBe(_value);
         }
 
+        [Test]
+        public void AddNullShouldThrow()
+        {
+            var tree = new SuffixTree();
+
+            Should.Throw<ArgumentNullException>(() => tree.Add("Executable", null))
+                .Message.ShouldBe("Cannot store null value in tree\r\nParameter name: type");
+        }
+
         private class TestCommand : ICommand
         {
             

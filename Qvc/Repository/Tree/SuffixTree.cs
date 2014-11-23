@@ -8,12 +8,17 @@ namespace Qvc.Repository.Tree
     {
         private readonly Branch _trunk = new Branch("ROOT");
 
-        public void Add(string name, Type fruit)
+        public void Add(string name, Type type)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException("type", "Cannot store null value in tree");
+            }
+
             var pathArray = Split(name);
             for (var start = 0; start < pathArray.Count(); start++)
             {
-                _trunk.Add(pathArray.Skip(start).ToList(), new Seed(name, fruit));
+                _trunk.Add(pathArray.Skip(start).ToList(), new Seed(name, type));
             }
         }
 
