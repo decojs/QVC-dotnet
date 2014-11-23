@@ -47,13 +47,13 @@ namespace Tests.Repository
         [Test]
         public void AddMultipleHandlersToSameCommand()
         {
-            Should.Throw<DuplicateCommandHandlerException>(() => _repo.AddCommandHandler(typeof(CommandA), typeof(CommandHandlerA2)));
+            Should.Throw<DuplicateCommandHandlerException>(() => _repo.AddCommandHandler(typeof(CommandA), typeof(CommandHandlerA)));
         }
 
         [Test]
         public void AddMultipleHandlersToSameQuery()
         {
-            Should.Throw<DuplicateQueryHandlerException>(() => _repo.AddQueryHandler(typeof(QueryA), typeof(QueryHandlerA2)));
+            Should.Throw<DuplicateQueryHandlerException>(() => _repo.AddQueryHandler(typeof(QueryA), typeof(QueryHandlerA)));
         }
     }
 
@@ -67,14 +67,14 @@ namespace Tests.Repository
         public int Handle(QueryA command) { return 0; }
     }
 
-    class CommandHandlerA2 : IHandleCommand<CommandA>
+    class CommandHandlerB : IHandleCommand<CommandB>
     {
-        public void Handle(CommandA command) { }
+        public void Handle(CommandB command) { }
     }
 
-    class QueryHandlerA2 : IHandleQuery<QueryA, int>
+    class QueryHandlerB : IHandleQuery<QueryB, int>
     {
-        public int Handle(QueryA command) { return 0; }
+        public int Handle(QueryB command) { return 0; }
     }
 
 }

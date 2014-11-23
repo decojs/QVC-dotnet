@@ -53,6 +53,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Reflection\ReflectionTest.cs" />
+    <Compile Include="Reflection\SetupTest.cs" />
     <Compile Include="Repository\ExecutableRepositoryTest.cs" />
     <Compile Include="Repository\HandlerRepositoryTest.cs" />
     <Compile Include="Repository\Tree\TreeTest.cs" />
