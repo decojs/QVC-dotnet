@@ -53,6 +53,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Repository\ExecutableRepositoryTest.cs" />
+    <Compile Include="Repository\HandlerRepositoryTest.cs" />
     <Compile Include="Repository\Tree\TreeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

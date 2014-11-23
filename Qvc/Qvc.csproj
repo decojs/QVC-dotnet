@@ -39,7 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\HandlerDoesNotExistException.cs" />
     <Compile Include="Exceptions\DuplicateExecutableException.cs" />
+    <Compile Include="Exceptions\DuplicateHandlerException.cs" />
     <Compile Include="Exceptions\ExecutableDoesNotExistException.cs" />
     <Compile Include="Executables\ICommand.cs" />
     <Compile Include="Executables\IExecutable.cs" />
@@ -49,6 +51,7 @@
     <Compile Include="Handlers\IHandleQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ExecutableRepository.cs" />
+    <Compile Include="Repository\HandlerRepository.cs" />
     <Compile Include="Repository\Tree\Branch.cs" />
     <Compile Include="Repository\Tree\Fruit.cs" />
     <Compile Include="Repository\Tree\Seed.cs" />
