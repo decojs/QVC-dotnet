@@ -45,6 +45,7 @@
     <Compile Include="Executables\IExecutable.cs" />
     <Compile Include="Executables\IQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ExecutableRepository.cs" />
     <Compile Include="Repository\Tree\Branch.cs" />
     <Compile Include="Repository\Tree\Fruit.cs" />
     <Compile Include="Repository\Tree\Seed.cs" />
