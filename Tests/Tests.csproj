@@ -35,6 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NSubstitute">
+      <HintPath>..\packages\NSubstitute.1.8.1.0\lib\net45\NSubstitute.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -52,12 +59,26 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Default\DefaultTest.cs" />
+    <Compile Include="Executables\Executables.cs" />
+    <Compile Include="Executables\Handlers.cs" />
+    <Compile Include="FullTest.cs" />
     <Compile Include="Reflection\ReflectionTest.cs" />
     <Compile Include="Reflection\SetupTest.cs" />
     <Compile Include="Repository\ExecutableRepositoryTest.cs" />
     <Compile Include="Repository\HandlerRepositoryTest.cs" />
     <Compile Include="Repository\Tree\TreeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steps\CreateCommandHandlerStepTest.cs" />
+    <Compile Include="Steps\CreateQueryHandlerStepTest.cs" />
+    <Compile Include="Steps\DeserializeCommandStepTest.cs" />
+    <Compile Include="Steps\DeserializeQueryStepTest.cs" />
+    <Compile Include="Steps\ExecuteCommandStepTest.cs" />
+    <Compile Include="Steps\ExecuteQueryStepTest.cs" />
+    <Compile Include="Steps\FindCommandHandlerStepTest.cs" />
+    <Compile Include="Steps\FindQueryHandlerStepTest.cs" />
+    <Compile Include="Steps\GetExecutableStepTest.cs" />
+    <Compile Include="Steps\SerializeResultStepTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

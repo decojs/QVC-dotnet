@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using NUnit.Framework;
 using Shouldly;
+using Tests.Executables;
 using Tests.Repository;
 
 namespace Tests.Reflection
@@ -14,7 +15,6 @@ namespace Tests.Reflection
             var handlers = Qvc.Reflection.Reflection.FindCommandHandlers().ToList();
             handlers.ShouldContain(typeof(CommandHandlerA));
             handlers.ShouldContain(typeof(CommandHandlerB));
-            handlers.Count().ShouldBe(2);
         }
 
         [Test]
@@ -23,7 +23,6 @@ namespace Tests.Reflection
             var handlers = Qvc.Reflection.Reflection.FindQueryHandlers().ToList();
             handlers.ShouldContain(typeof(QueryHandlerA));
             handlers.ShouldContain(typeof(QueryHandlerB));
-            handlers.Count().ShouldBe(2);
         }
 
         [Test]

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using Qvc.Exceptions;
-using Qvc.Executables;
 using Qvc.Repository;
 using Shouldly;
+using Tests.Executables;
 
 namespace Tests.Repository
 {
@@ -43,7 +43,7 @@ namespace Tests.Repository
         [Test]
         public void FindExecutableThatDoesntExist()
         {
-            Should.Throw<ExecutableDoesNotExistException>(() => _repo.FindExecutable("QueryD"));
+            Should.Throw<ExecutableDoesNotExistException>(() => _repo.FindExecutable("QueryFullTest"));
         }
 
         [Test]
@@ -61,13 +61,13 @@ namespace Tests.Repository
         [Test]
         public void FindCommandThatDoesntExist()
         {
-            Should.Throw<CommandDoesNotExistException>(() => _repo.FindCommand("CommandD"));
+            Should.Throw<CommandDoesNotExistException>(() => _repo.FindCommand("CommandFullTest"));
         }
 
         [Test]
         public void FindQueryThatDoesntExist()
         {
-            Should.Throw<QueryDoesNotExistException>(() => _repo.FindQuery("QueryD"));
+            Should.Throw<QueryDoesNotExistException>(() => _repo.FindQuery("QueryFullTest"));
         }
 
         [Test]
@@ -82,16 +82,4 @@ namespace Tests.Repository
             Should.Throw<CommandDoesNotExistException>(() => _repo.FindCommand("QueryA"));
         }
     }
-
-    class CommandA : ICommand { }
-
-    class CommandB : ICommand { }
-
-    class CommandC : ICommand { }
-
-    class QueryA : IQuery { }
-
-    class QueryC : IQuery { }
-
-    class QueryB : IQuery { }
 }

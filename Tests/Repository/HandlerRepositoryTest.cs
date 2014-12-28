@@ -4,6 +4,7 @@ using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Repository;
 using Shouldly;
+using Tests.Executables;
 
 namespace Tests.Repository
 {
@@ -56,25 +57,4 @@ namespace Tests.Repository
             Should.Throw<DuplicateQueryHandlerException>(() => _repo.AddQueryHandler(typeof(QueryA), typeof(QueryHandlerA)));
         }
     }
-
-    class CommandHandlerA : IHandleCommand<CommandA>
-    {
-        public void Handle(CommandA command) { }
-    }
-
-    class QueryHandlerA : IHandleQuery<QueryA, int>
-    {
-        public int Handle(QueryA command) { return 0; }
-    }
-
-    class CommandHandlerB : IHandleCommand<CommandB>
-    {
-        public void Handle(CommandB command) { }
-    }
-
-    class QueryHandlerB : IHandleQuery<QueryB, int>
-    {
-        public int Handle(QueryB command) { return 0; }
-    }
-
 }

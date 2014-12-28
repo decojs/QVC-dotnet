@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Qvc.Exceptions;
+using Qvc.Executables;
 
 namespace Qvc.Repository
 {
@@ -40,6 +41,30 @@ namespace Qvc.Repository
 
         public Type FindQueryHandler(Type queryType)
         {
+            if (!_queryHandlers.ContainsKey(queryType))
+            {
+                throw new QueryHandlerDoesNotExistException(queryType.FullName);
+            }
+
+            return _queryHandlers[queryType];
+        }
+
+        public Type FindCommandHandler(ICommand command)
+        {
+            var commandType = command.GetType();
+
+            if (!_commandHandlers.ContainsKey(commandType))
+            {
+                throw new CommandHandlerDoesNotExistException(commandType.FullName);
+            }
+
+            return _commandHandlers[commandType];
+        }
+
+        public Type FindQueryHandler(IQuery query)
+        {
+            var queryType = query.GetType();
+
             if (!_queryHandlers.ContainsKey(queryType))
             {
                 throw new QueryHandlerDoesNotExistException(queryType.FullName);
