@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Qvc.Steps;
 using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
-using Tests.Repository;
 
 namespace Tests.Steps
 {
@@ -26,6 +26,15 @@ namespace Tests.Steps
                 h.ShouldBe(typeof(CommandHandlerB));
                 return new CommandHandlerB();
             }).ShouldBeOfType<ExecuteCommandStep>();
+        }
+
+        [Test]
+        public void TestThrowsException()
+        {
+            _step.CreateCommandHandler(h =>
+            {
+                throw new Exception("could not be made");
+            }).ShouldBeOfType<DontExecuteCommandStep>();
         }
     }
 }

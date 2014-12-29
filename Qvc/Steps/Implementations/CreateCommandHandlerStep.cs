@@ -17,8 +17,15 @@ namespace Qvc.Steps.Implementations
 
         public IExecuteCommandStep CreateCommandHandler(Func<Type, object> createCommandHandler)
         {
-            var handler = createCommandHandler.Invoke(_handlerType);
-            return new ExecuteCommandStep(_command, handler as IHandleExecutable);
+            try
+            {
+                var handler = createCommandHandler.Invoke(_handlerType);
+                return new ExecuteCommandStep(_command, handler as IHandleExecutable);
+            }
+            catch (Exception e)
+            {
+                return new DontExecuteCommandStep(e);
+            }
         }
 
         public IExecuteCommandStep CreateCommandHandler()
