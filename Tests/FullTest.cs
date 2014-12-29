@@ -27,11 +27,11 @@ namespace Tests
         {
             new GetExecutableStep("CommandFullTest", "{}")
                 .GetCommand(_repo.FindCommand)
-                .DeserializeCommand(JsonConvert.DeserializeObject)
+                .DeserializeCommand(Qvc.Default.Deserialize)
                 .FindCommandHandler(_handlerRepo.FindCommandHandler)
-                .CreateCommandHandler(Activator.CreateInstance)
-                .HandleCommand(Qvc.Default.CommandExecutor)
-                .Serialize(JsonConvert.SerializeObject);
+                .CreateCommandHandler(Qvc.Default.CreateHandler)
+                .HandleCommand(Qvc.Default.HandleCommand)
+                .Serialize(Qvc.Default.Serialize);
         }
         
         [Test]
@@ -39,11 +39,11 @@ namespace Tests
         {
             new GetExecutableStep("QueryFullTest", "{}")
                 .GetQuery(_repo.FindQuery)
-                .DeserializeQuery(JsonConvert.DeserializeObject)
+                .DeserializeQuery(Qvc.Default.Deserialize)
                 .FindQueryHandler(_handlerRepo.FindQueryHandler)
-                .CreateQueryHandler(Activator.CreateInstance)
-                .HandleQuery(Qvc.Default.QueryExecutor)
-                .Serialize(JsonConvert.SerializeObject);
+                .CreateQueryHandler(Qvc.Default.CreateHandler)
+                .HandleQuery(Qvc.Default.HandleQuery)
+                .Serialize(Qvc.Default.Serialize);
         }
     }
 

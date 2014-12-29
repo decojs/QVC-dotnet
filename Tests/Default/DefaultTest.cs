@@ -28,14 +28,14 @@ namespace Tests.Default
         [Test]
         public void TestCommand()
         {
-            Qvc.Default.CommandExecutor(_commandHandler, _command);
+            Qvc.Default.HandleCommand(_commandHandler, _command);
             _commandHandler.Received().Handle(_command);
         }
 
         [Test]
         public void TestQuery()
         {
-            var result = Qvc.Default.QueryExecutor(_queryHandler, _query);
+            var result = Qvc.Default.HandleQuery(_queryHandler, _query);
             _queryHandler.Received().Handle(_query);
             result.ShouldBe("hello");
         }
