@@ -19,5 +19,10 @@ namespace Qvc.Steps
             var executable = deserializeTheCommand.Invoke(_json, _type) as ICommand;
             return new FindCommandHandlerStep(executable);
         }
+
+        public FindCommandHandlerStep DeserializeCommand()
+        {
+            return DeserializeCommand(Default.Deserialize);
+        }
     }
 }

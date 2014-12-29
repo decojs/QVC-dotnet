@@ -20,5 +20,10 @@ namespace Qvc.Steps
             var handler = createQueryHandler.Invoke(_handlerType);
             return new ExecuteQueryStep(_query, handler as IHandleExecutable);
         }
+
+        public ExecuteQueryStep CreateQueryHandler()
+        {
+            return CreateQueryHandler(Default.CreateHandler);
+        }
     }
 }

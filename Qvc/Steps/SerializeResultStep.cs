@@ -16,5 +16,10 @@ namespace Qvc.Steps
         {
             return serializeResult.Invoke(_result);
         }
+
+        public string Serialize()
+        {
+            return Serialize(Default.Serialize);
+        }
     }
 }

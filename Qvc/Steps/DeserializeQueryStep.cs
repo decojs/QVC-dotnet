@@ -19,5 +19,10 @@ namespace Qvc.Steps
             var executable = deserializeTheQuery.Invoke(_json, _type) as IQuery;
             return new FindQueryHandlerStep(executable);
         }
+
+        public FindQueryHandlerStep DeserializeQuery()
+        {
+            return DeserializeQuery(Default.Deserialize);
+        }
     }
 }

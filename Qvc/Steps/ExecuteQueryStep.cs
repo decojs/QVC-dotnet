@@ -21,5 +21,10 @@ namespace Qvc.Steps
             var result = executeQuery.Invoke(_handler, _query);
             return new SerializeResultStep(new QueryResult(result));
         }
+
+        public SerializeResultStep HandleQuery()
+        {
+            return HandleQuery(Default.HandleQuery);
+        }
     }
 }

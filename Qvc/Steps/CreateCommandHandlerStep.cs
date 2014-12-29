@@ -20,5 +20,10 @@ namespace Qvc.Steps
             var handler = createCommandHandler.Invoke(_handlerType);
             return new ExecuteCommandStep(_command, handler as IHandleExecutable);
         }
+
+        public ExecuteCommandStep CreateCommandHandler()
+        {
+            return CreateCommandHandler(Default.CreateHandler);
+        }
     }
 }

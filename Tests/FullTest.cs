@@ -1,6 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Repository;
@@ -27,11 +25,11 @@ namespace Tests
         {
             new GetExecutableStep("CommandFullTest", "{}")
                 .GetCommand(_repo.FindCommand)
-                .DeserializeCommand(Qvc.Default.Deserialize)
+                .DeserializeCommand()
                 .FindCommandHandler(_handlerRepo.FindCommandHandler)
-                .CreateCommandHandler(Qvc.Default.CreateHandler)
-                .HandleCommand(Qvc.Default.HandleCommand)
-                .Serialize(Qvc.Default.Serialize);
+                .CreateCommandHandler()
+                .HandleCommand()
+                .Serialize();
         }
         
         [Test]
@@ -39,11 +37,11 @@ namespace Tests
         {
             new GetExecutableStep("QueryFullTest", "{}")
                 .GetQuery(_repo.FindQuery)
-                .DeserializeQuery(Qvc.Default.Deserialize)
+                .DeserializeQuery()
                 .FindQueryHandler(_handlerRepo.FindQueryHandler)
-                .CreateQueryHandler(Qvc.Default.CreateHandler)
-                .HandleQuery(Qvc.Default.HandleQuery)
-                .Serialize(Qvc.Default.Serialize);
+                .CreateQueryHandler()
+                .HandleQuery()
+                .Serialize();
         }
     }
 

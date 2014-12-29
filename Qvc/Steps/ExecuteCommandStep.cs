@@ -21,5 +21,10 @@ namespace Qvc.Steps
             executeCommand.Invoke(_handler, _command);
             return new SerializeResultStep(new CommandResult());
         }
+
+        public SerializeResultStep HandleCommand()
+        {
+            return HandleCommand(Default.HandleCommand);
+        }
     }
 }
