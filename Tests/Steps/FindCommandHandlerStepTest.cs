@@ -40,5 +40,14 @@ namespace Tests.Steps
                 throw new CommandHandlerDoesNotExistException(c.GetType().FullName);
             }).ShouldBeOfType<DontCreateCommandHandlerStep>();
         }
+
+        [Test]
+        public void TestDuplicateHandler()
+        {
+            _step.FindCommandHandler(c =>
+            {
+                throw new DuplicateCommandHandlerException(c.GetType().FullName);
+            }).ShouldBeOfType<DontCreateCommandHandlerStep>();
+        }
     }
 }

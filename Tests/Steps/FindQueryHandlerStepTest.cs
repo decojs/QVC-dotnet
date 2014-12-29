@@ -40,5 +40,14 @@ namespace Tests.Steps
                 throw new QueryHandlerDoesNotExistException(q.GetType().FullName);
             }).ShouldBeOfType<DontCreateQueryHandlerStep>();
         }
+
+        [Test]
+        public void TestDuplicateHandler()
+        {
+            _step.FindQueryHandler(q =>
+            {
+                throw new DuplicateQueryHandlerException(q.GetType().FullName);
+            }).ShouldBeOfType<DontCreateQueryHandlerStep>();
+        }
     }
 }

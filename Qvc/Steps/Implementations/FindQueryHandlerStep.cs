@@ -24,6 +24,10 @@ namespace Qvc.Steps.Implementations
             {
                 return new DontCreateQueryHandlerStep(e);
             }
+            catch (DuplicateQueryHandlerException e)
+            {
+                return new DontCreateQueryHandlerStep(e);
+            }
         }
     }
 }

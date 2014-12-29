@@ -24,6 +24,10 @@ namespace Qvc.Steps.Implementations
             {
                 return new DontCreateCommandHandlerStep(e);
             }
+            catch (DuplicateCommandHandlerException e)
+            {
+                return new DontCreateCommandHandlerStep(e);
+            }
         }
     }
 }
