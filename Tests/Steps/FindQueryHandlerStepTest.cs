@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Qvc.Exceptions;
 using Qvc.Executables;
 using Qvc.Steps;
 using Qvc.Steps.Implementations;
@@ -29,6 +30,15 @@ namespace Tests.Steps
                 q.ShouldBe(_query);
                 return typeof(QueryHandlerB);
             }).ShouldBeOfType<CreateQueryHandlerStep>();
+        }
+
+        [Test]
+        public void TestHandlerDoesNotExist()
+        {
+            _step.FindQueryHandler(q =>
+            {
+                throw new QueryHandlerDoesNotExistException(q.GetType().FullName);
+            }).ShouldBeOfType<DontCreateQueryHandlerStep>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Qvc.Exceptions;
 using Qvc.Executables;
 
 namespace Qvc.Steps.Implementations
@@ -14,8 +15,15 @@ namespace Qvc.Steps.Implementations
 
         public ICreateCommandHandlerStep FindCommandHandler(Func<ICommand, Type> findCommandHandler)
         {
-            var handlerType = findCommandHandler.Invoke(_command);
-            return new CreateCommandHandlerStep(_command, handlerType);
+            try
+            {
+                var handlerType = findCommandHandler.Invoke(_command);
+                return new CreateCommandHandlerStep(_command, handlerType);
+            }
+            catch (CommandHandlerDoesNotExistException e)
+            {
+                return new DontCreateCommandHandlerStep(e);
+            }
         }
     }
 }

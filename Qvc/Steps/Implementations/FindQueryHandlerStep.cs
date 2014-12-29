@@ -1,4 +1,5 @@
 ﻿using System;
+using Qvc.Exceptions;
 using Qvc.Executables;
 
 namespace Qvc.Steps.Implementations
@@ -14,8 +15,15 @@ namespace Qvc.Steps.Implementations
 
         public ICreateQueryHandlerStep FindQueryHandler(Func<IQuery, Type> findQueryHandler)
         {
-            var handlerType = findQueryHandler.Invoke(_query);
-            return new CreateQueryHandlerStep(_query, handlerType);
+            try
+            {
+                var handlerType = findQueryHandler.Invoke(_query);
+                return new CreateQueryHandlerStep(_query, handlerType);
+            }
+            catch (QueryHandlerDoesNotExistException e)
+            {
+                return new DontCreateQueryHandlerStep(e);
+            }
         }
     }
 }

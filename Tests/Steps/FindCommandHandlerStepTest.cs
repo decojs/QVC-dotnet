@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Qvc.Exceptions;
 using Qvc.Executables;
 using Qvc.Steps;
 using Qvc.Steps.Implementations;
@@ -29,6 +30,15 @@ namespace Tests.Steps
                 c.ShouldBe(_command);
                 return typeof(CommandHandlerB);
             }).ShouldBeOfType<CreateCommandHandlerStep>();
+        }
+
+        [Test]
+        public void TestHandlerDoesNotExist()
+        {
+            _step.FindCommandHandler(c =>
+            {
+                throw new CommandHandlerDoesNotExistException(c.GetType().FullName);
+            }).ShouldBeOfType<DontCreateCommandHandlerStep>();
         }
     }
 }
