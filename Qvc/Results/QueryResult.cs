@@ -1,4 +1,6 @@
-﻿namespace Qvc.Results
+﻿using System;
+
+namespace Qvc.Results
 {
     public class QueryResult : ExecutableResult
     {
@@ -10,6 +12,14 @@
             Valid = true;
             Exception = null;
             Result = result;
+        }
+
+        public QueryResult(Exception exception)
+        {
+            Success = false;
+            Valid = true;
+            Exception = exception;
+            Result = null;
         }
     }
 }

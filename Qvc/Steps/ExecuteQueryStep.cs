@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
@@ -18,8 +19,19 @@ namespace Qvc.Steps
         
         public SerializeResultStep HandleQuery(Func<IHandleExecutable, IQuery, object> executeQuery)
         {
-            var result = executeQuery.Invoke(_handler, _query);
-            return new SerializeResultStep(new QueryResult(result));
+            try
+            {
+                var result = executeQuery.Invoke(_handler, _query);
+                return new SerializeResultStep(new QueryResult(result));
+            }
+            catch (TargetInvocationException e)
+            {
+                return new SerializeResultStep(new QueryResult(e.GetBaseException()));
+            }
+            catch (Exception e)
+            {
+                return new SerializeResultStep(new QueryResult(e));
+            }
         }
 
         public SerializeResultStep HandleQuery()

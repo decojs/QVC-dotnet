@@ -1,4 +1,5 @@
-﻿using Qvc.Handlers;
+﻿using System;
+using Qvc.Handlers;
 
 namespace Tests.Executables
 {
@@ -14,11 +15,11 @@ namespace Tests.Executables
 
     class CommandHandlerB : IHandleCommand<CommandB>
     {
-        public void Handle(CommandB command) { }
+        public void Handle(CommandB command) { throw new NullReferenceException(); }
     }
 
     class QueryHandlerB : IHandleQuery<QueryB, int>
     {
-        public int Handle(QueryB command) { return 0; }
+        public int Handle(QueryB command) { throw new NullReferenceException(); }
     }
 }

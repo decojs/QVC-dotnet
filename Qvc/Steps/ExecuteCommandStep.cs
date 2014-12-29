@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
@@ -18,8 +19,19 @@ namespace Qvc.Steps
 
         public SerializeResultStep HandleCommand(Action<IHandleExecutable, ICommand> executeCommand)
         {
-            executeCommand.Invoke(_handler, _command);
-            return new SerializeResultStep(new CommandResult());
+            try
+            {
+                executeCommand.Invoke(_handler, _command);
+                return new SerializeResultStep(new CommandResult());
+            }
+            catch (TargetInvocationException e)
+            {
+                return new SerializeResultStep(new CommandResult(e.GetBaseException()));
+            }
+            catch (Exception e)
+            {
+                return new SerializeResultStep(new CommandResult(e));
+            }
         }
 
         public SerializeResultStep HandleCommand()
