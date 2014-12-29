@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using Qvc.Results;
-using Qvc.Steps;
+using Qvc.Steps.Implementations;
 using Shouldly;
 
 namespace Tests.Steps

@@ -1,9 +1,9 @@
 ﻿using System;
 using Qvc.Executables;
 
-namespace Qvc.Steps
+namespace Qvc.Steps.Implementations
 {
-    public class DeserializeQueryStep
+    public class DeserializeQueryStep : IDeserializeQueryStep
     {
         private readonly string _json;
         private readonly Type _type;
@@ -14,13 +14,13 @@ namespace Qvc.Steps
             _type = type;
         }
 
-        public FindQueryHandlerStep DeserializeQuery(Func<string, Type, object> deserializeTheQuery)
+        public IFindQueryHandlerStep DeserializeQuery(Func<string, Type, object> deserializeTheQuery)
         {
             var executable = deserializeTheQuery.Invoke(_json, _type) as IQuery;
             return new FindQueryHandlerStep(executable);
         }
 
-        public FindQueryHandlerStep DeserializeQuery()
+        public IFindQueryHandlerStep DeserializeQuery()
         {
             return DeserializeQuery(Default.Deserialize);
         }

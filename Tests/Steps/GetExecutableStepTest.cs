@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Qvc.Steps;
+using Qvc.Exceptions;
+using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
 
@@ -22,7 +23,7 @@ namespace Tests.Steps
             _step.GetCommand(name =>
             {
                 name.ShouldBe("name");
-                return typeof (CommandA);
+                return typeof(CommandA);
             });
         }
 
@@ -34,6 +35,42 @@ namespace Tests.Steps
                 name.ShouldBe("name");
                 return typeof(QueryA);
             });
+        }
+
+        [Test]
+        public void TestCommandDoesNotExist()
+        {
+            _step.GetCommand(name =>
+            {
+                throw new CommandDoesNotExistException(name);
+            }).ShouldBeOfType<DontDeserializeCommandStep>();
+        }
+
+        [Test]
+        public void TestQueryDoesNotExist()
+        {
+            _step.GetQuery(name =>
+            {
+                throw new QueryDoesNotExistException(name);
+            }).ShouldBeOfType<DontDeserializeQueryStep>();
+        }
+
+        [Test]
+        public void TestQueryExecutableDoesNotExist()
+        {
+            _step.GetQuery(name =>
+            {
+                throw new ExecutableDoesNotExistException(name);
+            }).ShouldBeOfType<DontDeserializeQueryStep>();
+        }
+
+        [Test]
+        public void TestCommandExecutableDoesNotExist()
+        {
+            _step.GetCommand(name =>
+            {
+                throw new ExecutableDoesNotExistException(name);
+            }).ShouldBeOfType<DontDeserializeCommandStep>();
         }
     }
 }

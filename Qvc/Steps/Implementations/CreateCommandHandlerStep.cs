@@ -2,9 +2,9 @@
 using Qvc.Executables;
 using Qvc.Handlers;
 
-namespace Qvc.Steps
+namespace Qvc.Steps.Implementations
 {
-    public class CreateCommandHandlerStep
+    public class CreateCommandHandlerStep : ICreateCommandHandlerStep
     {
         private readonly ICommand _command;
         private readonly Type _handlerType;
@@ -15,13 +15,13 @@ namespace Qvc.Steps
             _handlerType = handlerType;
         }
 
-        public ExecuteCommandStep CreateCommandHandler(Func<Type, object> createCommandHandler)
+        public IExecuteCommandStep CreateCommandHandler(Func<Type, object> createCommandHandler)
         {
             var handler = createCommandHandler.Invoke(_handlerType);
             return new ExecuteCommandStep(_command, handler as IHandleExecutable);
         }
 
-        public ExecuteCommandStep CreateCommandHandler()
+        public IExecuteCommandStep CreateCommandHandler()
         {
             return CreateCommandHandler(Default.CreateHandler);
         }

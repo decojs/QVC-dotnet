@@ -1,9 +1,9 @@
 ﻿using System;
 using Qvc.Executables;
 
-namespace Qvc.Steps
+namespace Qvc.Steps.Implementations
 {
-    public class FindCommandHandlerStep
+    public class FindCommandHandlerStep : IFindCommandHandlerStep
     {
         private readonly ICommand _command;
 
@@ -12,7 +12,7 @@ namespace Qvc.Steps
             _command = command;
         }
 
-        public CreateCommandHandlerStep FindCommandHandler(Func<ICommand, Type> findCommandHandler)
+        public ICreateCommandHandlerStep FindCommandHandler(Func<ICommand, Type> findCommandHandler)
         {
             var handlerType = findCommandHandler.Invoke(_command);
             return new CreateCommandHandlerStep(_command, handlerType);

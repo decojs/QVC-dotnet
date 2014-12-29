@@ -1,9 +1,9 @@
 ﻿using System;
 using Qvc.Results;
 
-namespace Qvc.Steps
+namespace Qvc.Steps.Implementations
 {
-    public class SerializeResultStep
+    public class SerializeResultStep : ISerializeResultStep
     {
         private readonly ExecutableResult _result;
 

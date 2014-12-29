@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using Qvc.Steps;
+using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
 
@@ -8,7 +9,7 @@ namespace Tests.Steps
     [TestFixture]
     public class DeserializeCommandStepTest
     {
-        private DeserializeCommandStep _step;
+        private IDeserializeCommandStep _step;
 
         [SetUp]
         public void Setup()
@@ -24,7 +25,7 @@ namespace Tests.Steps
                 j.ShouldBe("json");
                 t.ShouldBe(typeof(CommandA));
                 return new CommandA();
-            });
+            }).ShouldBeOfType<FindCommandHandlerStep>();
         }
     }
 }

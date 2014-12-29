@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using Qvc.Steps;
+using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
 using Tests.Repository;
@@ -9,7 +10,7 @@ namespace Tests.Steps
     [TestFixture]
     public class CreateQueryHandlerStepTest
     {
-        private CreateQueryHandlerStep _step;
+        private ICreateQueryHandlerStep _step;
 
         [SetUp]
         public void Setup()
@@ -24,7 +25,7 @@ namespace Tests.Steps
             {
                 h.ShouldBe(typeof(QueryHandlerB));
                 return new QueryHandlerB();
-            });
+            }).ShouldBeOfType<ExecuteQueryStep>();
         }
     }
 }

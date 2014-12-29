@@ -2,9 +2,9 @@
 using Qvc.Executables;
 using Qvc.Handlers;
 
-namespace Qvc.Steps
+namespace Qvc.Steps.Implementations
 {
-    public class CreateQueryHandlerStep
+    public class CreateQueryHandlerStep : ICreateQueryHandlerStep
     {
         private readonly IQuery _query;
         private readonly Type _handlerType;
@@ -15,13 +15,13 @@ namespace Qvc.Steps
             _handlerType = handlerType;
         }
 
-        public ExecuteQueryStep CreateQueryHandler(Func<Type, object> createQueryHandler)
+        public IExecuteQueryStep CreateQueryHandler(Func<Type, object> createQueryHandler)
         {
             var handler = createQueryHandler.Invoke(_handlerType);
             return new ExecuteQueryStep(_query, handler as IHandleExecutable);
         }
 
-        public ExecuteQueryStep CreateQueryHandler()
+        public IExecuteQueryStep CreateQueryHandler()
         {
             return CreateQueryHandler(Default.CreateHandler);
         }

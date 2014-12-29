@@ -1,9 +1,9 @@
 ﻿using System;
 using Qvc.Executables;
 
-namespace Qvc.Steps
+namespace Qvc.Steps.Implementations
 {
-    public class FindQueryHandlerStep
+    public class FindQueryHandlerStep : IFindQueryHandlerStep
     {
         private readonly IQuery _query;
 
@@ -12,7 +12,7 @@ namespace Qvc.Steps
             _query = query;
         }
 
-        public CreateQueryHandlerStep FindQueryHandler(Func<IQuery, Type> findQueryHandler)
+        public ICreateQueryHandlerStep FindQueryHandler(Func<IQuery, Type> findQueryHandler)
         {
             var handlerType = findQueryHandler.Invoke(_query);
             return new CreateQueryHandlerStep(_query, handlerType);

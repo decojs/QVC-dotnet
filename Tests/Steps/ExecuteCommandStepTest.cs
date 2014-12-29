@@ -5,6 +5,7 @@ using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
 using Qvc.Steps;
+using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
 using Tests.Repository;
@@ -14,7 +15,7 @@ namespace Tests.Steps
     [TestFixture]
     public class ExecuteCommandStepTest
     {
-        private ExecuteCommandStep _step;
+        private IExecuteCommandStep _step;
         private ICommand _command;
         private IHandleExecutable _handler;
 
@@ -35,7 +36,7 @@ namespace Tests.Steps
                 c.ShouldBe(_command);
             }).Serialize(r =>
             {
-                r.ShouldBeOfType(typeof (CommandResult));
+                r.ShouldBeOfType(typeof(CommandResult));
                 r.Success.ShouldBe(true);
                 r.Valid.ShouldBe(true);
                 r.Exception.ShouldBe(null);

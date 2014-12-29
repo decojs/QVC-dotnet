@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Qvc.Executables;
 using Qvc.Steps;
+using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
 using Tests.Repository;
@@ -10,7 +11,7 @@ namespace Tests.Steps
     [TestFixture]
     public class FindCommandHandlerStepTest
     {
-        private FindCommandHandlerStep _step;
+        private IFindCommandHandlerStep _step;
         private ICommand _command;
 
         [SetUp]
@@ -27,7 +28,7 @@ namespace Tests.Steps
             {
                 c.ShouldBe(_command);
                 return typeof(CommandHandlerB);
-            });
+            }).ShouldBeOfType<CreateCommandHandlerStep>();
         }
     }
 }

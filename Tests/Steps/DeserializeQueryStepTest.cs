@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Qvc.Steps;
+using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
 
@@ -8,7 +9,7 @@ namespace Tests.Steps
     [TestFixture]
     public class DeserializeQueryStepTest
     {
-        private DeserializeQueryStep _step;
+        private IDeserializeQueryStep _step;
 
         [SetUp]
         public void Setup()
@@ -24,7 +25,7 @@ namespace Tests.Steps
                 j.ShouldBe("json");
                 t.ShouldBe(typeof(QueryA));
                 return new QueryA();
-            });
+            }).ShouldBeOfType<FindQueryHandlerStep>();
         }
     }
 }

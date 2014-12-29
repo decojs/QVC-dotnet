@@ -1,9 +1,9 @@
 ﻿using System;
 using Qvc.Executables;
 
-namespace Qvc.Steps
+namespace Qvc.Steps.Implementations
 {
-    public class DeserializeCommandStep
+    public class DeserializeCommandStep : IDeserializeCommandStep
     {
         private readonly string _json;
         private readonly Type _type;
@@ -14,13 +14,13 @@ namespace Qvc.Steps
             _type = type;
         }
 
-        public FindCommandHandlerStep DeserializeCommand(Func<string, Type, object> deserializeTheCommand)
+        public IFindCommandHandlerStep DeserializeCommand(Func<string, Type, object> deserializeTheCommand)
         {
             var executable = deserializeTheCommand.Invoke(_json, _type) as ICommand;
             return new FindCommandHandlerStep(executable);
         }
 
-        public FindCommandHandlerStep DeserializeCommand()
+        public IFindCommandHandlerStep DeserializeCommand()
         {
             return DeserializeCommand(Default.Deserialize);
         }

@@ -4,6 +4,7 @@ using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
 using Qvc.Steps;
+using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
 using Tests.Repository;
@@ -13,7 +14,7 @@ namespace Tests.Steps
     [TestFixture]
     public class ExecuteQueryStepTest
     {
-        private ExecuteQueryStep _step;
+        private IExecuteQueryStep _step;
         private IQuery _query;
         private IHandleExecutable _handler;
 

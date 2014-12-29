@@ -4,9 +4,9 @@ using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
 
-namespace Qvc.Steps
+namespace Qvc.Steps.Implementations
 {
-    public class ExecuteQueryStep
+    public class ExecuteQueryStep : IExecuteQueryStep
     {
         private readonly IQuery _query;
         private readonly IHandleExecutable _handler;
@@ -17,7 +17,7 @@ namespace Qvc.Steps
             _handler = handler;
         }
         
-        public SerializeResultStep HandleQuery(Func<IHandleExecutable, IQuery, object> executeQuery)
+        public ISerializeResultStep HandleQuery(Func<IHandleExecutable, IQuery, object> executeQuery)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace Qvc.Steps
             }
         }
 
-        public SerializeResultStep HandleQuery()
+        public ISerializeResultStep HandleQuery()
         {
             return HandleQuery(Default.HandleQuery);
         }
