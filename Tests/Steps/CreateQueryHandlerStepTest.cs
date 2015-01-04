@@ -34,7 +34,7 @@ namespace Tests.Steps
             _step.CreateQueryHandler(h =>
             {
                 throw new Exception("could not be made");
-            }).ShouldBeOfType<ErrorStep>();
+            }).ShouldBeOfType<QueryErrorStep>();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Tests.Steps
             _step.FindQueryHandler(q =>
             {
                 throw new QueryHandlerDoesNotExistException(q.GetType().FullName);
-            }).ShouldBeOfType<ErrorStep>();
+            }).ShouldBeOfType<QueryErrorStep>();
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace Tests.Steps
             _step.FindQueryHandler(q =>
             {
                 throw new DuplicateQueryHandlerException(q.GetType().FullName);
-            }).ShouldBeOfType<ErrorStep>();
+            }).ShouldBeOfType<QueryErrorStep>();
         }
     }
 }

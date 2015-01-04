@@ -73,12 +73,13 @@
     <Compile Include="Steps\CreateQueryHandlerStepTest.cs" />
     <Compile Include="Steps\DeserializeCommandStepTest.cs" />
     <Compile Include="Steps\DeserializeQueryStepTest.cs" />
-    <Compile Include="Steps\ErrorStepTest.cs" />
+    <Compile Include="Steps\CommandErrorStepTest.cs" />
     <Compile Include="Steps\ExecuteCommandStepTest.cs" />
     <Compile Include="Steps\ExecuteQueryStepTest.cs" />
     <Compile Include="Steps\FindCommandHandlerStepTest.cs" />
     <Compile Include="Steps\FindQueryHandlerStepTest.cs" />
     <Compile Include="Steps\GetExecutableStepTest.cs" />
+    <Compile Include="Steps\QueryErrorStepTest.cs" />
     <Compile Include="Steps\SerializeResultStepTest.cs" />
   </ItemGroup>
   <ItemGroup>

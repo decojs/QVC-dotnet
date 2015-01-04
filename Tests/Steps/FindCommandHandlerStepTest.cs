@@ -37,7 +37,7 @@ namespace Tests.Steps
             _step.FindCommandHandler(c =>
             {
                 throw new CommandHandlerDoesNotExistException(c.GetType().FullName);
-            }).ShouldBeOfType<ErrorStep>();
+            }).ShouldBeOfType<CommandErrorStep>();
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace Tests.Steps
             _step.FindCommandHandler(c =>
             {
                 throw new DuplicateCommandHandlerException(c.GetType().FullName);
-            }).ShouldBeOfType<ErrorStep>();
+            }).ShouldBeOfType<CommandErrorStep>();
         }
     }
 }

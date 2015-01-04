@@ -80,12 +80,13 @@
     <Compile Include="Steps\Implementations\CreateQueryHandlerStep.cs" />
     <Compile Include="Steps\Implementations\DeserializeCommandStep.cs" />
     <Compile Include="Steps\Implementations\DeserializeQueryStep.cs" />
-    <Compile Include="Steps\Implementations\ErrorStep.cs" />
+    <Compile Include="Steps\Implementations\CommandErrorStep.cs" />
     <Compile Include="Steps\Implementations\ExecuteCommandStep.cs" />
     <Compile Include="Steps\Implementations\ExecuteQueryStep.cs" />
     <Compile Include="Steps\Implementations\FindCommandHandlerStep.cs" />
     <Compile Include="Steps\Implementations\FindQueryHandlerStep.cs" />
     <Compile Include="Steps\Implementations\GetExecutableStep.cs" />
+    <Compile Include="Steps\Implementations\QueryErrorStep.cs" />
     <Compile Include="Steps\Implementations\SerializeResultStep.cs" />
     <Compile Include="Steps\ISerializeResultStep.cs" />
   </ItemGroup>
