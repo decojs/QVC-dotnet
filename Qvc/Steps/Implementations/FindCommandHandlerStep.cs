@@ -6,19 +6,19 @@ namespace Qvc.Steps.Implementations
 {
     public class FindCommandHandlerStep : IFindCommandHandlerStep
     {
-        private readonly ICommand _command;
+        public ICommand Command { get; private set; }
 
         public FindCommandHandlerStep(ICommand command)
         {
-            _command = command;
+            Command = command;
         }
 
         public ICreateCommandHandlerStep FindCommandHandler(Func<ICommand, Type> findCommandHandler)
         {
             try
             {
-                var handlerType = findCommandHandler.Invoke(_command);
-                return new CreateCommandHandlerStep(_command, handlerType);
+                var handlerType = findCommandHandler.Invoke(Command);
+                return new CreateCommandHandlerStep(Command, handlerType);
             }
             catch (CommandHandlerDoesNotExistException e)
             {

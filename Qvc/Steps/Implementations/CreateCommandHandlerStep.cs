@@ -6,21 +6,22 @@ namespace Qvc.Steps.Implementations
 {
     public class CreateCommandHandlerStep : ICreateCommandHandlerStep
     {
-        private readonly ICommand _command;
-        private readonly Type _handlerType;
+        public ICommand Command { get; private set; }
+
+        public Type HandlerType { get; private set; }
 
         public CreateCommandHandlerStep(ICommand command, Type handlerType)
         {
-            _command = command;
-            _handlerType = handlerType;
+            Command = command;
+            HandlerType = handlerType;
         }
 
         public IExecuteCommandStep CreateCommandHandler(Func<Type, object> createCommandHandler)
         {
             try
             {
-                var handler = createCommandHandler.Invoke(_handlerType);
-                return new ExecuteCommandStep(_command, handler as IHandleExecutable);
+                var handler = createCommandHandler.Invoke(HandlerType);
+                return new ExecuteCommandStep(Command, handler as IHandleExecutable);
             }
             catch (Exception e)
             {

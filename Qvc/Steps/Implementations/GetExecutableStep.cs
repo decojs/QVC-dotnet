@@ -5,21 +5,22 @@ namespace Qvc.Steps.Implementations
 {
     public class GetExecutableStep : IGetExecutableStep
     {
-        private readonly string _name;
-        private readonly string _json;
+        public string Name { get; private set; }
+
+        public string Json { get; private set; }
 
         public GetExecutableStep(string name, string json)
         {
-            _name = name;
-            _json = json;
+            Name = name;
+            Json = json;
         }
 
         public IDeserializeCommandStep GetCommand(Func<string, Type> getCommand)
         {
             try
             {
-                var type = getCommand.Invoke(_name);
-                return new DeserializeCommandStep(_json, type);
+                var type = getCommand.Invoke(Name);
+                return new DeserializeCommandStep(Json, type);
             }
             catch (CommandDoesNotExistException e)
             {
@@ -35,8 +36,8 @@ namespace Qvc.Steps.Implementations
         {
             try
             {
-                var type = getQuery.Invoke(_name);
-                return new DeserializeQueryStep(_json, type);
+                var type = getQuery.Invoke(Name);
+                return new DeserializeQueryStep(Json, type);
             }
             catch (QueryDoesNotExistException e)
             {

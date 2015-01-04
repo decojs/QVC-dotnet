@@ -16,11 +16,11 @@ namespace Qvc.Steps.Implementations
         IExecuteCommandStep, 
         IExecuteQueryStep
     {
-        private readonly Exception _exception;
+        public Exception Exception { get; private set; }
 
         public ErrorStep(Exception exception)
         {
-            _exception = exception;
+            Exception = exception;
         }
 
         public IDeserializeCommandStep GetCommand(Func<string, Type> getCommand)
@@ -85,22 +85,22 @@ namespace Qvc.Steps.Implementations
 
         public ISerializeResultStep HandleCommand(Action<IHandleExecutable, ICommand> executeCommand)
         {
-            return new SerializeResultStep(new CommandResult(_exception));
+            return new SerializeResultStep(new CommandResult(Exception));
         }
 
         public ISerializeResultStep HandleCommand()
         {
-            return new SerializeResultStep(new CommandResult(_exception));
+            return new SerializeResultStep(new CommandResult(Exception));
         }
 
         public ISerializeResultStep HandleQuery(Func<IHandleExecutable, IQuery, object> executeQuery)
         {
-            return new SerializeResultStep(new QueryResult(_exception));
+            return new SerializeResultStep(new QueryResult(Exception));
         }
 
         public ISerializeResultStep HandleQuery()
         {
-            return new SerializeResultStep(new QueryResult(_exception));
+            return new SerializeResultStep(new QueryResult(Exception));
         }
     }
 }

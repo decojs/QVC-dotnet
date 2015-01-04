@@ -8,20 +8,21 @@ namespace Qvc.Steps.Implementations
 {
     public class ExecuteCommandStep : IExecuteCommandStep
     {
-        private readonly ICommand _command;
-        private readonly IHandleExecutable _handler;
+        public ICommand Command { get; private set; }
+
+        public IHandleExecutable Handler { get; private set; }
 
         public ExecuteCommandStep(ICommand command, IHandleExecutable handler)
         {
-            _command = command;
-            _handler = handler;
+            Command = command;
+            Handler = handler;
         }
 
         public ISerializeResultStep HandleCommand(Action<IHandleExecutable, ICommand> executeCommand)
         {
             try
             {
-                executeCommand.Invoke(_handler, _command);
+                executeCommand.Invoke(Handler, Command);
                 return new SerializeResultStep(new CommandResult());
             }
             catch (TargetInvocationException e)

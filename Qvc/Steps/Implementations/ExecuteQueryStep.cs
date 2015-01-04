@@ -8,20 +8,21 @@ namespace Qvc.Steps.Implementations
 {
     public class ExecuteQueryStep : IExecuteQueryStep
     {
-        private readonly IQuery _query;
-        private readonly IHandleExecutable _handler;
+        public IQuery Query { get; private set; }
+
+        public IHandleExecutable Handler { get; private set; }
 
         public ExecuteQueryStep(IQuery query, IHandleExecutable handler)
         {
-            _query = query;
-            _handler = handler;
+            Query = query;
+            Handler = handler;
         }
         
         public ISerializeResultStep HandleQuery(Func<IHandleExecutable, IQuery, object> executeQuery)
         {
             try
             {
-                var result = executeQuery.Invoke(_handler, _query);
+                var result = executeQuery.Invoke(Handler, Query);
                 return new SerializeResultStep(new QueryResult(result));
             }
             catch (TargetInvocationException e)

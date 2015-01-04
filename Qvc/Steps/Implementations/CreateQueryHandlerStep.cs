@@ -6,21 +6,22 @@ namespace Qvc.Steps.Implementations
 {
     public class CreateQueryHandlerStep : ICreateQueryHandlerStep
     {
-        private readonly IQuery _query;
-        private readonly Type _handlerType;
+        public IQuery Query { get; private set; }
+
+        public Type HandlerType { get; private set; }
 
         public CreateQueryHandlerStep(IQuery query, Type handlerType)
         {
-            _query = query;
-            _handlerType = handlerType;
+            Query = query;
+            HandlerType = handlerType;
         }
 
         public IExecuteQueryStep CreateQueryHandler(Func<Type, object> createQueryHandler)
         {
             try
             {
-                var handler = createQueryHandler.Invoke(_handlerType);
-                return new ExecuteQueryStep(_query, handler as IHandleExecutable);
+                var handler = createQueryHandler.Invoke(HandlerType);
+                return new ExecuteQueryStep(Query, handler as IHandleExecutable);
             }
             catch (Exception e)
             {

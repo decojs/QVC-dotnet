@@ -5,16 +5,16 @@ namespace Qvc.Steps.Implementations
 {
     public class SerializeResultStep : ISerializeResultStep
     {
-        private readonly ExecutableResult _result;
+        public ExecutableResult Result { get; private set; }
 
         public SerializeResultStep(ExecutableResult result)
         {
-            _result = result;
+            Result = result;
         }
 
         public string Serialize(Func<ExecutableResult, string> serializeResult)
         {
-            return serializeResult.Invoke(_result);
+            return serializeResult.Invoke(Result);
         }
 
         public string Serialize()
