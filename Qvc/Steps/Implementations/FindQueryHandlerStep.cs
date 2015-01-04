@@ -22,11 +22,11 @@ namespace Qvc.Steps.Implementations
             }
             catch (QueryHandlerDoesNotExistException e)
             {
-                return new DontCreateQueryHandlerStep(e);
+                return new ErrorStep(e);
             }
             catch (DuplicateQueryHandlerException e)
             {
-                return new DontCreateQueryHandlerStep(e);
+                return new ErrorStep(e);
             }
         }
     }

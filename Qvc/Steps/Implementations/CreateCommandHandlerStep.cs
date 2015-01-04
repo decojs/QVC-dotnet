@@ -24,7 +24,7 @@ namespace Qvc.Steps.Implementations
             }
             catch (Exception e)
             {
-                return new DontExecuteCommandStep(e);
+                return new ErrorStep(e);
             }
         }
 

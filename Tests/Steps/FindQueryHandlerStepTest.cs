@@ -5,7 +5,6 @@ using Qvc.Steps;
 using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
-using Tests.Repository;
 
 namespace Tests.Steps
 {
@@ -38,7 +37,7 @@ namespace Tests.Steps
             _step.FindQueryHandler(q =>
             {
                 throw new QueryHandlerDoesNotExistException(q.GetType().FullName);
-            }).ShouldBeOfType<DontCreateQueryHandlerStep>();
+            }).ShouldBeOfType<ErrorStep>();
         }
 
         [Test]
@@ -47,7 +46,7 @@ namespace Tests.Steps
             _step.FindQueryHandler(q =>
             {
                 throw new DuplicateQueryHandlerException(q.GetType().FullName);
-            }).ShouldBeOfType<DontCreateQueryHandlerStep>();
+            }).ShouldBeOfType<ErrorStep>();
         }
     }
 }

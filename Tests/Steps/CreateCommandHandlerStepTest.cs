@@ -34,7 +34,7 @@ namespace Tests.Steps
             _step.CreateCommandHandler(h =>
             {
                 throw new Exception("could not be made");
-            }).ShouldBeOfType<DontExecuteCommandStep>();
+            }).ShouldBeOfType<ErrorStep>();
         }
     }
 }

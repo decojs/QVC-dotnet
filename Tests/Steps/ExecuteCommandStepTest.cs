@@ -1,5 +1,4 @@
 using System;
-using NSubstitute;
 using NUnit.Framework;
 using Qvc.Executables;
 using Qvc.Handlers;
@@ -8,7 +7,6 @@ using Qvc.Steps;
 using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
-using Tests.Repository;
 
 namespace Tests.Steps
 {

@@ -22,11 +22,11 @@ namespace Qvc.Steps.Implementations
             }
             catch (CommandHandlerDoesNotExistException e)
             {
-                return new DontCreateCommandHandlerStep(e);
+                return new ErrorStep(e);
             }
             catch (DuplicateCommandHandlerException e)
             {
-                return new DontCreateCommandHandlerStep(e);
+                return new ErrorStep(e);
             }
         }
     }

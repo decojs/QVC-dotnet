@@ -43,7 +43,7 @@ namespace Tests.Steps
             _step.GetCommand(name =>
             {
                 throw new CommandDoesNotExistException(name);
-            }).ShouldBeOfType<DontDeserializeCommandStep>();
+            }).ShouldBeOfType<ErrorStep>();
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Tests.Steps
             _step.GetQuery(name =>
             {
                 throw new QueryDoesNotExistException(name);
-            }).ShouldBeOfType<DontDeserializeQueryStep>();
+            }).ShouldBeOfType<ErrorStep>();
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace Tests.Steps
             _step.GetQuery(name =>
             {
                 throw new ExecutableDoesNotExistException(name);
-            }).ShouldBeOfType<DontDeserializeQueryStep>();
+            }).ShouldBeOfType<ErrorStep>();
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Tests.Steps
             _step.GetCommand(name =>
             {
                 throw new ExecutableDoesNotExistException(name);
-            }).ShouldBeOfType<DontDeserializeCommandStep>();
+            }).ShouldBeOfType<ErrorStep>();
         }
     }
 }

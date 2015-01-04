@@ -79,14 +79,7 @@
     <Compile Include="Steps\Implementations\CreateQueryHandlerStep.cs" />
     <Compile Include="Steps\Implementations\DeserializeCommandStep.cs" />
     <Compile Include="Steps\Implementations\DeserializeQueryStep.cs" />
-    <Compile Include="Steps\Implementations\DontCreateCommandHandlerStep.cs" />
-    <Compile Include="Steps\Implementations\DontCreateQueryHandlerStep.cs" />
-    <Compile Include="Steps\Implementations\DontDeserializeCommandStep.cs" />
-    <Compile Include="Steps\Implementations\DontDeserializeQueryStep.cs" />
-    <Compile Include="Steps\Implementations\DontExecuteCommandStep.cs" />
-    <Compile Include="Steps\Implementations\DontExecuteQueryStep.cs" />
-    <Compile Include="Steps\Implementations\DontFindCommandHandlerStep.cs" />
-    <Compile Include="Steps\Implementations\DontFindQueryHandlerStep.cs" />
+    <Compile Include="Steps\Implementations\ErrorStep.cs" />
     <Compile Include="Steps\Implementations\ExecuteCommandStep.cs" />
     <Compile Include="Steps\Implementations\ExecuteQueryStep.cs" />
     <Compile Include="Steps\Implementations\FindCommandHandlerStep.cs" />

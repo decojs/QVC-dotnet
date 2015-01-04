@@ -23,11 +23,11 @@ namespace Qvc.Steps.Implementations
             }
             catch (CommandDoesNotExistException e)
             {
-                return new DontDeserializeCommandStep(e);
+                return new ErrorStep(e);
             }
             catch (ExecutableDoesNotExistException e)
             {
-                return new DontDeserializeCommandStep(e);
+                return new ErrorStep(e);
             }
         }
 
@@ -40,11 +40,11 @@ namespace Qvc.Steps.Implementations
             }
             catch (QueryDoesNotExistException e)
             {
-                return new DontDeserializeQueryStep(e);
+                return new ErrorStep(e);
             }
             catch (ExecutableDoesNotExistException e)
             {
-                return new DontDeserializeQueryStep(e);
+                return new ErrorStep(e);
             }
         }
     }
