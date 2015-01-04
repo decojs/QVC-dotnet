@@ -74,7 +74,8 @@
     <Compile Include="Steps\IExecuteQueryStep.cs" />
     <Compile Include="Steps\IFindCommandHandlerStep.cs" />
     <Compile Include="Steps\IFindQueryHandlerStep.cs" />
-    <Compile Include="Steps\IGetExecutableStep.cs" />
+    <Compile Include="Steps\IGetCommandStep.cs" />
+    <Compile Include="Steps\IGetQueryStep.cs" />
     <Compile Include="Steps\Implementations\CreateCommandHandlerStep.cs" />
     <Compile Include="Steps\Implementations\CreateQueryHandlerStep.cs" />
     <Compile Include="Steps\Implementations\DeserializeCommandStep.cs" />

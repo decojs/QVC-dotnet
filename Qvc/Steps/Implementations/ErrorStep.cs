@@ -6,7 +6,8 @@ using Qvc.Results;
 namespace Qvc.Steps.Implementations
 {
     public class ErrorStep : 
-        IGetExecutableStep, 
+        IGetCommandStep,
+        IGetQueryStep,
         IDeserializeCommandStep, 
         IDeserializeQueryStep, 
         IFindCommandHandlerStep, 

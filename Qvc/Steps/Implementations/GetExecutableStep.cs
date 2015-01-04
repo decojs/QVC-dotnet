@@ -3,7 +3,7 @@ using Qvc.Exceptions;
 
 namespace Qvc.Steps.Implementations
 {
-    public class GetExecutableStep : IGetExecutableStep
+    public class GetExecutableStep : IGetCommandStep, IGetQueryStep
     {
         public string Name { get; private set; }
 

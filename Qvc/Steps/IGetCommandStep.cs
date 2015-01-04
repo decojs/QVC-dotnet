@@ -2,10 +2,8 @@
 
 namespace Qvc.Steps
 {
-    public interface IGetExecutableStep
+    public interface IGetCommandStep
     {
         IDeserializeCommandStep GetCommand(Func<string, Type> getCommand);
-
-        IDeserializeQueryStep GetQuery(Func<string, Type> getQuery);
     }
 }
