@@ -1,6 +1,7 @@
 ﻿using System;
 using Qvc.Executables;
 using Qvc.Handlers;
+using Qvc.Results;
 
 namespace Qvc.Steps.Implementations
 {
@@ -25,7 +26,7 @@ namespace Qvc.Steps.Implementations
             }
             catch (Exception e)
             {
-                return new QueryErrorStep(e);
+                return new QueryErrorStep(new QueryResult(e));
             }
         }
 

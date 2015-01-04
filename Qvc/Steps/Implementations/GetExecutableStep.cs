@@ -1,5 +1,6 @@
 ﻿using System;
 using Qvc.Exceptions;
+using Qvc.Results;
 
 namespace Qvc.Steps.Implementations
 {
@@ -24,11 +25,11 @@ namespace Qvc.Steps.Implementations
             }
             catch (CommandDoesNotExistException e)
             {
-                return new CommandErrorStep(e);
+                return new CommandErrorStep(new CommandResult(e));
             }
             catch (ExecutableDoesNotExistException e)
             {
-                return new CommandErrorStep(e);
+                return new CommandErrorStep(new CommandResult(e));
             }
         }
 
@@ -41,11 +42,11 @@ namespace Qvc.Steps.Implementations
             }
             catch (QueryDoesNotExistException e)
             {
-                return new QueryErrorStep(e);
+                return new QueryErrorStep(new QueryResult(e));
             }
             catch (ExecutableDoesNotExistException e)
             {
-                return new QueryErrorStep(e);
+                return new QueryErrorStep(new QueryResult(e));
             }
         }
     }

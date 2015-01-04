@@ -12,11 +12,11 @@ namespace Qvc.Steps.Implementations
         ICreateCommandHandlerStep,
         IExecuteCommandStep
     {
-        public Exception Exception { get; private set; }
+        public CommandResult CommandResult { get; private set; }
 
-        public CommandErrorStep(Exception exception)
+        public CommandErrorStep(CommandResult commandResult)
         {
-            Exception = exception;
+            CommandResult = commandResult;
         }
 
         public IDeserializeCommandStep GetCommand(Func<string, Type> getCommand)
@@ -51,12 +51,12 @@ namespace Qvc.Steps.Implementations
 
         public ISerializeResultStep HandleCommand(Action<IHandleExecutable, ICommand> executeCommand)
         {
-            return new SerializeResultStep(new CommandResult(Exception));
+            return new SerializeResultStep(CommandResult);
         }
 
         public ISerializeResultStep HandleCommand()
         {
-            return new SerializeResultStep(new CommandResult(Exception));
+            return new SerializeResultStep(CommandResult);
         }
     }
 }

@@ -12,11 +12,11 @@ namespace Qvc.Steps.Implementations
         ICreateQueryHandlerStep,
         IExecuteQueryStep
     {
-        public Exception Exception { get; private set; }
+        public QueryResult QueryResult { get; private set; }
 
-        public QueryErrorStep(Exception exception)
+        public QueryErrorStep(QueryResult queryResult)
         {
-            Exception = exception;
+            QueryResult = queryResult;
         }
 
         public IDeserializeQueryStep GetQuery(Func<string, Type> getQuery)
@@ -51,12 +51,12 @@ namespace Qvc.Steps.Implementations
 
         public ISerializeResultStep HandleQuery(Func<IHandleExecutable, IQuery, object> executeQuery)
         {
-            return new SerializeResultStep(new QueryResult(Exception));
+            return new SerializeResultStep(QueryResult);
         }
 
         public ISerializeResultStep HandleQuery()
         {
-            return new SerializeResultStep(new QueryResult(Exception));
+            return new SerializeResultStep(QueryResult);
         }
     }
 }

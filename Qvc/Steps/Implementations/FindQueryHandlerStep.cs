@@ -1,6 +1,7 @@
 ﻿using System;
 using Qvc.Exceptions;
 using Qvc.Executables;
+using Qvc.Results;
 
 namespace Qvc.Steps.Implementations
 {
@@ -22,11 +23,11 @@ namespace Qvc.Steps.Implementations
             }
             catch (QueryHandlerDoesNotExistException e)
             {
-                return new QueryErrorStep(e);
+                return new QueryErrorStep(new QueryResult(e));
             }
             catch (DuplicateQueryHandlerException e)
             {
-                return new QueryErrorStep(e);
+                return new QueryErrorStep(new QueryResult(e));
             }
         }
     }

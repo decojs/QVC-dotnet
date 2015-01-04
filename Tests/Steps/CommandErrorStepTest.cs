@@ -23,10 +23,10 @@ namespace Tests.Steps
         public void Setup()
         {
             _exception = new Exception("blabla");
-            _deserializeCommandStep = new CommandErrorStep(_exception);
-            _findCommandHandlerStep = new CommandErrorStep(_exception);
-            _createCommandHandlerStep = new CommandErrorStep(_exception);
-            _executeCommandStep = new CommandErrorStep(_exception);
+            _deserializeCommandStep = new CommandErrorStep(new CommandResult(_exception));
+            _findCommandHandlerStep = new CommandErrorStep(new CommandResult(_exception));
+            _createCommandHandlerStep = new CommandErrorStep(new CommandResult(_exception));
+            _executeCommandStep = new CommandErrorStep(new CommandResult(_exception));
         }
 
         [Test]

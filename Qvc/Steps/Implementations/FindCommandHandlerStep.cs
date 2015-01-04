@@ -1,6 +1,7 @@
 ﻿using System;
 using Qvc.Exceptions;
 using Qvc.Executables;
+using Qvc.Results;
 
 namespace Qvc.Steps.Implementations
 {
@@ -22,11 +23,11 @@ namespace Qvc.Steps.Implementations
             }
             catch (CommandHandlerDoesNotExistException e)
             {
-                return new CommandErrorStep(e);
+                return new CommandErrorStep(new CommandResult(e));
             }
             catch (DuplicateCommandHandlerException e)
             {
-                return new CommandErrorStep(e);
+                return new CommandErrorStep(new CommandResult(e));
             }
         }
     }

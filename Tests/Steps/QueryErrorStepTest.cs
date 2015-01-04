@@ -23,10 +23,10 @@ namespace Tests.Steps
         public void Setup()
         {
             _exception = new Exception("blabla");
-            _deserializeQueryStep = new QueryErrorStep(_exception);
-            _findQueryHandlerStep = new QueryErrorStep(_exception);
-            _createQueryHandlerStep = new QueryErrorStep(_exception);
-            _executeQueryStep = new QueryErrorStep(_exception);
+            _deserializeQueryStep = new QueryErrorStep(new QueryResult(_exception));
+            _findQueryHandlerStep = new QueryErrorStep(new QueryResult(_exception));
+            _createQueryHandlerStep = new QueryErrorStep(new QueryResult(_exception));
+            _executeQueryStep = new QueryErrorStep(new QueryResult(_exception));
         }
 
         [Test]
