@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="Exceptions\HandlerDoesNotExistException.cs" />
     <Compile Include="Exceptions\DuplicateExecutableException.cs" />

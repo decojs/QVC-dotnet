@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
+using Qvc;
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Repository;
-using Qvc.Steps.Implementations;
 
 namespace Tests
 {
@@ -23,7 +23,7 @@ namespace Tests
         [Test]
         public void ExecuteCommand()
         {
-            new GetExecutableStep("CommandFullTest", "{}")
+            Action.Command("CommandFullTest", "{}")
                 .GetCommand(_repo.FindCommand)
                 .DeserializeCommand()
                 .FindCommandHandler(_handlerRepo.FindCommandHandler)
@@ -35,7 +35,7 @@ namespace Tests
         [Test]
         public void ExecuteQuery()
         {
-            new GetExecutableStep("QueryFullTest", "{}")
+            Action.Query("QueryFullTest", "{}")
                 .GetQuery(_repo.FindQuery)
                 .DeserializeQuery()
                 .FindQueryHandler(_handlerRepo.FindQueryHandler)
