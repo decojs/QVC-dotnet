@@ -1,8 +1,10 @@
 ﻿using System;
+using Qvc.Executables;
+using Qvc.Steps;
 
 namespace Qvc.Results
 {
-    public class QueryResult : ExecutableResult
+    public class QueryResult : ExecutableResult, IJsonAndQueryType, IQuery, IQueryAndHandlerType, IQueryAndHandler
     {
         public object Result { get; private set; }
 

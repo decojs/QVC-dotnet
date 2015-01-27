@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using Qvc;
 using Qvc.Exceptions;
+using Qvc.Results;
 using Qvc.Steps;
-using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
 
@@ -35,7 +35,7 @@ namespace Tests.Steps
             _step.FindCommand(name =>
             {
                 throw new CommandDoesNotExistException(name);
-            }).ShouldBeOfType<CommandErrorStep>();
+            }).ShouldBeOfType<CommandResult>();
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Tests.Steps
             _step.FindCommand(name =>
             {
                 throw new ExecutableDoesNotExistException(name);
-            }).ShouldBeOfType<CommandErrorStep>();
+            }).ShouldBeOfType<CommandResult>();
         }
     }
 }

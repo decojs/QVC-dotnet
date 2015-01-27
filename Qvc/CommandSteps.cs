@@ -20,11 +20,11 @@ namespace Qvc
             }
             catch (CommandDoesNotExistException e)
             {
-                return new CommandErrorStep(new CommandResult(e));
+                return new CommandResult(e);
             }
             catch (ExecutableDoesNotExistException e)
             {
-                return new CommandErrorStep(new CommandResult(e));
+                return new CommandResult(e);
             }
         }
 
@@ -32,7 +32,7 @@ namespace Qvc
         {
             return self.Virtually<IJsonAndCommandType, ICommand>()
                 .Case<JsonAndType>(result => deserializeTheCommand.Invoke(result.Json, result.Type) as ICommand)
-                .Case<CommandErrorStep>(error => error)
+                .Case<CommandResult>(error => error)
                 .Result();
         }
 
@@ -44,7 +44,7 @@ namespace Qvc
         public static ICommandAndHandlerType FindCommandHandler(this ICommand self, Func<ICommand, Type> findCommandHandler)
         {
             return self.Virtually<ICommand, ICommandAndHandlerType>()
-                .Case<CommandErrorStep>(error => error)
+                .Case<CommandResult>(error => error)
                 .Default(command =>
                 {
                     try
@@ -54,11 +54,11 @@ namespace Qvc
                     }
                     catch (CommandHandlerDoesNotExistException e)
                     {
-                        return new CommandErrorStep(new CommandResult(e));
+                        return new CommandResult(e);
                     }
                     catch (DuplicateCommandHandlerException e)
                     {
-                        return new CommandErrorStep(new CommandResult(e));
+                        return new CommandResult(e);
                     }
                 })
                 .Result();
@@ -76,10 +76,10 @@ namespace Qvc
                     }
                     catch (Exception e)
                     {
-                        return new CommandErrorStep(new CommandResult(e));
+                        return new CommandResult(e);
                     }
                 })
-                .Case<CommandErrorStep>(error => error)
+                .Case<CommandResult>(error => error)
                 .Result();
         }
 
@@ -107,7 +107,7 @@ namespace Qvc
                         return new CommandResult(e);
                     }
                 })
-                .Case<CommandErrorStep>(error => error.CommandResult)
+                .Case<CommandResult>(error => error)
                 .Result();
             
         }

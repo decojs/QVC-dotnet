@@ -2,6 +2,7 @@ using NUnit.Framework;
 using Qvc;
 using Qvc.Exceptions;
 using Qvc.Executables;
+using Qvc.Results;
 using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
@@ -35,7 +36,7 @@ namespace Tests.Steps
             _query.FindQueryHandler(q =>
             {
                 throw new QueryHandlerDoesNotExistException(q.GetType().FullName);
-            }).ShouldBeOfType<QueryErrorStep>();
+            }).ShouldBeOfType<QueryResult>();
         }
 
         [Test]
@@ -44,7 +45,7 @@ namespace Tests.Steps
             _query.FindQueryHandler(q =>
             {
                 throw new DuplicateQueryHandlerException(q.GetType().FullName);
-            }).ShouldBeOfType<QueryErrorStep>();
+            }).ShouldBeOfType<QueryResult>();
         }
     }
 }

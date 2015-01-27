@@ -40,7 +40,7 @@ namespace Tests.Steps
                 r.Success.ShouldBe(true);
                 r.Valid.ShouldBe(true);
                 r.Exception.ShouldBe(null);
-                ((QueryResult) r).Result.ShouldBe(40);
+                r.Result.ShouldBe(40);
                 return "";
             });
         }
@@ -57,7 +57,7 @@ namespace Tests.Steps
                 r.Success.ShouldBe(false);
                 r.Valid.ShouldBe(true);
                 r.Exception.ShouldBeOfType(typeof(NullReferenceException));
-                ((QueryResult)r).Result.ShouldBe(null);
+                r.Result.ShouldBe(null);
                 return "";
             });
         }
@@ -71,7 +71,7 @@ namespace Tests.Steps
                 r.Success.ShouldBe(false);
                 r.Valid.ShouldBe(true);
                 r.Exception.ShouldBeOfType(typeof(NullReferenceException));
-                ((QueryResult)r).Result.ShouldBe(null);
+                r.Result.ShouldBe(null);
                 return "";
             });
         }

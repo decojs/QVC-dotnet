@@ -1,8 +1,10 @@
 ﻿using System;
+using Qvc.Executables;
+using Qvc.Steps;
 
 namespace Qvc.Results
 {
-    public class CommandResult : ExecutableResult
+    public class CommandResult : ExecutableResult, IJsonAndCommandType, ICommand, ICommandAndHandlerType, ICommandAndHandler
     {
         public CommandResult()
         {

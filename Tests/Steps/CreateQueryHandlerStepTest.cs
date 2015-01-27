@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using Qvc;
+using Qvc.Results;
 using Qvc.Steps;
 using Qvc.Steps.Implementations;
 using Shouldly;
@@ -35,7 +36,7 @@ namespace Tests.Steps
             _step.CreateQueryHandler(h =>
             {
                 throw new Exception("could not be made");
-            }).ShouldBeOfType<QueryErrorStep>();
+            }).ShouldBeOfType<QueryResult>();
         }
     }
 }

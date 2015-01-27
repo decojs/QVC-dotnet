@@ -2,6 +2,7 @@
 using Qvc;
 using Qvc.Exceptions;
 using Qvc.Executables;
+using Qvc.Results;
 using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
@@ -35,7 +36,7 @@ namespace Tests.Steps
             _command.FindCommandHandler(c =>
             {
                 throw new CommandHandlerDoesNotExistException(c.GetType().FullName);
-            }).ShouldBeOfType<CommandErrorStep>();
+            }).ShouldBeOfType<CommandResult>();
         }
 
         [Test]
@@ -44,7 +45,7 @@ namespace Tests.Steps
             _command.FindCommandHandler(c =>
             {
                 throw new DuplicateCommandHandlerException(c.GetType().FullName);
-            }).ShouldBeOfType<CommandErrorStep>();
+            }).ShouldBeOfType<CommandResult>();
         }
     }
 }

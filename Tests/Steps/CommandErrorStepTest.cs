@@ -6,7 +6,6 @@ using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
 using Qvc.Steps;
-using Qvc.Steps.Implementations;
 using Shouldly;
 
 namespace Tests.Steps
@@ -24,17 +23,17 @@ namespace Tests.Steps
         public void Setup()
         {
             _exception = new Exception("blabla");
-            _jsonAndCommandType = new CommandErrorStep(new CommandResult(_exception));
-            _findCommandHandlerStep = new CommandErrorStep(new CommandResult(_exception));
-            _commandAndHandlerType = new CommandErrorStep(new CommandResult(_exception));
-            _commandAndHandler = new CommandErrorStep(new CommandResult(_exception));
+            _jsonAndCommandType = new CommandResult(_exception);
+            _findCommandHandlerStep = new CommandResult(_exception);
+            _commandAndHandlerType = new CommandResult(_exception);
+            _commandAndHandler = new CommandResult(_exception);
         }
 
         [Test]
         public void TestDeserializeCommand()
         {
             var spy = Substitute.For<Func<string, Type, object>>();
-            _jsonAndCommandType.DeserializeCommand(spy).ShouldBeOfType<CommandErrorStep>();
+            _jsonAndCommandType.DeserializeCommand(spy).ShouldBeOfType<CommandResult>();
             spy.DidNotReceive().Invoke(Arg.Any<string>(), Arg.Any<Type>());
         }
 
@@ -42,7 +41,7 @@ namespace Tests.Steps
         public void TestFindCommandHandler()
         {
             var spy = Substitute.For<Func<ICommand, Type>>();
-            _findCommandHandlerStep.FindCommandHandler(spy).ShouldBeOfType<CommandErrorStep>();
+            _findCommandHandlerStep.FindCommandHandler(spy).ShouldBeOfType<CommandResult>();
             spy.DidNotReceive().Invoke(Arg.Any<ICommand>());
         }
 
@@ -50,7 +49,7 @@ namespace Tests.Steps
         public void TestCreateCommandHandler()
         {
             var spy = Substitute.For<Func<Type, object>>();
-            _commandAndHandlerType.CreateCommandHandler(spy).ShouldBeOfType<CommandErrorStep>();
+            _commandAndHandlerType.CreateCommandHandler(spy).ShouldBeOfType<CommandResult>();
             spy.DidNotReceive().Invoke(Arg.Any<Type>());
         }
 

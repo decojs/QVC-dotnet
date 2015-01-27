@@ -20,11 +20,11 @@ namespace Qvc
             }
             catch (QueryDoesNotExistException e)
             {
-                return new QueryErrorStep(new QueryResult(e));
+                return new QueryResult(e);
             }
             catch (ExecutableDoesNotExistException e)
             {
-                return new QueryErrorStep(new QueryResult(e));
+                return new QueryResult(e);
             }
         }
 
@@ -32,7 +32,7 @@ namespace Qvc
         {
             return self.Virtually<IJsonAndQueryType, IQuery>()
                 .Case<JsonAndType>(result => deserializeTheQuery.Invoke(result.Json, result.Type) as IQuery)
-                .Case<QueryErrorStep>(error => error)
+                .Case<QueryResult>(error => error)
                 .Result();
         }
 
@@ -44,7 +44,7 @@ namespace Qvc
         public static IQueryAndHandlerType FindQueryHandler(this IQuery self, Func<IQuery, Type> findQueryHandler)
         {
             return self.Virtually<IQuery, IQueryAndHandlerType>()
-                .Case<QueryErrorStep>(error => error)
+                .Case<QueryResult>(error => error)
                 .Default(query =>
                 {
                     try
@@ -54,11 +54,11 @@ namespace Qvc
                     }
                     catch (QueryHandlerDoesNotExistException e)
                     {
-                        return new QueryErrorStep(new QueryResult(e));
+                        return new QueryResult(e);
                     }
                     catch (DuplicateQueryHandlerException e)
                     {
-                        return new QueryErrorStep(new QueryResult(e));
+                        return new QueryResult(e);
                     }
                 })
                 .Result();
@@ -76,10 +76,10 @@ namespace Qvc
                     }
                     catch (Exception e)
                     {
-                        return new QueryErrorStep(new QueryResult(e));
+                        return new QueryResult(e);
                     }
                 })
-                .Case<QueryErrorStep>(error => error)
+                .Case<QueryResult>(error => error)
                 .Result();
             
         }
@@ -108,7 +108,7 @@ namespace Qvc
                         return new QueryResult(e);
                     }
                 })
-                .Case<QueryErrorStep>(error => error.QueryResult)
+                .Case<QueryResult>(error => error)
                 .Result();
         }
 

@@ -80,11 +80,8 @@
     <Compile Include="Steps\Implementations\CommandAndHandlerType.cs" />
     <Compile Include="Steps\Implementations\QueryAndHandlerType.cs" />
     <Compile Include="Steps\Implementations\JsonAndType.cs" />
-    <Compile Include="Steps\Implementations\CommandErrorStep.cs" />
     <Compile Include="Steps\Implementations\CommandAndHandler.cs" />
     <Compile Include="Steps\Implementations\QueryAndHandler.cs" />
-    <Compile Include="Steps\Implementations\QueryErrorStep.cs" />
-    <Compile Include="Steps\ISerializeResultStep.cs" />
     <Compile Include="Steps\QueryNameAndJson.cs" />
   </ItemGroup>
   <ItemGroup>

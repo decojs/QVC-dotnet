@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using Qvc;
 using Qvc.Exceptions;
+using Qvc.Results;
 using Qvc.Steps;
-using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
 
@@ -24,7 +24,7 @@ namespace Tests.Steps
         {
             _step.FindQuery(name =>
             {
-                ShouldBeTestExtensions.ShouldBe<string>(name, "name");
+                name.ShouldBe("name");
                 return typeof(QueryA);
             });
         }
@@ -35,7 +35,7 @@ namespace Tests.Steps
             _step.FindQuery(name =>
             {
                 throw new QueryDoesNotExistException(name);
-            }).ShouldBeOfType<QueryErrorStep>();
+            }).ShouldBeOfType<QueryResult>();
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Tests.Steps
             _step.FindQuery(name =>
             {
                 throw new ExecutableDoesNotExistException(name);
-            }).ShouldBeOfType<QueryErrorStep>();
+            }).ShouldBeOfType<QueryResult>();
         }
     }
 }
