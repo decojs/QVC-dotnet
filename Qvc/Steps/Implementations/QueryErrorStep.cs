@@ -6,7 +6,6 @@ using Qvc.Results;
 namespace Qvc.Steps.Implementations
 {
     public class QueryErrorStep :
-        IGetQueryStep,
         IDeserializeQueryStep,
         IFindQueryHandlerStep,
         ICreateQueryHandlerStep,
@@ -17,11 +16,6 @@ namespace Qvc.Steps.Implementations
         public QueryErrorStep(QueryResult queryResult)
         {
             QueryResult = queryResult;
-        }
-
-        public IDeserializeQueryStep GetQuery(Func<string, Type> getQuery)
-        {
-            return this;
         }
 
         public IFindQueryHandlerStep DeserializeQuery(Func<string, Type, object> deserializeTheQuery)

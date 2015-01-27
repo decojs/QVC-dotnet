@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action.cs" />
+    <Compile Include="CommandSteps.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="Exceptions\HandlerDoesNotExistException.cs" />
     <Compile Include="Exceptions\DuplicateExecutableException.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Handlers\IHandleCommand.cs" />
     <Compile Include="Handlers\IHandleExecutable.cs" />
     <Compile Include="Handlers\IHandleQuery.cs" />
+    <Compile Include="QuerySteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\Reflection.cs" />
     <Compile Include="Reflection\Setup.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Results\CommandResult.cs" />
     <Compile Include="Results\ExecutableResult.cs" />
     <Compile Include="Results\QueryResult.cs" />
+    <Compile Include="Steps\CommandNameAndJson.cs" />
     <Compile Include="Steps\ICreateCommandHandlerStep.cs" />
     <Compile Include="Steps\ICreateQueryHandlerStep.cs" />
     <Compile Include="Steps\IDeserializeCommandStep.cs" />
@@ -75,8 +78,6 @@
     <Compile Include="Steps\IExecuteQueryStep.cs" />
     <Compile Include="Steps\IFindCommandHandlerStep.cs" />
     <Compile Include="Steps\IFindQueryHandlerStep.cs" />
-    <Compile Include="Steps\IGetCommandStep.cs" />
-    <Compile Include="Steps\IGetQueryStep.cs" />
     <Compile Include="Steps\Implementations\CreateCommandHandlerStep.cs" />
     <Compile Include="Steps\Implementations\CreateQueryHandlerStep.cs" />
     <Compile Include="Steps\Implementations\DeserializeCommandStep.cs" />
@@ -86,10 +87,10 @@
     <Compile Include="Steps\Implementations\ExecuteQueryStep.cs" />
     <Compile Include="Steps\Implementations\FindCommandHandlerStep.cs" />
     <Compile Include="Steps\Implementations\FindQueryHandlerStep.cs" />
-    <Compile Include="Steps\Implementations\GetExecutableStep.cs" />
     <Compile Include="Steps\Implementations\QueryErrorStep.cs" />
     <Compile Include="Steps\Implementations\SerializeResultStep.cs" />
     <Compile Include="Steps\ISerializeResultStep.cs" />
+    <Compile Include="Steps\QueryNameAndJson.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

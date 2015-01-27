@@ -24,7 +24,7 @@ namespace Tests
         public void ExecuteCommand()
         {
             Action.Command("CommandFullTest", "{}")
-                .GetCommand(_repo.FindCommand)
+                .FindCommand(_repo.FindCommand)
                 .DeserializeCommand()
                 .FindCommandHandler(_handlerRepo.FindCommandHandler)
                 .CreateCommandHandler()
@@ -36,7 +36,7 @@ namespace Tests
         public void ExecuteQuery()
         {
             Action.Query("QueryFullTest", "{}")
-                .GetQuery(_repo.FindQuery)
+                .FindQuery(_repo.FindQuery)
                 .DeserializeQuery()
                 .FindQueryHandler(_handlerRepo.FindQueryHandler)
                 .CreateQueryHandler()

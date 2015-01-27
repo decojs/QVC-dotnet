@@ -78,8 +78,9 @@
     <Compile Include="Steps\ExecuteQueryStepTest.cs" />
     <Compile Include="Steps\FindCommandHandlerStepTest.cs" />
     <Compile Include="Steps\FindQueryHandlerStepTest.cs" />
-    <Compile Include="Steps\GetExecutableStepTest.cs" />
+    <Compile Include="Steps\CommandNameAndJsonTest.cs" />
     <Compile Include="Steps\QueryErrorStepTest.cs" />
+    <Compile Include="Steps\QueryNameAndJsonTest.cs" />
     <Compile Include="Steps\SerializeResultStepTest.cs" />
   </ItemGroup>
   <ItemGroup>
