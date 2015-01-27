@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using Qvc;
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
@@ -13,7 +14,7 @@ namespace Tests.Steps
     [TestFixture]
     public class ExecuteCommandStepTest
     {
-        private IExecuteCommandStep _step;
+        private ICommandAndHandler _step;
         private ICommand _command;
         private IHandleExecutable _handler;
 
@@ -22,7 +23,7 @@ namespace Tests.Steps
         {
             _command = new CommandB();
             _handler = new CommandHandlerB();
-            _step = new ExecuteCommandStep(_command, _handler);
+            _step = new CommandAndHandler(_command, _handler);
         }
 
         [Test]

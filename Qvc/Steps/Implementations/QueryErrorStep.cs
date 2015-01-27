@@ -1,6 +1,4 @@
-﻿using System;
-using Qvc.Executables;
-using Qvc.Handlers;
+﻿using Qvc.Executables;
 using Qvc.Results;
 
 namespace Qvc.Steps.Implementations
@@ -9,23 +7,13 @@ namespace Qvc.Steps.Implementations
         IJsonAndQueryType,
         IQuery,
         IQueryAndHandlerType,
-        IExecuteQueryStep
+        IQueryAndHandler
     {
         public QueryResult QueryResult { get; private set; }
 
         public QueryErrorStep(QueryResult queryResult)
         {
             QueryResult = queryResult;
-        }
-
-        public ISerializeResultStep HandleQuery(Func<IHandleExecutable, IQuery, object> executeQuery)
-        {
-            return new SerializeResultStep(QueryResult);
-        }
-
-        public ISerializeResultStep HandleQuery()
-        {
-            return new SerializeResultStep(QueryResult);
         }
     }
 }

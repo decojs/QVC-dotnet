@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using Qvc;
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
@@ -13,7 +14,7 @@ namespace Tests.Steps
     [TestFixture]
     public class ExecuteQueryStepTest
     {
-        private IExecuteQueryStep _step;
+        private IQueryAndHandler _step;
         private IQuery _query;
         private IHandleExecutable _handler;
 
@@ -22,7 +23,7 @@ namespace Tests.Steps
         {
             _query = new QueryB();
             _handler = new QueryHandlerB();
-            _step = new ExecuteQueryStep(_query, _handler);
+            _step = new QueryAndHandler(_query, _handler);
         }
 
         [Test]

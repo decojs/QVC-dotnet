@@ -18,7 +18,7 @@ namespace Tests.Steps
         private IJsonAndQueryType _jsonAndQueryType;
         private IQuery _findQueryHandlerStep;
         private IQueryAndHandlerType _queryAndHandlerType;
-        private IExecuteQueryStep _executeQueryStep;
+        private IQueryAndHandler _queryAndHandler;
 
         [SetUp]
         public void Setup()
@@ -27,7 +27,7 @@ namespace Tests.Steps
             _jsonAndQueryType = new QueryErrorStep(new QueryResult(_exception));
             _findQueryHandlerStep = new QueryErrorStep(new QueryResult(_exception));
             _queryAndHandlerType = new QueryErrorStep(new QueryResult(_exception));
-            _executeQueryStep = new QueryErrorStep(new QueryResult(_exception));
+            _queryAndHandler = new QueryErrorStep(new QueryResult(_exception));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace Tests.Steps
         public void TestExecuteQuery()
         {
             var spy = Substitute.For<Func<IHandleExecutable, IQuery, object>>();
-            _executeQueryStep.HandleQuery(spy).Serialize(r =>
+            _queryAndHandler.HandleQuery(spy).Serialize(r =>
             {
                 r.ShouldBeOfType(typeof(QueryResult));
                 r.Success.ShouldBe(false);

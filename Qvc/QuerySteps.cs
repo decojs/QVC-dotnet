@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Qvc.Exceptions;
 using Qvc.Executables;
 using Qvc.Handlers;
@@ -31,7 +32,7 @@ namespace Qvc
         {
             return self.Virtually<IJsonAndQueryType, IQuery>()
                 .Case<JsonAndType>(result => deserializeTheQuery.Invoke(result.Json, result.Type) as IQuery)
-                .Case<QueryErrorStep>(error => new QueryErrorStep(error.QueryResult))
+                .Case<QueryErrorStep>(error => error)
                 .Result();
         }
 
@@ -43,7 +44,7 @@ namespace Qvc
         public static IQueryAndHandlerType FindQueryHandler(this IQuery self, Func<IQuery, Type> findQueryHandler)
         {
             return self.Virtually<IQuery, IQueryAndHandlerType>()
-                .Case<QueryErrorStep>(error => new QueryErrorStep(error.QueryResult))
+                .Case<QueryErrorStep>(error => error)
                 .Default(query =>
                 {
                     try
@@ -63,29 +64,57 @@ namespace Qvc
                 .Result();
         }
 
-        public static IExecuteQueryStep CreateQueryHandler(this IQueryAndHandlerType self, Func<Type, object> createQueryHandler)
+        public static IQueryAndHandler CreateQueryHandler(this IQueryAndHandlerType self, Func<Type, object> createQueryHandler)
         {
-            return self.Virtually<IQueryAndHandlerType, IExecuteQueryStep>()
+            return self.Virtually<IQueryAndHandlerType, IQueryAndHandler>()
                 .Case<QueryAndHandlerType>(result =>
                 {
                     try
                     {
                         var handler = createQueryHandler.Invoke(result.HandlerType);
-                        return new ExecuteQueryStep(result.Query, handler as IHandleExecutable);
+                        return new QueryAndHandler(result.Query, handler as IHandleExecutable);
                     }
                     catch (Exception e)
                     {
                         return new QueryErrorStep(new QueryResult(e));
                     }
                 })
-                .Case<QueryErrorStep>(error => new QueryErrorStep(error.QueryResult))
+                .Case<QueryErrorStep>(error => error)
                 .Result();
             
         }
 
-        public static IExecuteQueryStep CreateQueryHandler(this IQueryAndHandlerType self)
+        public static IQueryAndHandler CreateQueryHandler(this IQueryAndHandlerType self)
         {
             return CreateQueryHandler(self, Default.CreateHandler);
+        }
+
+        public static ISerializeResultStep HandleQuery(this IQueryAndHandler self, Func<IHandleExecutable, IQuery, object> executeQuery)
+        {
+            return self.Virtually<IQueryAndHandler, ISerializeResultStep>()
+                .Case<QueryAndHandler>(queryAndHandler =>
+                {
+                    try
+                    {
+                        var result = executeQuery.Invoke(queryAndHandler.Handler, queryAndHandler.Query);
+                        return new SerializeResultStep(new QueryResult(result));
+                    }
+                    catch (TargetInvocationException e)
+                    {
+                        return new SerializeResultStep(new QueryResult(e.GetBaseException()));
+                    }
+                    catch (Exception e)
+                    {
+                        return new SerializeResultStep(new QueryResult(e));
+                    }
+                })
+                .Case<QueryErrorStep>(error => new SerializeResultStep(error.QueryResult))
+                .Result();
+        }
+
+        public static ISerializeResultStep HandleQuery(this IQueryAndHandler self)
+        {
+            return HandleQuery(self, Default.HandleQuery);
         }
     }
 }

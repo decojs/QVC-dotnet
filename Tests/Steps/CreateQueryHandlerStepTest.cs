@@ -26,7 +26,7 @@ namespace Tests.Steps
             {
                 h.ShouldBe(typeof(QueryHandlerB));
                 return new QueryHandlerB();
-            }).ShouldBeOfType<ExecuteQueryStep>();
+            }).ShouldBeOfType<QueryAndHandler>();
         }
 
         [Test]

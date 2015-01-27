@@ -18,7 +18,7 @@ namespace Tests.Steps
         private IJsonAndCommandType _jsonAndCommandType;
         private ICommand _findCommandHandlerStep;
         private ICommandAndHandlerType _commandAndHandlerType;
-        private IExecuteCommandStep _executeCommandStep;
+        private ICommandAndHandler _commandAndHandler;
 
         [SetUp]
         public void Setup()
@@ -27,7 +27,7 @@ namespace Tests.Steps
             _jsonAndCommandType = new CommandErrorStep(new CommandResult(_exception));
             _findCommandHandlerStep = new CommandErrorStep(new CommandResult(_exception));
             _commandAndHandlerType = new CommandErrorStep(new CommandResult(_exception));
-            _executeCommandStep = new CommandErrorStep(new CommandResult(_exception));
+            _commandAndHandler = new CommandErrorStep(new CommandResult(_exception));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace Tests.Steps
         public void TestExecuteCommand()
         {
             var spy = Substitute.For<Action<IHandleExecutable, ICommand>>();
-            _executeCommandStep.HandleCommand(spy).Serialize(r =>
+            _commandAndHandler.HandleCommand(spy).Serialize(r =>
             {
                 r.ShouldBeOfType(typeof(CommandResult));
                 r.Success.ShouldBe(false);

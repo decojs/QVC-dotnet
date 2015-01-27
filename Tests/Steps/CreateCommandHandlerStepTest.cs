@@ -26,7 +26,7 @@ namespace Tests.Steps
             {
                 h.ShouldBe(typeof(CommandHandlerB));
                 return new CommandHandlerB();
-            }).ShouldBeOfType<ExecuteCommandStep>();
+            }).ShouldBeOfType<CommandAndHandler>();
         }
 
         [Test]

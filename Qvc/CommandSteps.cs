@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Qvc.Exceptions;
 using Qvc.Executables;
 using Qvc.Handlers;
@@ -31,7 +32,7 @@ namespace Qvc
         {
             return self.Virtually<IJsonAndCommandType, ICommand>()
                 .Case<JsonAndType>(result => deserializeTheCommand.Invoke(result.Json, result.Type) as ICommand)
-                .Case<CommandErrorStep>(error => new CommandErrorStep(error.CommandResult))
+                .Case<CommandErrorStep>(error => error)
                 .Result();
         }
 
@@ -43,7 +44,7 @@ namespace Qvc
         public static ICommandAndHandlerType FindCommandHandler(this ICommand self, Func<ICommand, Type> findCommandHandler)
         {
             return self.Virtually<ICommand, ICommandAndHandlerType>()
-                .Case<CommandErrorStep>(error => new CommandErrorStep(error.CommandResult))
+                .Case<CommandErrorStep>(error => error)
                 .Default(command =>
                 {
                     try
@@ -63,28 +64,57 @@ namespace Qvc
                 .Result();
         }
 
-        public static IExecuteCommandStep CreateCommandHandler(this ICommandAndHandlerType self, Func<Type, object> createCommandHandler)
+        public static ICommandAndHandler CreateCommandHandler(this ICommandAndHandlerType self, Func<Type, object> createCommandHandler)
         {
-            return self.Virtually<ICommandAndHandlerType, IExecuteCommandStep>()
+            return self.Virtually<ICommandAndHandlerType, ICommandAndHandler>()
                 .Case<CommandAndHandlerType>(result =>
                 {
                     try
                     {
                         var handler = createCommandHandler.Invoke(result.HandlerType);
-                        return new ExecuteCommandStep(result.Command, handler as IHandleExecutable);
+                        return new CommandAndHandler(result.Command, handler as IHandleExecutable);
                     }
                     catch (Exception e)
                     {
                         return new CommandErrorStep(new CommandResult(e));
                     }
                 })
-                .Case<CommandErrorStep>(error => new CommandErrorStep(error.CommandResult))
+                .Case<CommandErrorStep>(error => error)
                 .Result();
         }
 
-        public static IExecuteCommandStep CreateCommandHandler(this ICommandAndHandlerType self)
+        public static ICommandAndHandler CreateCommandHandler(this ICommandAndHandlerType self)
         {
             return CreateCommandHandler(self, Default.CreateHandler);
+        }
+
+        public static ISerializeResultStep HandleCommand(this ICommandAndHandler self, Action<IHandleExecutable, ICommand> executeCommand)
+        {
+            return self.Virtually<ICommandAndHandler, ISerializeResultStep>()
+                .Case<CommandAndHandler>(result =>
+                {
+                    try
+                    {
+                        executeCommand.Invoke(result.Handler, result.Command);
+                        return new SerializeResultStep(new CommandResult());
+                    }
+                    catch (TargetInvocationException e)
+                    {
+                        return new SerializeResultStep(new CommandResult(e.GetBaseException()));
+                    }
+                    catch (Exception e)
+                    {
+                        return new SerializeResultStep(new CommandResult(e));
+                    }
+                })
+                .Case<CommandErrorStep>(error => new SerializeResultStep(error.CommandResult))
+                .Result();
+            
+        }
+
+        public static ISerializeResultStep HandleCommand(this ICommandAndHandler self)
+        {
+            return HandleCommand(self, Default.HandleCommand);
         }
     }
 }
