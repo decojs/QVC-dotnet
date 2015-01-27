@@ -2,7 +2,6 @@ using NUnit.Framework;
 using Qvc;
 using Qvc.Exceptions;
 using Qvc.Executables;
-using Qvc.Steps;
 using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
@@ -27,7 +26,7 @@ namespace Tests.Steps
             {
                 q.ShouldBe(_query);
                 return typeof(QueryHandlerB);
-            }).ShouldBeOfType<CreateQueryHandlerStep>();
+            }).ShouldBeOfType<QueryAndHandlerType>();
         }
 
         [Test]

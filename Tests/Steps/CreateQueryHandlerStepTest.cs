@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using Qvc;
 using Qvc.Steps;
 using Qvc.Steps.Implementations;
 using Shouldly;
@@ -10,12 +11,12 @@ namespace Tests.Steps
     [TestFixture]
     public class CreateQueryHandlerStepTest
     {
-        private ICreateQueryHandlerStep _step;
+        private IQueryAndHandlerType _step;
 
         [SetUp]
         public void Setup()
         {
-            _step = new CreateQueryHandlerStep(new QueryB(), typeof(QueryHandlerB));
+            _step = new QueryAndHandlerType(new QueryB(), typeof(QueryHandlerB));
         }
 
         [Test]

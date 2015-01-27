@@ -8,7 +8,7 @@ namespace Qvc.Steps.Implementations
     public class CommandErrorStep :
         IJsonAndCommandType,
         ICommand,
-        ICreateCommandHandlerStep,
+        ICommandAndHandlerType,
         IExecuteCommandStep
     {
         public CommandResult CommandResult { get; private set; }
@@ -16,16 +16,6 @@ namespace Qvc.Steps.Implementations
         public CommandErrorStep(CommandResult commandResult)
         {
             CommandResult = commandResult;
-        }
-
-        public IExecuteCommandStep CreateCommandHandler(Func<Type, object> createCommandHandler)
-        {
-            return this;
-        }
-
-        public IExecuteCommandStep CreateCommandHandler()
-        {
-            return this;
         }
 
         public ISerializeResultStep HandleCommand(Action<IHandleExecutable, ICommand> executeCommand)

@@ -1,6 +1,7 @@
 ﻿using System;
 using Qvc.Exceptions;
 using Qvc.Executables;
+using Qvc.Handlers;
 using Qvc.Results;
 using Qvc.Steps;
 using Qvc.Steps.Implementations;
@@ -39,16 +40,16 @@ namespace Qvc
             return DeserializeCommand(self, Default.Deserialize);
         }
         
-        public static ICreateCommandHandlerStep FindCommandHandler(this ICommand self, Func<ICommand, Type> findCommandHandler)
+        public static ICommandAndHandlerType FindCommandHandler(this ICommand self, Func<ICommand, Type> findCommandHandler)
         {
-            return self.Virtually<ICommand, ICreateCommandHandlerStep>()
+            return self.Virtually<ICommand, ICommandAndHandlerType>()
                 .Case<CommandErrorStep>(error => new CommandErrorStep(error.CommandResult))
                 .Default(command =>
                 {
                     try
                     {
                         var handlerType = findCommandHandler.Invoke(command);
-                        return new CreateCommandHandlerStep(command, handlerType);
+                        return new CommandAndHandlerType(command, handlerType);
                     }
                     catch (CommandHandlerDoesNotExistException e)
                     {
@@ -60,6 +61,30 @@ namespace Qvc
                     }
                 })
                 .Result();
+        }
+
+        public static IExecuteCommandStep CreateCommandHandler(this ICommandAndHandlerType self, Func<Type, object> createCommandHandler)
+        {
+            return self.Virtually<ICommandAndHandlerType, IExecuteCommandStep>()
+                .Case<CommandAndHandlerType>(result =>
+                {
+                    try
+                    {
+                        var handler = createCommandHandler.Invoke(result.HandlerType);
+                        return new ExecuteCommandStep(result.Command, handler as IHandleExecutable);
+                    }
+                    catch (Exception e)
+                    {
+                        return new CommandErrorStep(new CommandResult(e));
+                    }
+                })
+                .Case<CommandErrorStep>(error => new CommandErrorStep(error.CommandResult))
+                .Result();
+        }
+
+        public static IExecuteCommandStep CreateCommandHandler(this ICommandAndHandlerType self)
+        {
+            return CreateCommandHandler(self, Default.CreateHandler);
         }
     }
 }

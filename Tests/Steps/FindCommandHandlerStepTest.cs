@@ -2,7 +2,6 @@
 using Qvc;
 using Qvc.Exceptions;
 using Qvc.Executables;
-using Qvc.Steps;
 using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
@@ -27,7 +26,7 @@ namespace Tests.Steps
             {
                 c.ShouldBe(_command);
                 return typeof(CommandHandlerB);
-            }).ShouldBeOfType<CreateCommandHandlerStep>();
+            }).ShouldBeOfType<CommandAndHandlerType>();
         }
 
         [Test]

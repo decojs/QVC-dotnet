@@ -17,7 +17,7 @@ namespace Tests.Steps
         private Exception _exception;
         private IJsonAndQueryType _jsonAndQueryType;
         private IQuery _findQueryHandlerStep;
-        private ICreateQueryHandlerStep _createQueryHandlerStep;
+        private IQueryAndHandlerType _queryAndHandlerType;
         private IExecuteQueryStep _executeQueryStep;
 
         [SetUp]
@@ -26,7 +26,7 @@ namespace Tests.Steps
             _exception = new Exception("blabla");
             _jsonAndQueryType = new QueryErrorStep(new QueryResult(_exception));
             _findQueryHandlerStep = new QueryErrorStep(new QueryResult(_exception));
-            _createQueryHandlerStep = new QueryErrorStep(new QueryResult(_exception));
+            _queryAndHandlerType = new QueryErrorStep(new QueryResult(_exception));
             _executeQueryStep = new QueryErrorStep(new QueryResult(_exception));
         }
 
@@ -50,7 +50,7 @@ namespace Tests.Steps
         public void TestCreateQueryHandler()
         {
             var spy = Substitute.For<Func<Type, object>>();
-            _createQueryHandlerStep.CreateQueryHandler(spy).ShouldBeOfType<QueryErrorStep>();
+            _queryAndHandlerType.CreateQueryHandler(spy).ShouldBeOfType<QueryErrorStep>();
             spy.DidNotReceive().Invoke(Arg.Any<Type>());
         }
 

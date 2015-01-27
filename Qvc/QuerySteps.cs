@@ -1,6 +1,7 @@
 ﻿using System;
 using Qvc.Exceptions;
 using Qvc.Executables;
+using Qvc.Handlers;
 using Qvc.Results;
 using Qvc.Steps;
 using Qvc.Steps.Implementations;
@@ -39,16 +40,16 @@ namespace Qvc
             return DeserializeQuery(self, Default.Deserialize);
         }
         
-        public static ICreateQueryHandlerStep FindQueryHandler(this IQuery self, Func<IQuery, Type> findQueryHandler)
+        public static IQueryAndHandlerType FindQueryHandler(this IQuery self, Func<IQuery, Type> findQueryHandler)
         {
-            return self.Virtually<IQuery, ICreateQueryHandlerStep>()
+            return self.Virtually<IQuery, IQueryAndHandlerType>()
                 .Case<QueryErrorStep>(error => new QueryErrorStep(error.QueryResult))
                 .Default(query =>
                 {
                     try
                     {
                         var handlerType = findQueryHandler.Invoke(query);
-                        return new CreateQueryHandlerStep(query, handlerType);
+                        return new QueryAndHandlerType(query, handlerType);
                     }
                     catch (QueryHandlerDoesNotExistException e)
                     {
@@ -60,6 +61,31 @@ namespace Qvc
                     }
                 })
                 .Result();
+        }
+
+        public static IExecuteQueryStep CreateQueryHandler(this IQueryAndHandlerType self, Func<Type, object> createQueryHandler)
+        {
+            return self.Virtually<IQueryAndHandlerType, IExecuteQueryStep>()
+                .Case<QueryAndHandlerType>(result =>
+                {
+                    try
+                    {
+                        var handler = createQueryHandler.Invoke(result.HandlerType);
+                        return new ExecuteQueryStep(result.Query, handler as IHandleExecutable);
+                    }
+                    catch (Exception e)
+                    {
+                        return new QueryErrorStep(new QueryResult(e));
+                    }
+                })
+                .Case<QueryErrorStep>(error => new QueryErrorStep(error.QueryResult))
+                .Result();
+            
+        }
+
+        public static IExecuteQueryStep CreateQueryHandler(this IQueryAndHandlerType self)
+        {
+            return CreateQueryHandler(self, Default.CreateHandler);
         }
     }
 }

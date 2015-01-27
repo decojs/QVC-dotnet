@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using Qvc;
 using Qvc.Steps;
 using Qvc.Steps.Implementations;
 using Shouldly;
@@ -10,12 +11,12 @@ namespace Tests.Steps
     [TestFixture]
     public class CreateCommandHandlerStepTest
     {
-        private ICreateCommandHandlerStep _step;
+        private ICommandAndHandlerType _step;
 
         [SetUp]
         public void Setup()
         {
-            _step = new CreateCommandHandlerStep(new CommandB(), typeof(CommandHandlerB));
+            _step = new CommandAndHandlerType(new CommandB(), typeof(CommandHandlerB));
         }
 
         [Test]

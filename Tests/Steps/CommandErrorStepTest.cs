@@ -17,7 +17,7 @@ namespace Tests.Steps
         private Exception _exception;
         private IJsonAndCommandType _jsonAndCommandType;
         private ICommand _findCommandHandlerStep;
-        private ICreateCommandHandlerStep _createCommandHandlerStep;
+        private ICommandAndHandlerType _commandAndHandlerType;
         private IExecuteCommandStep _executeCommandStep;
 
         [SetUp]
@@ -26,7 +26,7 @@ namespace Tests.Steps
             _exception = new Exception("blabla");
             _jsonAndCommandType = new CommandErrorStep(new CommandResult(_exception));
             _findCommandHandlerStep = new CommandErrorStep(new CommandResult(_exception));
-            _createCommandHandlerStep = new CommandErrorStep(new CommandResult(_exception));
+            _commandAndHandlerType = new CommandErrorStep(new CommandResult(_exception));
             _executeCommandStep = new CommandErrorStep(new CommandResult(_exception));
         }
 
@@ -50,7 +50,7 @@ namespace Tests.Steps
         public void TestCreateCommandHandler()
         {
             var spy = Substitute.For<Func<Type, object>>();
-            _createCommandHandlerStep.CreateCommandHandler(spy).ShouldBeOfType<CommandErrorStep>();
+            _commandAndHandlerType.CreateCommandHandler(spy).ShouldBeOfType<CommandErrorStep>();
             spy.DidNotReceive().Invoke(Arg.Any<Type>());
         }
 
