@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Qvc;
 using Qvc.Exceptions;
 using Qvc.Executables;
 using Qvc.Steps;
@@ -11,20 +12,18 @@ namespace Tests.Steps
     [TestFixture]
     public class FindCommandHandlerStepTest
     {
-        private IFindCommandHandlerStep _step;
         private ICommand _command;
 
         [SetUp]
         public void Setup()
         {
             _command = new CommandB();
-            _step = new FindCommandHandlerStep(_command);
         }
 
         [Test]
         public void Test()
         {
-            _step.FindCommandHandler(c =>
+            _command.FindCommandHandler(c =>
             {
                 c.ShouldBe(_command);
                 return typeof(CommandHandlerB);
@@ -34,7 +33,7 @@ namespace Tests.Steps
         [Test]
         public void TestHandlerDoesNotExist()
         {
-            _step.FindCommandHandler(c =>
+            _command.FindCommandHandler(c =>
             {
                 throw new CommandHandlerDoesNotExistException(c.GetType().FullName);
             }).ShouldBeOfType<CommandErrorStep>();
@@ -43,7 +42,7 @@ namespace Tests.Steps
         [Test]
         public void TestDuplicateHandler()
         {
-            _step.FindCommandHandler(c =>
+            _command.FindCommandHandler(c =>
             {
                 throw new DuplicateCommandHandlerException(c.GetType().FullName);
             }).ShouldBeOfType<CommandErrorStep>();

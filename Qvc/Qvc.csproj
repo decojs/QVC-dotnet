@@ -77,16 +77,12 @@
     <Compile Include="Steps\IJsonAndQueryType.cs" />
     <Compile Include="Steps\IExecuteCommandStep.cs" />
     <Compile Include="Steps\IExecuteQueryStep.cs" />
-    <Compile Include="Steps\IFindCommandHandlerStep.cs" />
-    <Compile Include="Steps\IFindQueryHandlerStep.cs" />
     <Compile Include="Steps\Implementations\CreateCommandHandlerStep.cs" />
     <Compile Include="Steps\Implementations\CreateQueryHandlerStep.cs" />
     <Compile Include="Steps\Implementations\JsonAndType.cs" />
     <Compile Include="Steps\Implementations\CommandErrorStep.cs" />
     <Compile Include="Steps\Implementations\ExecuteCommandStep.cs" />
     <Compile Include="Steps\Implementations\ExecuteQueryStep.cs" />
-    <Compile Include="Steps\Implementations\FindCommandHandlerStep.cs" />
-    <Compile Include="Steps\Implementations\FindQueryHandlerStep.cs" />
     <Compile Include="Steps\Implementations\QueryErrorStep.cs" />
     <Compile Include="Steps\Implementations\SerializeResultStep.cs" />
     <Compile Include="Steps\ISerializeResultStep.cs" />

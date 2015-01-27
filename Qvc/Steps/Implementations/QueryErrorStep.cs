@@ -7,7 +7,7 @@ namespace Qvc.Steps.Implementations
 {
     public class QueryErrorStep :
         IJsonAndQueryType,
-        IFindQueryHandlerStep,
+        IQuery,
         ICreateQueryHandlerStep,
         IExecuteQueryStep
     {
@@ -16,11 +16,6 @@ namespace Qvc.Steps.Implementations
         public QueryErrorStep(QueryResult queryResult)
         {
             QueryResult = queryResult;
-        }
-
-        public ICreateQueryHandlerStep FindQueryHandler(Func<IQuery, Type> findQueryHandler)
-        {
-            return this;
         }
 
         public IExecuteQueryStep CreateQueryHandler(Func<Type, object> createQueryHandler)

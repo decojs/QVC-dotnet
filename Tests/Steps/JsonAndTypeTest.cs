@@ -29,7 +29,7 @@ namespace Tests.Steps
                 j.ShouldBe("json");
                 t.ShouldBe(typeof(CommandA));
                 return new CommandA();
-            }).ShouldBeOfType<FindCommandHandlerStep>();
+            }).ShouldBeOfType<CommandA>();
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace Tests.Steps
                 j.ShouldBe("json");
                 t.ShouldBe(typeof(QueryA));
                 return new QueryA();
-            }).ShouldBeOfType<FindQueryHandlerStep>();
+            }).ShouldBeOfType<QueryA>();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Tests.Steps
     {
         private Exception _exception;
         private IJsonAndCommandType _jsonAndCommandType;
-        private IFindCommandHandlerStep _findCommandHandlerStep;
+        private ICommand _findCommandHandlerStep;
         private ICreateCommandHandlerStep _createCommandHandlerStep;
         private IExecuteCommandStep _executeCommandStep;
 

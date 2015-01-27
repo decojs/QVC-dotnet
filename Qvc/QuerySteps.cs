@@ -26,17 +26,40 @@ namespace Qvc
             }
         }
 
-        public static IFindQueryHandlerStep DeserializeQuery(this IJsonAndQueryType self, Func<string, Type, object> deserializeTheQuery)
+        public static IQuery DeserializeQuery(this IJsonAndQueryType self, Func<string, Type, object> deserializeTheQuery)
         {
-            return self.Virtually<IJsonAndQueryType, IFindQueryHandlerStep>()
-                .Case<JsonAndType>(result => new FindQueryHandlerStep(deserializeTheQuery.Invoke(result.Json, result.Type) as IQuery))
+            return self.Virtually<IJsonAndQueryType, IQuery>()
+                .Case<JsonAndType>(result => deserializeTheQuery.Invoke(result.Json, result.Type) as IQuery)
                 .Case<QueryErrorStep>(error => new QueryErrorStep(error.QueryResult))
                 .Result();
         }
 
-        public static IFindQueryHandlerStep DeserializeQuery(this IJsonAndQueryType self)
+        public static IQuery DeserializeQuery(this IJsonAndQueryType self)
         {
             return DeserializeQuery(self, Default.Deserialize);
+        }
+        
+        public static ICreateQueryHandlerStep FindQueryHandler(this IQuery self, Func<IQuery, Type> findQueryHandler)
+        {
+            return self.Virtually<IQuery, ICreateQueryHandlerStep>()
+                .Case<QueryErrorStep>(error => new QueryErrorStep(error.QueryResult))
+                .Default(query =>
+                {
+                    try
+                    {
+                        var handlerType = findQueryHandler.Invoke(query);
+                        return new CreateQueryHandlerStep(query, handlerType);
+                    }
+                    catch (QueryHandlerDoesNotExistException e)
+                    {
+                        return new QueryErrorStep(new QueryResult(e));
+                    }
+                    catch (DuplicateQueryHandlerException e)
+                    {
+                        return new QueryErrorStep(new QueryResult(e));
+                    }
+                })
+                .Result();
         }
     }
 }

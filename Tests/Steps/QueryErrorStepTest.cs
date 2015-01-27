@@ -16,7 +16,7 @@ namespace Tests.Steps
     {
         private Exception _exception;
         private IJsonAndQueryType _jsonAndQueryType;
-        private IFindQueryHandlerStep _findQueryHandlerStep;
+        private IQuery _findQueryHandlerStep;
         private ICreateQueryHandlerStep _createQueryHandlerStep;
         private IExecuteQueryStep _executeQueryStep;
 

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Qvc;
 using Qvc.Exceptions;
 using Qvc.Executables;
 using Qvc.Steps;
@@ -11,20 +12,18 @@ namespace Tests.Steps
     [TestFixture]
     public class FindQueryHandlerStepTest
     {
-        private IFindQueryHandlerStep _step;
         private IQuery _query;
 
         [SetUp]
         public void Setup()
         {
             _query = new QueryB();
-            _step = new FindQueryHandlerStep(_query);
         }
 
         [Test]
         public void Test()
         {
-            _step.FindQueryHandler(q =>
+            _query.FindQueryHandler(q =>
             {
                 q.ShouldBe(_query);
                 return typeof(QueryHandlerB);
@@ -34,7 +33,7 @@ namespace Tests.Steps
         [Test]
         public void TestHandlerDoesNotExist()
         {
-            _step.FindQueryHandler(q =>
+            _query.FindQueryHandler(q =>
             {
                 throw new QueryHandlerDoesNotExistException(q.GetType().FullName);
             }).ShouldBeOfType<QueryErrorStep>();
@@ -43,7 +42,7 @@ namespace Tests.Steps
         [Test]
         public void TestDuplicateHandler()
         {
-            _step.FindQueryHandler(q =>
+            _query.FindQueryHandler(q =>
             {
                 throw new DuplicateQueryHandlerException(q.GetType().FullName);
             }).ShouldBeOfType<QueryErrorStep>();
