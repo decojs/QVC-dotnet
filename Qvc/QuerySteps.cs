@@ -89,32 +89,42 @@ namespace Qvc
             return CreateQueryHandler(self, Default.CreateHandler);
         }
 
-        public static ISerializeResultStep HandleQuery(this IQueryAndHandler self, Func<IHandleExecutable, IQuery, object> executeQuery)
+        public static QueryResult HandleQuery(this IQueryAndHandler self, Func<IHandleExecutable, IQuery, object> executeQuery)
         {
-            return self.Virtually<IQueryAndHandler, ISerializeResultStep>()
+            return self.Virtually<IQueryAndHandler, QueryResult>()
                 .Case<QueryAndHandler>(queryAndHandler =>
                 {
                     try
                     {
                         var result = executeQuery.Invoke(queryAndHandler.Handler, queryAndHandler.Query);
-                        return new SerializeResultStep(new QueryResult(result));
+                        return new QueryResult(result);
                     }
                     catch (TargetInvocationException e)
                     {
-                        return new SerializeResultStep(new QueryResult(e.GetBaseException()));
+                        return new QueryResult(e.GetBaseException());
                     }
                     catch (Exception e)
                     {
-                        return new SerializeResultStep(new QueryResult(e));
+                        return new QueryResult(e);
                     }
                 })
-                .Case<QueryErrorStep>(error => new SerializeResultStep(error.QueryResult))
+                .Case<QueryErrorStep>(error => error.QueryResult)
                 .Result();
         }
 
-        public static ISerializeResultStep HandleQuery(this IQueryAndHandler self)
+        public static QueryResult HandleQuery(this IQueryAndHandler self)
         {
             return HandleQuery(self, Default.HandleQuery);
+        }
+
+        public static string Serialize(this QueryResult self, Func<QueryResult, string> serializeResult)
+        {
+            return serializeResult.Invoke(self);
+        }
+
+        public static string Serialize(this QueryResult self)
+        {
+            return Serialize(self, Default.Serialize);
         }
     }
 }

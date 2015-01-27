@@ -84,7 +84,6 @@
     <Compile Include="Steps\Implementations\CommandAndHandler.cs" />
     <Compile Include="Steps\Implementations\QueryAndHandler.cs" />
     <Compile Include="Steps\Implementations\QueryErrorStep.cs" />
-    <Compile Include="Steps\Implementations\SerializeResultStep.cs" />
     <Compile Include="Steps\ISerializeResultStep.cs" />
     <Compile Include="Steps\QueryNameAndJson.cs" />
   </ItemGroup>

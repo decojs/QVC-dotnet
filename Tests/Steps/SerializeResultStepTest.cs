@@ -1,6 +1,6 @@
 using NUnit.Framework;
+using Qvc;
 using Qvc.Results;
-using Qvc.Steps.Implementations;
 using Shouldly;
 
 namespace Tests.Steps
@@ -8,23 +8,25 @@ namespace Tests.Steps
     [TestFixture]
     public class SerializeResultStepTest
     {
-        private SerializeResultStep _step;
-        private ExecutableResult _result;
-
-        [SetUp]
-        public void Setup()
+        [Test]
+        public void TestCommandResult()
         {
-            _result = new ExecutableResult();
-            _step = new SerializeResultStep(_result);
+            var result = new CommandResult();
+            result.Serialize(r =>
+            {
+                r.ShouldBe(result);
+                return "result";
+            }).ShouldBe("result");
         }
 
         [Test]
-        public void Test()
+        public void TestQueryResult()
         {
-            _step.Serialize(r =>
+            var result = new QueryResult("result");
+            result.Serialize(r =>
             {
-                r.ShouldBe(_result);
-                return "result";
+                r.ShouldBe(result);
+                return r.Result as string;
             }).ShouldBe("result");
         }
     }

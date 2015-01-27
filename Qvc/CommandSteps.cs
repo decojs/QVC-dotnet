@@ -88,33 +88,43 @@ namespace Qvc
             return CreateCommandHandler(self, Default.CreateHandler);
         }
 
-        public static ISerializeResultStep HandleCommand(this ICommandAndHandler self, Action<IHandleExecutable, ICommand> executeCommand)
+        public static CommandResult HandleCommand(this ICommandAndHandler self, Action<IHandleExecutable, ICommand> executeCommand)
         {
-            return self.Virtually<ICommandAndHandler, ISerializeResultStep>()
+            return self.Virtually<ICommandAndHandler, CommandResult>()
                 .Case<CommandAndHandler>(result =>
                 {
                     try
                     {
                         executeCommand.Invoke(result.Handler, result.Command);
-                        return new SerializeResultStep(new CommandResult());
+                        return new CommandResult();
                     }
                     catch (TargetInvocationException e)
                     {
-                        return new SerializeResultStep(new CommandResult(e.GetBaseException()));
+                        return new CommandResult(e.GetBaseException());
                     }
                     catch (Exception e)
                     {
-                        return new SerializeResultStep(new CommandResult(e));
+                        return new CommandResult(e);
                     }
                 })
-                .Case<CommandErrorStep>(error => new SerializeResultStep(error.CommandResult))
+                .Case<CommandErrorStep>(error => error.CommandResult)
                 .Result();
             
         }
 
-        public static ISerializeResultStep HandleCommand(this ICommandAndHandler self)
+        public static CommandResult HandleCommand(this ICommandAndHandler self)
         {
             return HandleCommand(self, Default.HandleCommand);
+        }
+
+        public static string Serialize(this CommandResult self, Func<CommandResult, string> serializeResult)
+        {
+            return serializeResult.Invoke(self);
+        }
+
+        public static string Serialize(this CommandResult self)
+        {
+            return Serialize(self, Default.Serialize);
         }
     }
 }
