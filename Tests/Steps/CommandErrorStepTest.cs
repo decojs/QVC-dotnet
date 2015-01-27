@@ -1,6 +1,7 @@
 ﻿using System;
 using NSubstitute;
 using NUnit.Framework;
+using Qvc;
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
@@ -14,7 +15,7 @@ namespace Tests.Steps
     public class CommandErrorStepTest
     {
         private Exception _exception;
-        private IDeserializeCommandStep _deserializeCommandStep;
+        private IJsonAndCommandType _jsonAndCommandType;
         private IFindCommandHandlerStep _findCommandHandlerStep;
         private ICreateCommandHandlerStep _createCommandHandlerStep;
         private IExecuteCommandStep _executeCommandStep;
@@ -23,7 +24,7 @@ namespace Tests.Steps
         public void Setup()
         {
             _exception = new Exception("blabla");
-            _deserializeCommandStep = new CommandErrorStep(new CommandResult(_exception));
+            _jsonAndCommandType = new CommandErrorStep(new CommandResult(_exception));
             _findCommandHandlerStep = new CommandErrorStep(new CommandResult(_exception));
             _createCommandHandlerStep = new CommandErrorStep(new CommandResult(_exception));
             _executeCommandStep = new CommandErrorStep(new CommandResult(_exception));
@@ -33,7 +34,7 @@ namespace Tests.Steps
         public void TestDeserializeCommand()
         {
             var spy = Substitute.For<Func<string, Type, object>>();
-            _deserializeCommandStep.DeserializeCommand(spy).ShouldBeOfType<CommandErrorStep>();
+            _jsonAndCommandType.DeserializeCommand(spy).ShouldBeOfType<CommandErrorStep>();
             spy.DidNotReceive().Invoke(Arg.Any<string>(), Arg.Any<Type>());
         }
 

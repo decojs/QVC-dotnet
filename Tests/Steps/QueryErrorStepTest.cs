@@ -1,6 +1,7 @@
 using System;
 using NSubstitute;
 using NUnit.Framework;
+using Qvc;
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
@@ -14,7 +15,7 @@ namespace Tests.Steps
     public class QueryErrorStepTest
     {
         private Exception _exception;
-        private IDeserializeQueryStep _deserializeQueryStep;
+        private IJsonAndQueryType _jsonAndQueryType;
         private IFindQueryHandlerStep _findQueryHandlerStep;
         private ICreateQueryHandlerStep _createQueryHandlerStep;
         private IExecuteQueryStep _executeQueryStep;
@@ -23,7 +24,7 @@ namespace Tests.Steps
         public void Setup()
         {
             _exception = new Exception("blabla");
-            _deserializeQueryStep = new QueryErrorStep(new QueryResult(_exception));
+            _jsonAndQueryType = new QueryErrorStep(new QueryResult(_exception));
             _findQueryHandlerStep = new QueryErrorStep(new QueryResult(_exception));
             _createQueryHandlerStep = new QueryErrorStep(new QueryResult(_exception));
             _executeQueryStep = new QueryErrorStep(new QueryResult(_exception));
@@ -33,7 +34,7 @@ namespace Tests.Steps
         public void TestDeserializeQuery()
         {
             var spy = Substitute.For<Func<string, Type, object>>();
-            _deserializeQueryStep.DeserializeQuery(spy).ShouldBeOfType<QueryErrorStep>();
+            _jsonAndQueryType.DeserializeQuery(spy).ShouldBeOfType<QueryErrorStep>();
             spy.DidNotReceive().Invoke(Arg.Any<string>(), Arg.Any<Type>());
         }
 

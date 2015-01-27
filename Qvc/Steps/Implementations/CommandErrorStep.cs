@@ -6,7 +6,7 @@ using Qvc.Results;
 namespace Qvc.Steps.Implementations
 {
     public class CommandErrorStep :
-        IDeserializeCommandStep,
+        IJsonAndCommandType,
         IFindCommandHandlerStep,
         ICreateCommandHandlerStep,
         IExecuteCommandStep
@@ -16,16 +16,6 @@ namespace Qvc.Steps.Implementations
         public CommandErrorStep(CommandResult commandResult)
         {
             CommandResult = commandResult;
-        }
-
-        public IFindCommandHandlerStep DeserializeCommand(Func<string, Type, object> deserializeTheCommand)
-        {
-            return this;
-        }
-
-        public IFindCommandHandlerStep DeserializeCommand()
-        {
-            return this;
         }
 
         public ICreateCommandHandlerStep FindCommandHandler(Func<ICommand, Type> findCommandHandler)
