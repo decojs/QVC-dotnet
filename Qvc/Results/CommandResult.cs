@@ -1,16 +1,14 @@
 ﻿using System;
-using Qvc.Executables;
-using Qvc.Steps;
+using Qvc.Validation;
 
 namespace Qvc.Results
 {
-    public class CommandResult : ExecutableResult, IJsonAndCommandType, ICommand, ICommandAndHandlerType, ICommandAndHandler
+    public class CommandResult : ExecutableResult
     {
         public CommandResult()
         {
             Success = true;
             Valid = true;
-            Exception = null;
         }
 
         public CommandResult(Exception exception)
@@ -18,6 +16,13 @@ namespace Qvc.Results
             Success = false;
             Valid = true;
             Exception = exception;
+        }
+
+        public CommandResult(ValidationException exception)
+        {
+            Success = false;
+            Valid = false;
+            Violations = exception.Violations;
         }
     }
 }

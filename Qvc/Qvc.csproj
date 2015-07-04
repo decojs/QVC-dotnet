@@ -35,6 +35,7 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,7 +57,7 @@
     <Compile Include="Handlers\IHandleCommand.cs" />
     <Compile Include="Handlers\IHandleExecutable.cs" />
     <Compile Include="Handlers\IHandleQuery.cs" />
-    <Compile Include="Maybe.cs" />
+    <Compile Include="Promise.cs" />
     <Compile Include="QuerySteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\Reflection.cs" />
@@ -70,23 +71,21 @@
     <Compile Include="Results\CommandResult.cs" />
     <Compile Include="Results\ExecutableResult.cs" />
     <Compile Include="Results\QueryResult.cs" />
-    <Compile Include="Steps\CommandNameAndJson.cs" />
+    <Compile Include="Steps\CommandAndHandler.cs" />
     <Compile Include="Steps\CommandAndHandlerType.cs" />
-    <Compile Include="Steps\IQueryAndHandlerType.cs" />
-    <Compile Include="Steps\IJsonAndCommandType.cs" />
-    <Compile Include="Steps\IJsonAndQueryType.cs" />
-    <Compile Include="Steps\ICommandAndHandler.cs" />
-    <Compile Include="Steps\IQueryAndHandler.cs" />
-    <Compile Include="Steps\Implementations\CommandAndHandlerType.cs" />
-    <Compile Include="Steps\Implementations\QueryAndHandlerType.cs" />
-    <Compile Include="Steps\Implementations\JsonAndType.cs" />
-    <Compile Include="Steps\Implementations\CommandAndHandler.cs" />
-    <Compile Include="Steps\Implementations\QueryAndHandler.cs" />
+    <Compile Include="Steps\CommandNameAndJson.cs" />
+    <Compile Include="Steps\JsonAndType.cs" />
+    <Compile Include="Steps\QueryAndHandler.cs" />
+    <Compile Include="Steps\QueryAndHandlerType.cs" />
     <Compile Include="Steps\QueryNameAndJson.cs" />
+    <Compile Include="Validation\ValidationException.cs" />
+    <Compile Include="Validation\Validator.cs" />
+    <Compile Include="Validation\Violation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

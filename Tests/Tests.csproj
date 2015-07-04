@@ -49,6 +49,7 @@
       <HintPath>..\packages\Shouldly.2.3.0\lib\net40\Shouldly.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -72,15 +73,14 @@
     <Compile Include="Steps\CreateCommandHandlerStepTest.cs" />
     <Compile Include="Steps\CreateQueryHandlerStepTest.cs" />
     <Compile Include="Steps\JsonAndTypeTest.cs" />
-    <Compile Include="Steps\CommandErrorStepTest.cs" />
     <Compile Include="Steps\ExecuteCommandStepTest.cs" />
     <Compile Include="Steps\ExecuteQueryStepTest.cs" />
     <Compile Include="Steps\FindCommandHandlerStepTest.cs" />
     <Compile Include="Steps\FindQueryHandlerStepTest.cs" />
     <Compile Include="Steps\CommandNameAndJsonTest.cs" />
-    <Compile Include="Steps\QueryErrorStepTest.cs" />
     <Compile Include="Steps\QueryNameAndJsonTest.cs" />
     <Compile Include="Steps\SerializeResultStepTest.cs" />
+    <Compile Include="Validation\ValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

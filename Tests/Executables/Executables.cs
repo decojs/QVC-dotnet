@@ -1,4 +1,5 @@
-﻿using Qvc.Executables;
+﻿using System.ComponentModel.DataAnnotations;
+using Qvc.Executables;
 
 namespace Tests.Executables
 {
@@ -8,7 +9,11 @@ namespace Tests.Executables
 
     class CommandC : ICommand { }
 
-    class QueryA : IQuery { }
+    class QueryA : IQuery
+    {
+        [Required]
+        public string Name { get; set; }
+    }
 
     class QueryB : IQuery { }
 

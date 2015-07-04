@@ -1,10 +1,9 @@
 ﻿using System;
-using Qvc.Executables;
-using Qvc.Steps;
+using Qvc.Validation;
 
 namespace Qvc.Results
 {
-    public class QueryResult : ExecutableResult, IJsonAndQueryType, IQuery, IQueryAndHandlerType, IQueryAndHandler
+    public class QueryResult : ExecutableResult
     {
         public object Result { get; private set; }
 
@@ -12,7 +11,6 @@ namespace Qvc.Results
         {
             Success = true;
             Valid = true;
-            Exception = null;
             Result = result;
         }
 
@@ -21,7 +19,13 @@ namespace Qvc.Results
             Success = false;
             Valid = true;
             Exception = exception;
-            Result = null;
+        }
+
+        public QueryResult(ValidationException exception)
+        {
+            Success = false;
+            Valid = false;
+            Violations = exception.Violations;
         }
     }
 }
