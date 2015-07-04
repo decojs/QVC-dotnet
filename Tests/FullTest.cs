@@ -36,7 +36,7 @@ namespace Tests
                 .ThenSerialize()
                 .Done().ShouldBe("{\"Success\":true,\"Valid\":true,\"Exception\":null,\"Violations\":[]}");
         }
-        
+
         [Test]
         public void ExecuteQuery()
         {
@@ -50,6 +50,16 @@ namespace Tests
                 .Catch(e => new QueryResult(e))
                 .Then(q => QuerySteps.Serialize(q))
                 .Done().ShouldBe("{\"Result\":\"hello\",\"Success\":true,\"Valid\":true,\"Exception\":null,\"Violations\":[]}");
+        }
+
+        [Test]
+        public void GetConstraints()
+        {
+            Action.Constraints("QueryFullTest")
+                .Then(name => ConstraintsSteps.FindExecutable(name, _repo.FindExecutable))
+                .Then(executable => ConstraintsSteps.GetConstraints(executable))
+                .Then(result => ConstraintsSteps.Serialize(result))
+                .Done().ShouldBe("{\"Parameters\":null}");
         }
     }
 

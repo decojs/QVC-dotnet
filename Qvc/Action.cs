@@ -20,6 +20,11 @@ namespace Qvc
             return Promise.Resolve(new QueryNameAndJson(name, json));
         }
 
+        public static Promise<string> Constraints(string name)
+        {
+            return Promise.Resolve(name);
+        } 
+
         public static Promise<JsonAndType> ThenFindCommand(this Promise<CommandNameAndJson> commandNameAndJson, Func<string, Type> getCommand)
         {
             return commandNameAndJson.Then(c => new JsonAndType(c.Json, getCommand(c.Name)));

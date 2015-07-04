@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +47,9 @@
   <ItemGroup>
     <Compile Include="Action.cs" />
     <Compile Include="CommandSteps.cs" />
+    <Compile Include="ConstraintsSteps.cs" />
+    <Compile Include="Constraints\Constraint.cs" />
+    <Compile Include="Constraints\Parameter.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="Exceptions\HandlerDoesNotExistException.cs" />
     <Compile Include="Exceptions\DuplicateExecutableException.cs" />
@@ -69,6 +73,7 @@
     <Compile Include="Repository\Tree\Seed.cs" />
     <Compile Include="Repository\Tree\SuffixTree.cs" />
     <Compile Include="Results\CommandResult.cs" />
+    <Compile Include="Results\ConstraintsResult.cs" />
     <Compile Include="Results\ExecutableResult.cs" />
     <Compile Include="Results\QueryResult.cs" />
     <Compile Include="Steps\CommandAndHandler.cs" />
