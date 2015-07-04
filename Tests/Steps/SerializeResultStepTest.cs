@@ -12,7 +12,7 @@ namespace Tests.Steps
         public void TestCommandResult()
         {
             var result = new CommandResult();
-            result.Serialize(r =>
+            CommandSteps.Serialize(result, r =>
             {
                 r.ShouldBe(result);
                 return "result";
@@ -23,7 +23,7 @@ namespace Tests.Steps
         public void TestQueryResult()
         {
             var result = new QueryResult("result");
-            result.Serialize(r =>
+            QuerySteps.Serialize(result, r =>
             {
                 r.ShouldBe(result);
                 return r.Result as string;

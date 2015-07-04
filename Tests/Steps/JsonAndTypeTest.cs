@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using Qvc;
 using Qvc.Steps;
-using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
 
@@ -10,9 +9,9 @@ namespace Tests.Steps
     [TestFixture]
     public class JsonAndTypeTest
     {
-        private IJsonAndQueryType _jsonAndQueryType;
+        private JsonAndType _jsonAndQueryType;
 
-        private IJsonAndCommandType _jsonAndCommandType;
+        private JsonAndType _jsonAndCommandType;
 
         [SetUp]
         public void Setup()
@@ -24,7 +23,7 @@ namespace Tests.Steps
         [Test]
         public void TestCommand()
         {
-            _jsonAndCommandType.DeserializeCommand((j, t) =>
+            CommandSteps.DeserializeCommand(_jsonAndCommandType, (j, t) =>
             {
                 j.ShouldBe("json");
                 t.ShouldBe(typeof(CommandA));
@@ -35,7 +34,7 @@ namespace Tests.Steps
         [Test]
         public void TestQuery()
         {
-            _jsonAndQueryType.DeserializeQuery((j, t) =>
+            QuerySteps.DeserializeQuery(_jsonAndQueryType, (j, t) =>
             {
                 j.ShouldBe("json");
                 t.ShouldBe(typeof(QueryA));

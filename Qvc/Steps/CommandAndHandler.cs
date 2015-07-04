@@ -1,9 +1,9 @@
 ﻿using Qvc.Executables;
 using Qvc.Handlers;
 
-namespace Qvc.Steps.Implementations
+namespace Qvc.Steps
 {
-    public class CommandAndHandler : ICommandAndHandler
+    public class CommandAndHandler
     {
         public ICommand Command { get; private set; }
 

@@ -22,7 +22,7 @@ namespace Tests.Steps
         [Test]
         public void TestQuery()
         {
-            _step.FindQuery(name =>
+            QuerySteps.FindQuery(_step, name =>
             {
                 name.ShouldBe("name");
                 return typeof(QueryA);
@@ -32,19 +32,21 @@ namespace Tests.Steps
         [Test]
         public void TestQueryDoesNotExist()
         {
-            _step.FindQuery(name =>
-            {
-                throw new QueryDoesNotExistException(name);
-            }).ShouldBeOfType<QueryResult>();
+            Should.Throw<QueryDoesNotExistException>(() =>
+                QuerySteps.FindQuery(_step, name =>
+                {
+                    throw new QueryDoesNotExistException(name);
+                }));
         }
 
         [Test]
         public void TestQueryExecutableDoesNotExist()
         {
-            _step.FindQuery(name =>
-            {
-                throw new ExecutableDoesNotExistException(name);
-            }).ShouldBeOfType<QueryResult>();
+            Should.Throw<ExecutableDoesNotExistException>(() =>
+                QuerySteps.FindQuery(_step, name =>
+                {
+                    throw new ExecutableDoesNotExistException(name);
+                }));
         }
     }
 }

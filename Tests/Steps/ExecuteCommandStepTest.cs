@@ -5,7 +5,6 @@ using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
 using Qvc.Steps;
-using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
 
@@ -14,7 +13,7 @@ namespace Tests.Steps
     [TestFixture]
     public class ExecuteCommandStepTest
     {
-        private ICommandAndHandler _step;
+        private CommandAndHandler _step;
         private ICommand _command;
         private IHandleExecutable _handler;
 
@@ -29,11 +28,13 @@ namespace Tests.Steps
         [Test]
         public void Test()
         {
-            _step.HandleCommand((h, c) =>
+            var result = CommandSteps.HandleCommand(_step, (h, c) =>
             {
                 h.ShouldBe(_handler);
                 c.ShouldBe(_command);
-            }).Serialize(r =>
+            });
+            
+            CommandSteps.Serialize(result, r =>
             {
                 r.ShouldBeOfType(typeof(CommandResult));
                 r.Success.ShouldBe(true);
@@ -46,30 +47,17 @@ namespace Tests.Steps
         [Test]
         public void TestWhenThrows()
         {
-            _step.HandleCommand((h, c) =>
-            {
-                throw new NullReferenceException();
-            }).Serialize(r =>
-            {
-                r.ShouldBeOfType(typeof(CommandResult));
-                r.Success.ShouldBe(false);
-                r.Valid.ShouldBe(true);
-                r.Exception.ShouldBeOfType(typeof(NullReferenceException));
-                return "";
-            });
+            Should.Throw<NullReferenceException>(() =>
+                CommandSteps.HandleCommand(_step, (h, c) =>
+                {
+                    throw new NullReferenceException();
+                }));
         }
 
         [Test]
         public void TestWhenThrowsInvocationException()
         {
-            _step.HandleCommand(Qvc.Default.HandleCommand).Serialize(r =>
-            {
-                r.ShouldBeOfType(typeof(CommandResult));
-                r.Success.ShouldBe(false);
-                r.Valid.ShouldBe(true);
-                r.Exception.ShouldBeOfType(typeof(NullReferenceException));
-                return "";
-            });
+            Should.Throw<NullReferenceException>(() => CommandSteps.HandleCommand(_step, Qvc.Default.HandleCommand));
         }
     }
 }

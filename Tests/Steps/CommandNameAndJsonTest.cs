@@ -22,7 +22,7 @@ namespace Tests.Steps
         [Test]
         public void TestCommand()
         {
-            _step.FindCommand(name =>
+            CommandSteps.FindCommand(_step, name =>
             {
                 name.ShouldBe("name");
                 return typeof(CommandA);
@@ -32,19 +32,21 @@ namespace Tests.Steps
         [Test]
         public void TestCommandDoesNotExist()
         {
-            _step.FindCommand(name =>
-            {
-                throw new CommandDoesNotExistException(name);
-            }).ShouldBeOfType<CommandResult>();
+            Should.Throw<CommandDoesNotExistException>(() =>
+                CommandSteps.FindCommand(_step, name =>
+                {
+                    throw new CommandDoesNotExistException(name);
+                }));
         }
 
         [Test]
         public void TestCommandExecutableDoesNotExist()
         {
-            _step.FindCommand(name =>
-            {
-                throw new ExecutableDoesNotExistException(name);
-            }).ShouldBeOfType<CommandResult>();
+            Should.Throw<ExecutableDoesNotExistException>(() =>
+                CommandSteps.FindCommand(_step, name =>
+                {
+                    throw new ExecutableDoesNotExistException(name);
+                }));
         }
     }
 }

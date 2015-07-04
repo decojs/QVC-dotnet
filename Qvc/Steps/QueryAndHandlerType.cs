@@ -1,9 +1,9 @@
 ﻿using System;
 using Qvc.Executables;
 
-namespace Qvc.Steps.Implementations
+namespace Qvc.Steps
 {
-    public class QueryAndHandlerType : IQueryAndHandlerType
+    public class QueryAndHandlerType
     {
         public IQuery Query { get; private set; }
 

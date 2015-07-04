@@ -3,7 +3,7 @@ using Qvc;
 using Qvc.Exceptions;
 using Qvc.Executables;
 using Qvc.Results;
-using Qvc.Steps.Implementations;
+using Qvc.Steps;
 using Shouldly;
 using Tests.Executables;
 
@@ -23,7 +23,7 @@ namespace Tests.Steps
         [Test]
         public void Test()
         {
-            _query.FindQueryHandler(q =>
+            QuerySteps.FindQueryHandler(_query, q =>
             {
                 q.ShouldBe(_query);
                 return typeof(QueryHandlerB);
@@ -33,19 +33,21 @@ namespace Tests.Steps
         [Test]
         public void TestHandlerDoesNotExist()
         {
-            _query.FindQueryHandler(q =>
-            {
-                throw new QueryHandlerDoesNotExistException(q.GetType().FullName);
-            }).ShouldBeOfType<QueryResult>();
+            Should.Throw<QueryHandlerDoesNotExistException>(() =>
+                QuerySteps.FindQueryHandler(_query, q =>
+                {
+                    throw new QueryHandlerDoesNotExistException(q.GetType().FullName);
+                }));
         }
 
         [Test]
         public void TestDuplicateHandler()
         {
-            _query.FindQueryHandler(q =>
-            {
-                throw new DuplicateQueryHandlerException(q.GetType().FullName);
-            }).ShouldBeOfType<QueryResult>();
+            Should.Throw<DuplicateQueryHandlerException>(() =>
+                QuerySteps.FindQueryHandler(_query, q =>
+                {
+                    throw new DuplicateQueryHandlerException(q.GetType().FullName);
+                }));
         }
     }
 }

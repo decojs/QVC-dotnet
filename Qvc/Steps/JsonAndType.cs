@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Qvc.Steps.Implementations
+namespace Qvc.Steps
 {
-    public class JsonAndType : IJsonAndCommandType, IJsonAndQueryType
+    public class JsonAndType
     {
         public string Json { get; private set; }
 

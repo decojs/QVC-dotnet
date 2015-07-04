@@ -1,9 +1,7 @@
 using System;
 using NUnit.Framework;
 using Qvc;
-using Qvc.Results;
 using Qvc.Steps;
-using Qvc.Steps.Implementations;
 using Shouldly;
 using Tests.Executables;
 
@@ -12,7 +10,7 @@ namespace Tests.Steps
     [TestFixture]
     public class CreateQueryHandlerStepTest
     {
-        private IQueryAndHandlerType _step;
+        private QueryAndHandlerType _step;
 
         [SetUp]
         public void Setup()
@@ -23,7 +21,7 @@ namespace Tests.Steps
         [Test]
         public void Test()
         {
-            _step.CreateQueryHandler(h =>
+            QuerySteps.CreateQueryHandler(_step, h =>
             {
                 h.ShouldBe(typeof(QueryHandlerB));
                 return new QueryHandlerB();
@@ -33,10 +31,11 @@ namespace Tests.Steps
         [Test]
         public void TestThrowsException()
         {
-            _step.CreateQueryHandler(h =>
-            {
-                throw new Exception("could not be made");
-            }).ShouldBeOfType<QueryResult>();
+            Should.Throw<Exception>(() =>
+                QuerySteps.CreateQueryHandler(_step, h =>
+                {
+                    throw new Exception("could not be made");
+                }));
         }
     }
 }

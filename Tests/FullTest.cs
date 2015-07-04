@@ -1,8 +1,11 @@
-﻿using NUnit.Framework;
+﻿using System.Diagnostics;
+using NUnit.Framework;
 using Qvc;
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Repository;
+using Qvc.Results;
+using Shouldly;
 
 namespace Tests
 {
@@ -24,24 +27,27 @@ namespace Tests
         public void ExecuteCommand()
         {
             Action.Command("CommandFullTest", "{}")
-                .FindCommand(_repo.FindCommand)
-                .DeserializeCommand()
-                .FindCommandHandler(_handlerRepo.FindCommandHandler)
-                .CreateCommandHandler()
-                .HandleCommand()
-                .Serialize();
+                .ThenFindCommand(_repo.FindCommand)
+                .ThenDeserializeCommand()
+                .ThenFindCommandHandler(_handlerRepo.FindCommandHandler)
+                .ThenCreateCommandHandler()
+                .ThenHandleCommand()
+                .ThenSerialize()
+                .Done().ShouldBe("{\"Success\":true,\"Valid\":true,\"Exception\":null,\"Violations\":[]}");
         }
         
         [Test]
         public void ExecuteQuery()
         {
             Action.Query("QueryFullTest", "{}")
-                .FindQuery(_repo.FindQuery)
-                .DeserializeQuery()
-                .FindQueryHandler(_handlerRepo.FindQueryHandler)
-                .CreateQueryHandler()
-                .HandleQuery()
-                .Serialize();
+                .Then(q => QuerySteps.FindQuery(q, _repo.FindQuery))
+                .Then(q => QuerySteps.DeserializeQuery(q))
+                .Then(q => QuerySteps.FindQueryHandler(q, _handlerRepo.FindQueryHandler))
+                .Then(q => QuerySteps.CreateQueryHandler(q))
+                .Then(q => QuerySteps.HandleQuery(q))
+                .Catch(e => new QueryResult(e))
+                .Then(q => QuerySteps.Serialize(q))
+                .Done().ShouldBe("{\"Result\":\"hello\",\"Success\":true,\"Valid\":true,\"Exception\":null,\"Violations\":[]}");
         }
     }
 
