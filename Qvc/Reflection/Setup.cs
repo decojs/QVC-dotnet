@@ -15,17 +15,17 @@ namespace Qvc.Reflection
         private static void AddQueriesAndHandlers(HandlerRepository handlerRepository, ExecutableRepository executableRepository)
         {
             var queryHandlers = Reflection.FindQueryHandlers()
-                .Select(h => new {Handler = h, Command = Reflection.GetQueryHandledByHandler(h)})
-                .ToList();
+                    .SelectMany(h => Reflection.GetQueriesHandledByHandler(h).Select(c => new { Handler = h, Query = c }))
+                    .ToList();
 
-            queryHandlers.ForEach(c => handlerRepository.AddQueryHandler(c.Command, c.Handler));
-            executableRepository.AddExecutables(queryHandlers.Select(c => c.Command));
+            queryHandlers.ForEach(c => handlerRepository.AddQueryHandler(c.Query, c.Handler));
+            executableRepository.AddExecutables(queryHandlers.Select(c => c.Query));
         }
 
         private static void AddCommandsAndHandlers(HandlerRepository handlerRepository, ExecutableRepository executableRepository)
         {
             var commandHandlers = Reflection.FindCommandHandlers()
-                .Select(h => new {Handler = h, Command = Reflection.GetCommandHandledByHandler(h)})
+                .SelectMany(h => Reflection.GetCommandsHandledByHandler(h).Select(c => new { Handler = h, Command = c }))
                 .ToList();
 
             commandHandlers.ForEach(c => handlerRepository.AddCommandHandler(c.Command, c.Handler));

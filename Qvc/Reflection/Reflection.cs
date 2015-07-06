@@ -17,14 +17,14 @@ namespace Qvc.Reflection
             return GetImplementationsOf(typeof(IHandleQuery<,>));
         }
 
-        public static Type GetCommandHandledByHandler(Type handler)
+        public static IEnumerable<Type> GetCommandsHandledByHandler(Type handler)
         {
-            return handler.GetInterface(typeof(IHandleCommand<>).FullName).GenericTypeArguments.First();
+            return GetExecutablesHandledByHandler(handler, typeof(IHandleCommand<>));
         }
 
-        public static Type GetQueryHandledByHandler(Type handler)
+        public static IEnumerable<Type> GetQueriesHandledByHandler(Type handler)
         {
-            return handler.GetInterface(typeof(IHandleQuery<,>).FullName).GenericTypeArguments.First();
+            return GetExecutablesHandledByHandler(handler, typeof(IHandleQuery<,>));
         }
 
         public static IEnumerable<Type> GetImplementationsOf(Type type)
@@ -38,6 +38,14 @@ namespace Qvc.Reflection
                     .Where(i => i.IsGenericType)
                     .Select(i => i.GetGenericTypeDefinition())
                     .Contains(type));
+        }
+
+        private static IEnumerable<Type> GetExecutablesHandledByHandler(Type handler, Type executableType)
+        {
+            return
+                handler.GetInterfaces()
+                    .Where(iface => iface.IsGenericType && iface.GetGenericTypeDefinition() == executableType)
+                    .Select(iface => iface.GenericTypeArguments.First());
         }
     }
 }
