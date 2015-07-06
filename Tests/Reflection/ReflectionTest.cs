@@ -28,13 +28,15 @@ namespace Tests.Reflection
         [Test]
         public void TestReflectionOfCommandHandler()
         {
-            Qvc.Reflection.Reflection.GetCommandHandledByHandler(typeof(CommandHandlerA)).ShouldBe(typeof(CommandA));
+            Qvc.Reflection.Reflection.GetCommandsHandledByHandler(typeof(CommandHandlerA))
+                .ShouldContain(typeof(CommandA));
         }
 
         [Test]
         public void TestReflectionOfQueryHandler()
         {
-            Qvc.Reflection.Reflection.GetQueryHandledByHandler(typeof(QueryHandlerA)).ShouldBe(typeof(QueryA));
+            Qvc.Reflection.Reflection.GetQueriesHandledByHandler(typeof(QueryHandlerA))
+                .ShouldContain(typeof(QueryA));
         }
     }
 }
