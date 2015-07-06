@@ -42,77 +42,6 @@ namespace Qvc
             creator.Invoke(Resolve, Reject);
         }
 
-        private void Reject(Exception exception)
-        {
-            if (_state != State.Pending)
-            {
-                return;
-            }
-
-            _state = State.Rejected;
-            _exception = exception;
-        }
-
-        private void Resolve(T value)
-        {
-            if (_state != State.Pending)
-            {
-                return;
-            }
-
-            _state = State.Resolved;
-            _value = value;
-            successHandlers.ForEach(x => x.Invoke(value));
-        }
-
-        private void Remember(Action<T> toDo)
-        {
-            switch (_state)
-            {
-                case State.Resolved:
-                    toDo(_value);
-                    break;
-                case State.Rejected:
-                    break;
-                default:
-                    successHandlers.Add(toDo);
-                    break;
-            }
-        }
-
-        private void Remember(Action<Exception> toCatch)
-        {
-            switch (_state)
-            {
-                case State.Rejected:
-                    toCatch(_exception);
-                    break;
-                case State.Resolved:
-                    break;
-                default:
-                    errorHandlers.Add(toCatch);
-                    break;
-            }
-        }
-
-        private void Remember(Action<T> toDo, Action<Exception> toCatch)
-        {
-            switch (_state)
-            {
-                case State.Resolved:
-                    toDo(_value);
-                    break;
-
-                case State.Rejected:
-                    toCatch(_exception);
-                    break;
-                default:
-                    successHandlers.Add(toDo);
-                    errorHandlers.Add(toCatch);
-                    break;
-            }
-        }
-
         public Promise<TResult> Then<TResult>(Func<T, TResult> successHandle, Func<Exception, TResult> errorHandle)
         {
             return new Promise<TResult>((resolve, reject) => Remember(
@@ -145,21 +74,6 @@ namespace Qvc
         public Promise<T> Catch(Func<Exception, Promise<T>> handle)
         {
             return Then(Promise.Resolve, handle);
-        }
-
-        public void Then(Action<T> handleSuccess, Action<Exception> handleError)
-        {
-            Remember(handleSuccess, handleError);
-        }
-
-        public void Then(Action<T> handle)
-        {
-            Remember(handle);
-        }
-
-        public void Catch(Action<Exception> handle)
-        {
-            Remember(handle);
         }
 
         public T Done()
@@ -207,6 +121,67 @@ namespace Qvc
                 }
                 result.Then(resolve);
             };
+        }
+
+        private void Then(Action<T> handle)
+        {
+            Remember(handle);
+        }
+
+        private void Reject(Exception exception)
+        {
+            if (_state != State.Pending)
+            {
+                return;
+            }
+
+            _state = State.Rejected;
+            _exception = exception;
+        }
+
+        private void Resolve(T value)
+        {
+            if (_state != State.Pending)
+            {
+                return;
+            }
+
+            _state = State.Resolved;
+            _value = value;
+            successHandlers.ForEach(x => x.Invoke(value));
+        }
+
+        private void Remember(Action<T> toDo)
+        {
+            switch (_state)
+            {
+                case State.Resolved:
+                    toDo(_value);
+                    break;
+                case State.Rejected:
+                    break;
+                default:
+                    successHandlers.Add(toDo);
+                    break;
+            }
+        }
+
+        private void Remember(Action<T> toDo, Action<Exception> toCatch)
+        {
+            switch (_state)
+            {
+                case State.Resolved:
+                    toDo(_value);
+                    break;
+
+                case State.Rejected:
+                    toCatch(_exception);
+                    break;
+                default:
+                    successHandlers.Add(toDo);
+                    errorHandlers.Add(toCatch);
+                    break;
+            }
         }
     }
 }
