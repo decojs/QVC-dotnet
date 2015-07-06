@@ -4,6 +4,7 @@ using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
 using Qvc.Steps;
+using Qvc.Validation;
 
 namespace Qvc
 {
@@ -58,6 +59,16 @@ namespace Qvc
         public static CommandResult HandleCommand(CommandAndHandler self)
         {
             return HandleCommand(self, Default.HandleCommand);
+        }
+
+        public static CommandResult ExceptionToCommandResult(Exception exception)
+        {
+            if (exception is ValidationException)
+            {
+                return new CommandResult(exception as ValidationException);
+            }
+
+            return new CommandResult(exception);
         }
 
         public static string Serialize(CommandResult self, Func<CommandResult, string> serializeResult)

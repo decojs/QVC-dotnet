@@ -67,6 +67,16 @@ namespace Qvc
             return HandleQuery(self, Default.HandleQuery);
         }
 
+        public static QueryResult ExceptionToQueryResult(Exception exception)
+        {
+            if (exception is ValidationException)
+            {
+                return new QueryResult(exception as ValidationException);
+            }
+
+            return new QueryResult(exception);
+        }
+
         public static string Serialize(QueryResult self, Func<QueryResult, string> serializeResult)
         {
             return serializeResult.Invoke(self);

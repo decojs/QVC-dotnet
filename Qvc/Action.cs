@@ -88,7 +88,7 @@ namespace Qvc
         public static Promise<string> ThenSerialize(this Promise<CommandResult> commandResult, Func<CommandResult, string> serializeResult)
         {
             return commandResult
-                .Catch(e => new CommandResult(e))
+                .Catch(e => CommandSteps.ExceptionToCommandResult(e))
                 .Then(serializeResult);
         }
 
