@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Qvc.Constraints
+﻿namespace Qvc.Constraints
 {
     public class Constraint
     {
-        public Constraint(string name, IReadOnlyDictionary<string, object> attributes)
+        public Constraint(string name, IRule attributes)
         {
             Name = name;
             Attributes = attributes;
@@ -12,6 +10,6 @@ namespace Qvc.Constraints
 
         public string Name { get; private set; }
 
-        public IReadOnlyDictionary<string, object> Attributes { get; private set; }
+        public IRule Attributes { get; private set; }
     }
 }

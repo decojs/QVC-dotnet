@@ -49,6 +49,7 @@
     <Compile Include="CommandSteps.cs" />
     <Compile Include="ConstraintsSteps.cs" />
     <Compile Include="Constraints\Constraint.cs" />
+    <Compile Include="Constraints\IRule.cs" />
     <Compile Include="Constraints\Parameter.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="Exceptions\HandlerDoesNotExistException.cs" />
@@ -76,6 +77,8 @@
     <Compile Include="Results\ConstraintsResult.cs" />
     <Compile Include="Results\ExecutableResult.cs" />
     <Compile Include="Results\QueryResult.cs" />
+    <Compile Include="Rules\NotEmpty.cs" />
+    <Compile Include="Rules\Pattern.cs" />
     <Compile Include="Steps\CommandAndHandler.cs" />
     <Compile Include="Steps\CommandAndHandlerType.cs" />
     <Compile Include="Steps\CommandNameAndJson.cs" />
