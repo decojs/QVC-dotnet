@@ -36,7 +36,7 @@ namespace Tests
                 .ThenCreateCommandHandler()
                 .ThenHandleCommand()
                 .ThenSerializeResult();
-            result.ShouldBe("{\"Success\":true,\"Valid\":true,\"Exception\":null,\"Violations\":[]}");
+            result.ShouldBe("{\"success\":true,\"valid\":true,\"exception\":null,\"violations\":[]}");
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Tests
                 .ThenCreateQueryHandler()
                 .ThenHandleQuery()
                 .ThenSerializeResult();
-            result.ShouldBe("{\"Result\":\"hello\",\"Success\":true,\"Valid\":true,\"Exception\":null,\"Violations\":[]}");
+            result.ShouldBe("{\"result\":\"hello\",\"success\":true,\"valid\":true,\"exception\":null,\"violations\":[]}");
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace Tests
                 .ThenFindExecutable(_repo.FindExecutable)
                 .ThenGetConstraints(type => new ConstraintsResult(new List<Parameter>()))
                 .ThenSerialize();
-            result.ShouldBe("{\"Parameters\":[]}");
+            result.ShouldBe("{\"parameters\":[]}");
         }
     }
 }

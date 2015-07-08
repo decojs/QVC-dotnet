@@ -48,6 +48,7 @@
     <Compile Include="Action.cs" />
     <Compile Include="Async\AsyncInvokeHelper.cs" />
     <Compile Include="ConstraintsExtensions.cs" />
+    <Compile Include="JsonCamelCase\JsonCamelCaseResolver.cs" />
     <Compile Include="QueryExtensions.cs" />
     <Compile Include="CommandExtensions.cs" />
     <Compile Include="Constraints\Constraint.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Steps\CommandSteps.cs" />
     <Compile Include="Steps\ConstraintsSteps.cs" />
     <Compile Include="Steps\QuerySteps.cs" />
+    <Compile Include="StringExtensions.cs" />
     <Compile Include="TaskExtensions.cs" />
     <Compile Include="Handlers\IHandleCommand.cs" />
     <Compile Include="Handlers\IHandleExecutable.cs" />

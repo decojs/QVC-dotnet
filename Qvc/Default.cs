@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Qvc.Async;
 using Qvc.Executables;
 using Qvc.Handlers;
+using Qvc.JsonCamelCase;
 
 namespace Qvc
 {
@@ -13,7 +14,20 @@ namespace Qvc
     {
         public static object Deserialize(string json, Type type)
         {
-            return JsonConvert.DeserializeObject(json, type);
+            return JsonConvert.DeserializeObject(json, type, JsonCamelCaseSettings());
+        }
+
+        public static string Serialize(object result)
+        {
+            return JsonConvert.SerializeObject(result, JsonCamelCaseSettings());
+        }
+
+        public static JsonSerializerSettings JsonCamelCaseSettings()
+        {
+            return new JsonSerializerSettings
+            {
+                ContractResolver = new JsonCamelCaseResolver()
+            };
         }
 
         public static object CreateHandler(Type queryHandler)
@@ -35,11 +49,6 @@ namespace Qvc
                 handler.GetType().GetMethod("Handle", new[] { query.GetType() }),
                 handler,
                 new object[] { query });
-        }
-
-        public static string Serialize(object result)
-        {
-            return JsonConvert.SerializeObject(result);
         }
     }
 }
