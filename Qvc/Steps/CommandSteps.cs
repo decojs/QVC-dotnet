@@ -44,11 +44,11 @@ namespace Qvc.Steps
             return CreateCommandHandler(self, Default.CreateHandler);
         }
 
-        public static CommandResult HandleCommand(CommandAndHandler self, Func<IHandleExecutable, ICommand, Task> executeCommand)
+        public static async Task<CommandResult> HandleCommand(CommandAndHandler self, Func<IHandleExecutable, ICommand, Task> executeCommand)
         {
             try
             {
-                executeCommand.Invoke(self.Handler, self.Command);
+                await executeCommand.Invoke(self.Handler, self.Command);
                 return new CommandResult();
             }
             catch (TargetInvocationException e)
@@ -57,7 +57,7 @@ namespace Qvc.Steps
             }
         }
 
-        public static CommandResult HandleCommand(CommandAndHandler self)
+        public static Task<CommandResult> HandleCommand(CommandAndHandler self)
         {
             return HandleCommand(self, Default.HandleCommand);
         }

@@ -52,5 +52,15 @@ namespace Tests.Steps
                     throw new NullReferenceException();
                 }));
         }
+
+        [Test]
+        public void TestWhenThrowsAsync()
+        {
+            Should.Throw<NullReferenceException>(() =>
+                QuerySteps.HandleQuery(_step, async (h, c) =>
+                {
+                    throw new NullReferenceException();
+                }));
+        }
     }
 }

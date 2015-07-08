@@ -1,6 +1,5 @@
 using System;
 using NUnit.Framework;
-using Qvc;
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Steps;
@@ -26,9 +25,9 @@ namespace Tests.Steps
         }
 
         [Test]
-        public void Test()
+        public async void Test()
         {
-            var result = CommandSteps.HandleCommand(_step, async (h, c) =>
+            var result = await CommandSteps.HandleCommand(_step, async (h, c) =>
             {
                 h.ShouldBe(_handler);
                 c.ShouldBe(_command);
@@ -44,6 +43,16 @@ namespace Tests.Steps
         {
             Should.Throw<NullReferenceException>(() =>
                 CommandSteps.HandleCommand(_step, (h, c) =>
+                {
+                    throw new NullReferenceException();
+                }));
+        }
+
+        [Test]
+        public void TestWhenThrowsAsync()
+        {
+            Should.Throw<NullReferenceException>(() =>
+                CommandSteps.HandleCommand(_step, async (h, c) =>
                 {
                     throw new NullReferenceException();
                 }));
