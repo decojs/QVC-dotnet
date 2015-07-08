@@ -26,6 +26,13 @@ namespace Tests.TestMaterial
         public int Handle(QueryB command) { throw new NullReferenceException(); }
     }
 
+    class AsyncVoidHandler : IHandleCommand<AsyncVoidCommand>
+    {
+        public async void Handle(AsyncVoidCommand command)
+        {
+        }
+    }
+
     class FullTestHandler :
         IHandleCommandAsync<CommandFullTest>,
         IHandleQuery<QueryFullTest, string>,

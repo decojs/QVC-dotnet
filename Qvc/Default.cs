@@ -38,7 +38,7 @@ namespace Qvc
         public static async Task HandleCommand(IHandleExecutable handler, ICommand command)
         {
             await AsyncInvokeHelper.ExecuteAsync(
-                handler.GetType().GetMethod("Handle", new[] { command.GetType() }),
+                Reflection.Reflection.GetHandleMethod(command.GetType(), handler.GetType()),
                 handler,
                 new object[] { command });
         }
@@ -46,7 +46,7 @@ namespace Qvc
         public static async Task<object> HandleQuery(IHandleExecutable handler, IQuery query)
         {
             return await AsyncInvokeHelper.ExecuteAsync(
-                handler.GetType().GetMethod("Handle", new[] { query.GetType() }),
+                Reflection.Reflection.GetHandleMethod(query.GetType(), handler.GetType()),
                 handler,
                 new object[] { query });
         }

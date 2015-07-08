@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 using NUnit.Framework;
@@ -9,6 +10,8 @@ using Qvc.Results;
 using Qvc.Steps;
 
 using Shouldly;
+
+using Tests.TestMaterial;
 
 namespace Tests
 {
@@ -21,7 +24,9 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            var types = Assembly.GetAssembly(typeof(FullTest)).GetTypes();
+            var types = Assembly.GetAssembly(typeof(FullTest)).GetTypes()
+                .Where(t => t != typeof(AsyncVoidHandler))
+                .ToList();
             _repo = new ExecutableRepository();
             _handlerRepo = new HandlerRepository();
             Qvc.Reflection.Setup.SetupRepositories(_handlerRepo, _repo, types);

@@ -58,5 +58,11 @@ namespace Tests.Repository
         {
             Should.Throw<DuplicateQueryHandlerException>(() => _repo.AddQueryHandler(typeof(QueryA), typeof(QueryHandlerA)));
         }
+
+        [Test]
+        public void AddHandlerWithAsyncVoidCommandHandler()
+        {
+            Should.Throw<AsyncVoidException>(() => _repo.AddCommandHandler(typeof(AsyncVoidCommand), typeof(AsyncVoidHandler)));
+        }
     }
 }

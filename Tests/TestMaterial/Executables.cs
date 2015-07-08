@@ -32,5 +32,7 @@ namespace Tests.TestMaterial
 
     class QueryThatThrowsValidationException : IQuery { }
 
+    class AsyncVoidCommand : ICommand { }
+
     class TestCommand : ICommand { }
 }

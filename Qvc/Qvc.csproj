@@ -48,6 +48,7 @@
     <Compile Include="Action.cs" />
     <Compile Include="Async\AsyncInvokeHelper.cs" />
     <Compile Include="ConstraintsExtensions.cs" />
+    <Compile Include="Exceptions\AsyncVoidException.cs" />
     <Compile Include="JsonCamelCase\JsonCamelCaseResolver.cs" />
     <Compile Include="QueryExtensions.cs" />
     <Compile Include="CommandExtensions.cs" />

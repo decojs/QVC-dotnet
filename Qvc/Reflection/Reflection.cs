@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+
 using Qvc.Handlers;
 
 namespace Qvc.Reflection
@@ -64,6 +66,11 @@ namespace Qvc.Reflection
             return AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(assembly => assembly.GetTypes())
                 .ToList();
+        }
+
+        public static MethodInfo GetHandleMethod(Type executableType, Type handlerType)
+        {
+            return handlerType.GetMethod("Handle", new[] { executableType });
         }
     }
 }
