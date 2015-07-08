@@ -53,24 +53,14 @@ namespace Qvc.Repository
         {
             var commandType = command.GetType();
 
-            if (!_commandHandlers.ContainsKey(commandType))
-            {
-                throw new CommandHandlerDoesNotExistException(commandType.FullName);
-            }
-
-            return _commandHandlers[commandType];
+            return FindCommandHandler(commandType);
         }
 
         public Type FindQueryHandler(IQuery query)
         {
             var queryType = query.GetType();
 
-            if (!_queryHandlers.ContainsKey(queryType))
-            {
-                throw new QueryHandlerDoesNotExistException(queryType.FullName);
-            }
-
-            return _queryHandlers[queryType];
+            return FindQueryHandler(queryType);
         }
     }
 }

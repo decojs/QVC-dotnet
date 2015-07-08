@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action.cs" />
+    <Compile Include="Async\AsyncInvokeHelper.cs" />
     <Compile Include="CommandSteps.cs" />
     <Compile Include="ConstraintsSteps.cs" />
     <Compile Include="Constraints\Constraint.cs" />
@@ -59,10 +60,10 @@
     <Compile Include="Executables\ICommand.cs" />
     <Compile Include="Executables\IExecutable.cs" />
     <Compile Include="Executables\IQuery.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Handlers\IHandleCommand.cs" />
     <Compile Include="Handlers\IHandleExecutable.cs" />
     <Compile Include="Handlers\IHandleQuery.cs" />
-    <Compile Include="Promise.cs" />
     <Compile Include="QuerySteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\Reflection.cs" />

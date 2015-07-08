@@ -1,18 +1,30 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Shouldly;
 using Tests.Executables;
-using Tests.Repository;
 
 namespace Tests.Reflection
 {
     [TestFixture]
     public class ReflectionTest
     {
+        private IEnumerable<Type> _types;
+
+        [SetUp]
+        public void Setup()
+        {
+            _types = AppDomain
+                .CurrentDomain
+                .GetAssemblies()
+                .SelectMany(assembly => assembly.GetTypes());
+        }
+
         [Test]
         public void TestReflectionOfCommand()
         {
-            var handlers = Qvc.Reflection.Reflection.FindCommandHandlers().ToList();
+            var handlers = Qvc.Reflection.Reflection.FindCommandHandlers(_types).ToList();
             handlers.ShouldContain(typeof(CommandHandlerA));
             handlers.ShouldContain(typeof(CommandHandlerB));
         }
@@ -20,7 +32,7 @@ namespace Tests.Reflection
         [Test]
         public void TestReflectionOfQuery()
         {
-            var handlers = Qvc.Reflection.Reflection.FindQueryHandlers().ToList();
+            var handlers = Qvc.Reflection.Reflection.FindQueryHandlers(_types).ToList();
             handlers.ShouldContain(typeof(QueryHandlerA));
             handlers.ShouldContain(typeof(QueryHandlerB));
         }

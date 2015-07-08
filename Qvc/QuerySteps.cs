@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
+
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
@@ -49,11 +51,11 @@ namespace Qvc
             return CreateQueryHandler(self, Default.CreateHandler);
         }
 
-        public static QueryResult HandleQuery(QueryAndHandler self, Func<IHandleExecutable, IQuery, object> executeQuery)
+        public static async Task<QueryResult> HandleQuery(QueryAndHandler self, Func<IHandleExecutable, IQuery, Task<object>> executeQuery)
         {
             try
             {
-                var result = executeQuery.Invoke(self.Handler, self.Query);
+                var result = await executeQuery.Invoke(self.Handler, self.Query);
                 return new QueryResult(result);
             }
             catch (TargetInvocationException e)
@@ -62,7 +64,7 @@ namespace Qvc
             }
         }
 
-        public static QueryResult HandleQuery(QueryAndHandler self)
+        public static Task<QueryResult> HandleQuery(QueryAndHandler self)
         {
             return HandleQuery(self, Default.HandleQuery);
         }

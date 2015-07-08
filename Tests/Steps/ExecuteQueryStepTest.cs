@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+
 using NUnit.Framework;
 using Qvc;
 using Qvc.Executables;
@@ -26,13 +28,13 @@ namespace Tests.Steps
         }
 
         [Test]
-        public void Test()
+        public async void Test()
         {
-            var result = QuerySteps.HandleQuery(_step, (h, c) =>
+            var result = await QuerySteps.HandleQuery(_step, (h, c) =>
             {
                 h.ShouldBe(_handler);
                 c.ShouldBe(_query);
-                return 40;
+                return Task.FromResult((object)40);
             });
 
             QuerySteps.Serialize(result, r =>
@@ -54,12 +56,6 @@ namespace Tests.Steps
                 {
                     throw new NullReferenceException();
                 }));
-        }
-
-        [Test]
-        public void TestWhenThrowsInvocationException()
-        {
-            Should.Throw<NullReferenceException>(() => QuerySteps.HandleQuery(_step, Qvc.Default.HandleQuery));
         }
     }
 }

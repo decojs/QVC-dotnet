@@ -1,10 +1,9 @@
-﻿using System.Diagnostics;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Qvc;
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Repository;
-using Qvc.Results;
+
 using Shouldly;
 
 namespace Tests
@@ -24,42 +23,42 @@ namespace Tests
         }
 
         [Test]
-        public void ExecuteCommand()
+        public async void ExecuteCommand()
         {
-            Action.Command("CommandFullTest", "{}")
+            var result = await Action.Command("CommandFullTest", "{}")
                 .ThenFindCommand(_repo.FindCommand)
                 .ThenDeserializeCommand()
                 .ThenValidateCommand()
                 .ThenFindCommandHandler(_handlerRepo.FindCommandHandler)
                 .ThenCreateCommandHandler()
                 .ThenHandleCommand()
-                .ThenSerialize()
-                .Done().ShouldBe("{\"Success\":true,\"Valid\":true,\"Exception\":null,\"Violations\":[]}");
+                .ThenSerialize();
+            result.ShouldBe("{\"Success\":true,\"Valid\":true,\"Exception\":null,\"Violations\":[]}");
         }
 
         [Test]
-        public void ExecuteQuery()
+        public async void ExecuteQuery()
         {
-            Action.Query("QueryFullTest", "{}")
+            var result = await Action.Query("QueryFullTest", "{}")
                 .Then(q => QuerySteps.FindQuery(q, _repo.FindQuery))
-                .Then(q => QuerySteps.DeserializeQuery(q))
-                .Then(q => QuerySteps.ValidateQuery(q))
+                .Then(QuerySteps.DeserializeQuery)
+                .Then(QuerySteps.ValidateQuery)
                 .Then(q => QuerySteps.FindQueryHandler(q, _handlerRepo.FindQueryHandler))
-                .Then(q => QuerySteps.CreateQueryHandler(q))
-                .Then(q => QuerySteps.HandleQuery(q))
-                .Catch(e => new QueryResult(e))
-                .Then(q => QuerySteps.Serialize(q))
-                .Done().ShouldBe("{\"Result\":\"hello\",\"Success\":true,\"Valid\":true,\"Exception\":null,\"Violations\":[]}");
+                .Then(QuerySteps.CreateQueryHandler)
+                .Then(QuerySteps.HandleQuery)
+                .Catch(QuerySteps.ExceptionToQueryResult)
+                .Then(QuerySteps.Serialize);
+            result.ShouldBe("{\"Result\":\"hello\",\"Success\":true,\"Valid\":true,\"Exception\":null,\"Violations\":[]}");
         }
 
         [Test]
-        public void GetConstraints()
+        public async void GetConstraints()
         {
-            Action.Constraints("QueryFullTest")
+            var result = await Action.Constraints("QueryFullTest")
                 .Then(name => ConstraintsSteps.FindExecutable(name, _repo.FindExecutable))
-                .Then(executable => ConstraintsSteps.GetConstraints(executable))
-                .Then(result => ConstraintsSteps.Serialize(result))
-                .Done().ShouldBe("{\"Parameters\":null}");
+                .Then(ConstraintsSteps.GetConstraints)
+                .Then(ConstraintsSteps.Serialize);
+            result.ShouldBe("{\"Parameters\":null}");
         }
     }
 

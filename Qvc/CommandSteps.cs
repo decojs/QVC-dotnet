@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
+
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
@@ -43,7 +45,7 @@ namespace Qvc
             return CreateCommandHandler(self, Default.CreateHandler);
         }
 
-        public static CommandResult HandleCommand(CommandAndHandler self, Action<IHandleExecutable, ICommand> executeCommand)
+        public static CommandResult HandleCommand(CommandAndHandler self, Func<IHandleExecutable, ICommand, Task> executeCommand)
         {
             try
             {

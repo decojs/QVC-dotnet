@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Qvc.Repository;
 
 namespace Qvc.Reflection
@@ -14,7 +15,7 @@ namespace Qvc.Reflection
 
         private static void AddQueriesAndHandlers(HandlerRepository handlerRepository, ExecutableRepository executableRepository)
         {
-            var queryHandlers = Reflection.FindQueryHandlers()
+            var queryHandlers = Reflection.FindQueryHandlers(Reflection.FindAllTypes())
                     .SelectMany(h => Reflection.GetQueriesHandledByHandler(h).Select(c => new { Handler = h, Query = c }))
                     .ToList();
 
@@ -24,7 +25,7 @@ namespace Qvc.Reflection
 
         private static void AddCommandsAndHandlers(HandlerRepository handlerRepository, ExecutableRepository executableRepository)
         {
-            var commandHandlers = Reflection.FindCommandHandlers()
+            var commandHandlers = Reflection.FindCommandHandlers(Reflection.FindAllTypes())
                 .SelectMany(h => Reflection.GetCommandsHandledByHandler(h).Select(c => new { Handler = h, Command = c }))
                 .ToList();
 

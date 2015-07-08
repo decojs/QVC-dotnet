@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
+
 using Newtonsoft.Json;
+
+using Qvc.Async;
 using Qvc.Executables;
 using Qvc.Handlers;
 
@@ -17,14 +21,20 @@ namespace Qvc
             return Activator.CreateInstance(queryHandler);
         }
 
-        public static void HandleCommand(IHandleExecutable handler, ICommand command)
+        public static async Task HandleCommand(IHandleExecutable handler, ICommand command)
         {
-            handler.GetType().GetMethod("Handle", new[] { command.GetType() }).Invoke(handler, new object[] { command });
+            await AsyncInvokeHelper.ExecuteAsync(
+                handler.GetType().GetMethod("Handle", new[] { command.GetType() }),
+                handler,
+                new object[] { command });
         }
 
-        public static object HandleQuery(IHandleExecutable handler, IQuery query)
+        public static async Task<object> HandleQuery(IHandleExecutable handler, IQuery query)
         {
-            return handler.GetType().GetMethod("Handle", new[] { query.GetType() }).Invoke(handler, new object[] { query });
+            return await AsyncInvokeHelper.ExecuteAsync(
+                handler.GetType().GetMethod("Handle", new[] { query.GetType() }),
+                handler,
+                new object[] { query });
         }
 
         public static string Serialize(object result)

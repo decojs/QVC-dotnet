@@ -28,7 +28,7 @@ namespace Tests.Steps
         [Test]
         public void Test()
         {
-            var result = CommandSteps.HandleCommand(_step, (h, c) =>
+            var result = CommandSteps.HandleCommand(_step, async (h, c) =>
             {
                 h.ShouldBe(_handler);
                 c.ShouldBe(_command);
@@ -52,12 +52,6 @@ namespace Tests.Steps
                 {
                     throw new NullReferenceException();
                 }));
-        }
-
-        [Test]
-        public void TestWhenThrowsInvocationException()
-        {
-            Should.Throw<NullReferenceException>(() => CommandSteps.HandleCommand(_step, Qvc.Default.HandleCommand));
         }
     }
 }
