@@ -1,7 +1,8 @@
 ﻿using System;
+
 using Qvc.Handlers;
 
-namespace Tests.Executables
+namespace Tests.TestMaterial
 {
     class CommandHandlerA : IHandleCommand<CommandA>
     {

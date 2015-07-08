@@ -4,7 +4,7 @@ using Qvc.Exceptions;
 using Qvc.Repository.Tree;
 using Shouldly;
 
-using Tests.Executables;
+using Tests.TestMaterial;
 
 namespace Tests.Repository.Tree
 {

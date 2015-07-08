@@ -5,9 +5,10 @@ using Qvc;
 using Qvc.Constraints;
 using Qvc.Repository;
 using Qvc.Results;
-using Qvc.Steps;
 
 using Shouldly;
+
+using Tests.TestMaterial;
 
 namespace Tests
 {
@@ -22,7 +23,13 @@ namespace Tests
         {
             _repo = new ExecutableRepository();
             _handlerRepo = new HandlerRepository();
-            Qvc.Reflection.Setup.SetupRepositories(_handlerRepo, _repo);
+            _repo.AddExecutables(new []
+            {
+                typeof(CommandFullTest),
+                typeof(QueryFullTest)
+            });
+            _handlerRepo.AddCommandHandler(typeof(CommandFullTest), typeof(FullTestHandler));
+            _handlerRepo.AddQueryHandler(typeof(QueryFullTest), typeof(FullTestHandler));
         }
 
         [Test]

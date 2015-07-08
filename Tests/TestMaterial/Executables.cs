@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 using Qvc.Executables;
 
-namespace Tests.Executables
+namespace Tests.TestMaterial
 {
     class CommandA : ICommand { }
 

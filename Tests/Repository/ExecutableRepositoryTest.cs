@@ -4,7 +4,8 @@ using NUnit.Framework;
 using Qvc.Exceptions;
 using Qvc.Repository;
 using Shouldly;
-using Tests.Executables;
+
+using Tests.TestMaterial;
 
 namespace Tests.Repository
 {

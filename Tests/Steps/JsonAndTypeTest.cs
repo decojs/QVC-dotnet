@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
-using Qvc;
 using Qvc.Steps;
 using Shouldly;
-using Tests.Executables;
+
+using Tests.TestMaterial;
 
 namespace Tests.Steps
 {

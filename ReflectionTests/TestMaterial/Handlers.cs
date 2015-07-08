@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 using Qvc.Handlers;
 
@@ -37,12 +38,12 @@ namespace ReflectionTests.TestMaterial
     }
 
     class MultipleHandler : 
-        IHandleCommand<CommandC>,
+        IHandleCommandAsync<CommandC>,
         IHandleCommand<CommandD>,
-        IHandleQuery<QueryC, int>,
+        IHandleQueryAsync<QueryC, int>,
         IHandleQuery<QueryD, int>
     {
-        public void Handle(CommandC command)
+        public Task Handle(CommandC command)
         {
             throw new NotImplementedException();
         }
@@ -52,7 +53,7 @@ namespace ReflectionTests.TestMaterial
             throw new NotImplementedException();
         }
 
-        public int Handle(QueryC command)
+        public Task<int> Handle(QueryC command)
         {
             throw new NotImplementedException();
         }

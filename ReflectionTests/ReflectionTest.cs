@@ -11,7 +11,7 @@ namespace ReflectionTests.Reflection
     [TestFixture]
     public class ReflectionTest
     {
-        private IEnumerable<Type> _types;
+        private IReadOnlyCollection<Type> _types;
 
         [SetUp]
         public void Setup()

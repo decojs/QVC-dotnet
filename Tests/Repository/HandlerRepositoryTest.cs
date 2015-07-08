@@ -5,7 +5,8 @@ using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Repository;
 using Shouldly;
-using Tests.Executables;
+
+using Tests.TestMaterial;
 
 namespace Tests.Repository
 {

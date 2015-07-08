@@ -27,7 +27,7 @@ namespace Qvc.Reflection
         private static void AddQueriesAndHandlers(
             HandlerRepository handlerRepository, 
             ExecutableRepository executableRepository, 
-            IEnumerable<Type> types)
+            IReadOnlyCollection<Type> types)
         {
             var queryHandlers = Reflection.FindQueryHandlers(types)
                     .SelectMany(h => Reflection.GetQueriesHandledByHandler(h).Select(c => new { Handler = h, Query = c }))
@@ -40,7 +40,7 @@ namespace Qvc.Reflection
         private static void AddCommandsAndHandlers(
             HandlerRepository handlerRepository, 
             ExecutableRepository executableRepository, 
-            IEnumerable<Type> types)
+            IReadOnlyCollection<Type> types)
         {
             var commandHandlers = Reflection.FindCommandHandlers(types)
                 .SelectMany(h => Reflection.GetCommandsHandledByHandler(h).Select(c => new { Handler = h, Command = c }))

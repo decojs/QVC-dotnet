@@ -7,24 +7,36 @@ namespace Qvc.Reflection
 {
     public class Reflection
     {
-        public static IReadOnlyCollection<Type> FindCommandHandlers(IEnumerable<Type> types)
+        public static IReadOnlyCollection<Type> FindCommandHandlers(IReadOnlyCollection<Type> types)
         {
-            return GetImplementationsOfGenericInterface(typeof(IHandleCommand<>), types);
+            return GetImplementationsOfGenericInterface(typeof(IHandleCommand<>), types)
+                .Concat(GetImplementationsOfGenericInterface(typeof(IHandleCommandAsync<>), types))
+                .Distinct()
+                .ToList();
         }
         
-        public static IReadOnlyCollection<Type> FindQueryHandlers(IEnumerable<Type> types)
+        public static IReadOnlyCollection<Type> FindQueryHandlers(IReadOnlyCollection<Type> types)
         {
-            return GetImplementationsOfGenericInterface(typeof(IHandleQuery<,>), types);
+            return GetImplementationsOfGenericInterface(typeof(IHandleQuery<,>), types)
+                .Concat(GetImplementationsOfGenericInterface(typeof(IHandleQueryAsync<,>), types))
+                .Distinct()
+                .ToList();
         }
 
         public static IReadOnlyCollection<Type> GetCommandsHandledByHandler(Type handler)
         {
-            return GetFirstGenericArgumentFromInterfacesOfType(handler, typeof(IHandleCommand<>));
+            return GetFirstGenericArgumentFromInterfacesOfType(handler, typeof(IHandleCommand<>))
+                .Concat(GetFirstGenericArgumentFromInterfacesOfType(handler, typeof(IHandleCommandAsync<>)))
+                .Distinct()
+                .ToList();
         }
 
         public static IReadOnlyCollection<Type> GetQueriesHandledByHandler(Type handler)
         {
-            return GetFirstGenericArgumentFromInterfacesOfType(handler, typeof(IHandleQuery<,>));
+            return GetFirstGenericArgumentFromInterfacesOfType(handler, typeof(IHandleQuery<,>))
+                .Concat(GetFirstGenericArgumentFromInterfacesOfType(handler, typeof(IHandleQueryAsync<,>)))
+                .Distinct()
+                .ToList();
         }
 
         public static IReadOnlyCollection<Type> GetImplementationsOfGenericInterface(Type genericInterfaceType, IEnumerable<Type> types)
