@@ -5,7 +5,6 @@ using NUnit.Framework;
 using Qvc;
 using Qvc.Executables;
 using Qvc.Handlers;
-using Qvc.Results;
 using Qvc.Steps;
 using Shouldly;
 using Tests.Executables;
@@ -37,15 +36,10 @@ namespace Tests.Steps
                 return Task.FromResult((object)40);
             });
 
-            QuerySteps.Serialize(result, r =>
-            {
-                r.ShouldBeOfType(typeof(QueryResult));
-                r.Success.ShouldBe(true);
-                r.Valid.ShouldBe(true);
-                r.Exception.ShouldBe(null);
-                r.Result.ShouldBe(40);
-                return "";
-            });
+            result.Success.ShouldBe(true);
+            result.Valid.ShouldBe(true);
+            result.Exception.ShouldBe(null);
+            result.Result.ShouldBe(40);
         }
 
         [Test]

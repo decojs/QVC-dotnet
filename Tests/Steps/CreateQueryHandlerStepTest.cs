@@ -12,20 +12,26 @@ namespace Tests.Steps
     {
         private QueryAndHandlerType _step;
 
+        private QueryB _query;
+
         [SetUp]
         public void Setup()
         {
-            _step = new QueryAndHandlerType(new QueryB(), typeof(QueryHandlerB));
+            _query = new QueryB();
+            _step = new QueryAndHandlerType(_query, typeof(QueryHandlerB));
         }
 
         [Test]
         public void Test()
         {
-            QuerySteps.CreateQueryHandler(_step, h =>
+            var result = QuerySteps.CreateQueryHandler(_step, h =>
             {
                 h.ShouldBe(typeof(QueryHandlerB));
                 return new QueryHandlerB();
-            }).ShouldBeOfType<QueryAndHandler>();
+            });
+
+            result.Handler.ShouldBeOfType<QueryHandlerB>();
+            result.Query.ShouldBe(_query);
         }
 
         [Test]

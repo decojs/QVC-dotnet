@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Qvc.Repository;
 
@@ -6,16 +7,29 @@ namespace Qvc.Reflection
 {
     public class Setup
     {
-        public static void SetupRepositories(HandlerRepository handlerRepository, ExecutableRepository executableRepository)
+        public static void SetupRepositories(
+            HandlerRepository handlerRepository, 
+            ExecutableRepository executableRepository)
         {
-            AddCommandsAndHandlers(handlerRepository, executableRepository);
-
-            AddQueriesAndHandlers(handlerRepository, executableRepository);
+            SetupRepositories(handlerRepository, executableRepository, Reflection.FindAllTypes());
         }
 
-        private static void AddQueriesAndHandlers(HandlerRepository handlerRepository, ExecutableRepository executableRepository)
+        public static void SetupRepositories(
+            HandlerRepository handlerRepository, 
+            ExecutableRepository executableRepository, 
+            IReadOnlyCollection<Type> types)
         {
-            var queryHandlers = Reflection.FindQueryHandlers(Reflection.FindAllTypes())
+            AddCommandsAndHandlers(handlerRepository, executableRepository, types);
+
+            AddQueriesAndHandlers(handlerRepository, executableRepository, types);
+        }
+
+        private static void AddQueriesAndHandlers(
+            HandlerRepository handlerRepository, 
+            ExecutableRepository executableRepository, 
+            IEnumerable<Type> types)
+        {
+            var queryHandlers = Reflection.FindQueryHandlers(types)
                     .SelectMany(h => Reflection.GetQueriesHandledByHandler(h).Select(c => new { Handler = h, Query = c }))
                     .ToList();
 
@@ -23,9 +37,12 @@ namespace Qvc.Reflection
             executableRepository.AddExecutables(queryHandlers.Select(c => c.Query));
         }
 
-        private static void AddCommandsAndHandlers(HandlerRepository handlerRepository, ExecutableRepository executableRepository)
+        private static void AddCommandsAndHandlers(
+            HandlerRepository handlerRepository, 
+            ExecutableRepository executableRepository, 
+            IEnumerable<Type> types)
         {
-            var commandHandlers = Reflection.FindCommandHandlers(Reflection.FindAllTypes())
+            var commandHandlers = Reflection.FindCommandHandlers(types)
                 .SelectMany(h => Reflection.GetCommandsHandledByHandler(h).Select(c => new { Handler = h, Command = c }))
                 .ToList();
 

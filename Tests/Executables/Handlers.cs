@@ -22,4 +22,19 @@ namespace Tests.Executables
     {
         public int Handle(QueryB command) { throw new NullReferenceException(); }
     }
+
+    class FullTestHandler :
+        IHandleCommand<CommandFullTest>,
+        IHandleQuery<QueryFullTest, string>
+    {
+        public void Handle(CommandFullTest command)
+        {
+
+        }
+
+        public string Handle(QueryFullTest query)
+        {
+            return "hello";
+        }
+    }
 }

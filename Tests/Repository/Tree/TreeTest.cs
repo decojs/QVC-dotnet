@@ -1,9 +1,10 @@
 ﻿using System;
 using NUnit.Framework;
 using Qvc.Exceptions;
-using Qvc.Executables;
 using Qvc.Repository.Tree;
 using Shouldly;
+
+using Tests.Executables;
 
 namespace Tests.Repository.Tree
 {
@@ -105,11 +106,6 @@ namespace Tests.Repository.Tree
 
             Should.Throw<ArgumentNullException>(() => tree.Add("Executable", null))
                 .Message.ShouldBe("Cannot store null value in tree\r\nParameter name: type");
-        }
-
-        private class TestCommand : ICommand
-        {
-            
         }
     }
 }

@@ -23,11 +23,14 @@ namespace Tests.Steps
         [Test]
         public void Test()
         {
-            QuerySteps.FindQueryHandler(_query, q =>
+            var result = QuerySteps.FindQueryHandler(_query, q =>
             {
                 q.ShouldBe(_query);
                 return typeof(QueryHandlerB);
-            }).ShouldBeOfType<QueryAndHandlerType>();
+            });
+
+            result.HandlerType.ShouldBe(typeof(QueryHandlerB));
+            result.Query.ShouldBe(_query);
         }
 
         [Test]

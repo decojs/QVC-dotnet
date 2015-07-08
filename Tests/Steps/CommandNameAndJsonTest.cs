@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using Qvc;
 using Qvc.Exceptions;
-using Qvc.Results;
 using Qvc.Steps;
 using Shouldly;
 using Tests.Executables;
@@ -22,11 +21,14 @@ namespace Tests.Steps
         [Test]
         public void TestCommand()
         {
-            CommandSteps.FindCommand(_step, name =>
+            var result = CommandSteps.FindCommand(_step, name =>
             {
                 name.ShouldBe("name");
                 return typeof(CommandA);
             });
+
+            result.Json.ShouldBe("json");
+            result.Type.ShouldBe(typeof(CommandA));
         }
 
         [Test]

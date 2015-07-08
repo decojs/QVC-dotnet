@@ -12,20 +12,26 @@ namespace Tests.Steps
     {
         private CommandAndHandlerType _step;
 
+        private CommandB _command;
+
         [SetUp]
         public void Setup()
         {
-            _step = new CommandAndHandlerType(new CommandB(), typeof(CommandHandlerB));
+            _command = new CommandB();
+            _step = new CommandAndHandlerType(_command, typeof(CommandHandlerB));
         }
 
         [Test]
         public void Test()
         {
-            CommandSteps.CreateCommandHandler(_step, h =>
+            var result = CommandSteps.CreateCommandHandler(_step, h =>
             {
                 h.ShouldBe(typeof(CommandHandlerB));
                 return new CommandHandlerB();
-            }).ShouldBeOfType<CommandAndHandler>();
+            });
+
+            result.Handler.ShouldBeOfType<CommandHandlerB>();
+            result.Command.ShouldBe(_command);
         }
 
         [Test]

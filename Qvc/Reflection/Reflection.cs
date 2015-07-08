@@ -7,48 +7,51 @@ namespace Qvc.Reflection
 {
     public class Reflection
     {
-        public static IEnumerable<Type> FindCommandHandlers(IEnumerable<Type> types)
+        public static IReadOnlyCollection<Type> FindCommandHandlers(IEnumerable<Type> types)
         {
             return GetImplementationsOfGenericInterface(typeof(IHandleCommand<>), types);
         }
         
-        public static IEnumerable<Type> FindQueryHandlers(IEnumerable<Type> types)
+        public static IReadOnlyCollection<Type> FindQueryHandlers(IEnumerable<Type> types)
         {
             return GetImplementationsOfGenericInterface(typeof(IHandleQuery<,>), types);
         }
 
-        public static IEnumerable<Type> GetCommandsHandledByHandler(Type handler)
+        public static IReadOnlyCollection<Type> GetCommandsHandledByHandler(Type handler)
         {
             return GetFirstGenericArgumentFromInterfacesOfType(handler, typeof(IHandleCommand<>));
         }
 
-        public static IEnumerable<Type> GetQueriesHandledByHandler(Type handler)
+        public static IReadOnlyCollection<Type> GetQueriesHandledByHandler(Type handler)
         {
             return GetFirstGenericArgumentFromInterfacesOfType(handler, typeof(IHandleQuery<,>));
         }
 
-        public static IEnumerable<Type> GetImplementationsOfGenericInterface(Type genericInterfaceType, IEnumerable<Type> types)
+        public static IReadOnlyCollection<Type> GetImplementationsOfGenericInterface(Type genericInterfaceType, IEnumerable<Type> types)
         {
             return types
                 .Where(found => !found.IsAbstract && !found.IsInterface)
                 .Where(found => found.GetInterfaces()
                     .Where(i => i.IsGenericType)
                     .Select(i => i.GetGenericTypeDefinition())
-                    .Contains(genericInterfaceType));
+                    .Contains(genericInterfaceType))
+                .ToList();
         }
 
-        public static IEnumerable<Type> GetFirstGenericArgumentFromInterfacesOfType(Type type, Type genericInterfaceType)
+        public static IReadOnlyCollection<Type> GetFirstGenericArgumentFromInterfacesOfType(Type type, Type genericInterfaceType)
         {
             return
                 type.GetInterfaces()
                     .Where(iface => iface.IsGenericType && iface.GetGenericTypeDefinition() == genericInterfaceType)
-                    .Select(iface => iface.GenericTypeArguments.First());
+                    .Select(iface => iface.GenericTypeArguments.First())
+                    .ToList();
         }
 
-        public static IEnumerable<Type> FindAllTypes()
+        public static IReadOnlyCollection<Type> FindAllTypes()
         {
             return AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(assembly => assembly.GetTypes());
+                .SelectMany(assembly => assembly.GetTypes())
+                .ToList();
         }
     }
 }

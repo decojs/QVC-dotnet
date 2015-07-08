@@ -1,7 +1,5 @@
 ﻿using NUnit.Framework;
 using Qvc;
-using Qvc.Executables;
-using Qvc.Handlers;
 using Qvc.Repository;
 
 using Shouldly;
@@ -61,23 +59,4 @@ namespace Tests
             result.ShouldBe("{\"Parameters\":null}");
         }
     }
-
-    class FullTestHandler :
-        IHandleCommand<CommandFullTest>,
-        IHandleQuery<QueryFullTest, string>
-    {
-        public void Handle(CommandFullTest command)
-        {
-            
-        }
-
-        public string Handle(QueryFullTest query)
-        {
-            return "hello";
-        }
-    }
-
-    class CommandFullTest : ICommand { }
-
-    class QueryFullTest : IQuery { }
 }

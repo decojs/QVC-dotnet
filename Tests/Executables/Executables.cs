@@ -18,4 +18,10 @@ namespace Tests.Executables
     class QueryB : IQuery { }
 
     class QueryC : IQuery { }
+
+    class CommandFullTest : ICommand { }
+
+    class QueryFullTest : IQuery { }
+
+    class TestCommand : ICommand { }
 }

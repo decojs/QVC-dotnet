@@ -3,7 +3,6 @@ using NUnit.Framework;
 using Qvc;
 using Qvc.Executables;
 using Qvc.Handlers;
-using Qvc.Results;
 using Qvc.Steps;
 using Shouldly;
 using Tests.Executables;
@@ -33,15 +32,10 @@ namespace Tests.Steps
                 h.ShouldBe(_handler);
                 c.ShouldBe(_command);
             });
-            
-            CommandSteps.Serialize(result, r =>
-            {
-                r.ShouldBeOfType(typeof(CommandResult));
-                r.Success.ShouldBe(true);
-                r.Valid.ShouldBe(true);
-                r.Exception.ShouldBe(null);
-                return "";
-            });
+
+            result.Success.ShouldBe(true);
+            result.Valid.ShouldBe(true);
+            result.Exception.ShouldBe(null);
         }
 
         [Test]

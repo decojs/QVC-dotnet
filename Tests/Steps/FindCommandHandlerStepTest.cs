@@ -23,11 +23,14 @@ namespace Tests.Steps
         [Test]
         public void Test()
         {
-            CommandSteps.FindCommandHandler(_command, c =>
+            var result = CommandSteps.FindCommandHandler(_command, c =>
             {
                 c.ShouldBe(_command);
                 return typeof(CommandHandlerB);
-            }).ShouldBeOfType<CommandAndHandlerType>();
+            });
+
+            result.HandlerType.ShouldBe(typeof(CommandHandlerB));
+            result.Command.ShouldBe(_command);
         }
 
         [Test]

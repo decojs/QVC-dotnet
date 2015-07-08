@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{179DE312-C9F9-4A0B-B1C0-ACAB4165B545}</ProjectGuid>
+    <ProjectGuid>{14BEA40A-82FF-4A79-9B31-47110A00A04F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tests</RootNamespace>
-    <AssemblyName>Tests</AssemblyName>
+    <RootNamespace>ReflectionTests</RootNamespace>
+    <AssemblyName>ReflectionTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,21 +35,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NSubstitute">
+    <Reference Include="NSubstitute, Version=1.8.1.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <HintPath>..\packages\NSubstitute.1.8.1.0\lib\net45\NSubstitute.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework">
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Shouldly">
+    <Reference Include="Shouldly, Version=2.3.0.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
       <HintPath>..\packages\Shouldly.2.3.0\lib\net40\Shouldly.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -60,37 +58,21 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Default\DefaultTest.cs" />
-    <Compile Include="Executables\Executables.cs" />
-    <Compile Include="Executables\Handlers.cs" />
-    <Compile Include="FullTest.cs" />
-    <Compile Include="Repository\ExecutableRepositoryTest.cs" />
-    <Compile Include="Repository\HandlerRepositoryTest.cs" />
-    <Compile Include="Repository\Tree\TreeTest.cs" />
+    <Compile Include="ReflectionTest.cs" />
+    <Compile Include="SetupTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Steps\CreateCommandHandlerStepTest.cs" />
-    <Compile Include="Steps\CreateQueryHandlerStepTest.cs" />
-    <Compile Include="Steps\JsonAndTypeTest.cs" />
-    <Compile Include="Steps\ExecuteCommandStepTest.cs" />
-    <Compile Include="Steps\ExecuteQueryStepTest.cs" />
-    <Compile Include="Steps\FindCommandHandlerStepTest.cs" />
-    <Compile Include="Steps\FindQueryHandlerStepTest.cs" />
-    <Compile Include="Steps\CommandNameAndJsonTest.cs" />
-    <Compile Include="Steps\QueryNameAndJsonTest.cs" />
-    <Compile Include="Steps\SerializeResultStepTest.cs" />
-    <Compile Include="TaskExtensions\TaskTests.cs" />
-    <Compile Include="Validation\ValidatorTests.cs" />
+    <Compile Include="TestMaterial\Executables.cs" />
+    <Compile Include="TestMaterial\Handlers.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Qvc\Qvc.csproj">
+      <Project>{63d89265-c275-47a2-bac3-6a1eddc6bd0b}</Project>
+      <Name>Qvc</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Qvc\Qvc.csproj">
-      <Project>{63D89265-C275-47A2-BAC3-6A1EDDC6BD0B}</Project>
-      <Name>Qvc</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qvc", "Qvc\Qvc.csproj", "{6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{179DE312-C9F9-4A0B-B1C0-ACAB4165B545}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionTests", "ReflectionTests\ReflectionTests.csproj", "{14BEA40A-82FF-4A79-9B31-47110A00A04F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{179DE312-C9F9-4A0B-B1C0-ACAB4165B545}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{179DE312-C9F9-4A0B-B1C0-ACAB4165B545}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{179DE312-C9F9-4A0B-B1C0-ACAB4165B545}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14BEA40A-82FF-4A79-9B31-47110A00A04F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14BEA40A-82FF-4A79-9B31-47110A00A04F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14BEA40A-82FF-4A79-9B31-47110A00A04F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14BEA40A-82FF-4A79-9B31-47110A00A04F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

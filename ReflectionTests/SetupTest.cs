@@ -1,10 +1,11 @@
-﻿using NUnit.Framework;
+﻿using System.Reflection;
+
+using NUnit.Framework;
 using Qvc.Repository;
 using Shouldly;
-using Tests.Executables;
-using Tests.Repository;
+using ReflectionTests.TestMaterial;
 
-namespace Tests.Reflection
+namespace ReflectionTests.Reflection
 {
     [TestFixture]
     public class SetupTest
@@ -15,9 +16,10 @@ namespace Tests.Reflection
         [SetUp]
         public void Setup()
         {
+            var types  = Assembly.GetAssembly(typeof(SetupTest)).GetTypes();
             _executableRepo = new ExecutableRepository();
             _handlerRepo = new HandlerRepository();
-            Qvc.Reflection.Setup.SetupRepositories(_handlerRepo, _executableRepo);
+            Qvc.Reflection.Setup.SetupRepositories(_handlerRepo, _executableRepo, types);
         }
 
         [Test]

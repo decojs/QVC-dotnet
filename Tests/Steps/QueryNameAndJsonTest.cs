@@ -22,11 +22,14 @@ namespace Tests.Steps
         [Test]
         public void TestQuery()
         {
-            QuerySteps.FindQuery(_step, name =>
+            var result = QuerySteps.FindQuery(_step, name =>
             {
                 name.ShouldBe("name");
                 return typeof(QueryA);
             });
+
+            result.Json.ShouldBe("json");
+            result.Type.ShouldBe(typeof(QueryA));
         }
 
         [Test]
