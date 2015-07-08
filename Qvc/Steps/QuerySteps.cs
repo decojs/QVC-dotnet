@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 using Qvc.Executables;
 using Qvc.Handlers;
 using Qvc.Results;
-using Qvc.Steps;
 using Qvc.Validation;
 
-namespace Qvc
+namespace Qvc.Steps
 {
     public static class QuerySteps
     {

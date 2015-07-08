@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Qvc
 {
-    public static class Extensions
+    public static class TaskExtensions
     {
         public static async Task<TOut> Then<TIn, TOut>(this Task<TIn> self, Func<TIn, TOut> doFunc)
         {

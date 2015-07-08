@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+
+using Qvc.Constraints;
 using Qvc.Results;
 
-namespace Qvc
+namespace Qvc.Steps
 {
     public static class ConstraintsSteps
     {
@@ -23,6 +26,11 @@ namespace Qvc
         public static string Serialize(ConstraintsResult self)
         {
             return Serialize(self, Default.Serialize);
+        }
+
+        public static ConstraintsResult ExceptionToConstraintsResult(Exception e)
+        {
+            return new ConstraintsResult(new List<Parameter>());
         }
     }
 }

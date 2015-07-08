@@ -1,6 +1,11 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+
+using NUnit.Framework;
 using Qvc;
+using Qvc.Constraints;
 using Qvc.Repository;
+using Qvc.Results;
+using Qvc.Steps;
 
 using Shouldly;
 
@@ -30,7 +35,7 @@ namespace Tests
                 .ThenFindCommandHandler(_handlerRepo.FindCommandHandler)
                 .ThenCreateCommandHandler()
                 .ThenHandleCommand()
-                .ThenSerialize();
+                .ThenSerializeResult();
             result.ShouldBe("{\"Success\":true,\"Valid\":true,\"Exception\":null,\"Violations\":[]}");
         }
 
@@ -38,14 +43,13 @@ namespace Tests
         public async void ExecuteQuery()
         {
             var result = await Action.Query("QueryFullTest", "{}")
-                .Then(q => QuerySteps.FindQuery(q, _repo.FindQuery))
-                .Then(QuerySteps.DeserializeQuery)
-                .Then(QuerySteps.ValidateQuery)
-                .Then(q => QuerySteps.FindQueryHandler(q, _handlerRepo.FindQueryHandler))
-                .Then(QuerySteps.CreateQueryHandler)
-                .Then(QuerySteps.HandleQuery)
-                .Catch(QuerySteps.ExceptionToQueryResult)
-                .Then(QuerySteps.Serialize);
+                .ThenFindQuery( _repo.FindQuery)
+                .ThenDeserializeQuery()
+                .ThenValidateQuery()
+                .ThenFindQueryHandler(_handlerRepo.FindQueryHandler)
+                .ThenCreateQueryHandler()
+                .ThenHandleQuery()
+                .ThenSerializeResult();
             result.ShouldBe("{\"Result\":\"hello\",\"Success\":true,\"Valid\":true,\"Exception\":null,\"Violations\":[]}");
         }
 
@@ -53,10 +57,10 @@ namespace Tests
         public async void GetConstraints()
         {
             var result = await Action.Constraints("QueryFullTest")
-                .Then(name => ConstraintsSteps.FindExecutable(name, _repo.FindExecutable))
-                .Then(ConstraintsSteps.GetConstraints)
-                .Then(ConstraintsSteps.Serialize);
-            result.ShouldBe("{\"Parameters\":null}");
+                .ThenFindExecutable(_repo.FindExecutable)
+                .ThenGetConstraints(type => new ConstraintsResult(new List<Parameter>()))
+                .ThenSerialize();
+            result.ShouldBe("{\"Parameters\":[]}");
         }
     }
 }
