@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 
@@ -17,6 +18,14 @@ namespace Qvc.Async
             object[] orderedMethodArguments)
         {
             object invocationResult = null;
+
+            // Somebody has an async function which returns null, not Task
+            // Can't handle that!
+            if (MethodIsAsyncVoid(actionMethodInfo))
+            {
+                throw new Exception(GetAsyncVoidFriendlyExceptionMessage(actionMethodInfo, instance));
+            }
+
             try
             {
                 invocationResult = actionMethodInfo.Invoke(instance, orderedMethodArguments);
@@ -31,6 +40,20 @@ namespace Qvc.Async
             return await CoerceResultToTaskAsync(
                 invocationResult,
                 actionMethodInfo.ReturnType);
+        }
+
+        private static string GetAsyncVoidFriendlyExceptionMessage(MethodBase actionMethodInfo, object instance)
+        {
+            var firstParameter = actionMethodInfo.GetParameters().First();
+            var actual = string.Format("async void {0}.{1}({2} {3});", instance.GetType().FullName, actionMethodInfo.Name, firstParameter.ParameterType.Name, firstParameter.Name);
+            var expected = string.Format("async Task {0}.{1}({2} {3});", instance.GetType().FullName, actionMethodInfo.Name, firstParameter.ParameterType.Name, firstParameter.Name);
+            return "async method must return a Task!\n" + actual + "\nShould be\n" + expected;
+        }
+
+        private static bool MethodIsAsyncVoid(MethodInfo actionMethodInfo)
+        {
+            return actionMethodInfo.ReturnType == typeof(void) 
+            && actionMethodInfo.GetCustomAttributes<AsyncStateMachineAttribute>().Any();
         }
 
         // Method called via reflection.

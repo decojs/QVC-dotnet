@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 using Qvc.Handlers;
+using Qvc.Validation;
 
 namespace Tests.TestMaterial
 {
@@ -25,12 +27,11 @@ namespace Tests.TestMaterial
     }
 
     class FullTestHandler :
-        IHandleCommand<CommandFullTest>,
+        IHandleCommandAsync<CommandFullTest>,
         IHandleQuery<QueryFullTest, string>
     {
-        public void Handle(CommandFullTest command)
+        public async Task Handle(CommandFullTest command)
         {
-
         }
 
         public string Handle(QueryFullTest query)

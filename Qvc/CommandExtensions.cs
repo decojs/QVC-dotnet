@@ -53,11 +53,11 @@ namespace Qvc
 
         public static Task<CommandResult> ThenHandleCommand(this Task<CommandAndHandler> commandAndHandler, Func<IHandleExecutable, ICommand, Task> executeCommand)
         {
-            return commandAndHandler.Then(self =>
+            return commandAndHandler.Then(async self =>
             {
                 try
                 {
-                    executeCommand.Invoke(self.Handler, self.Command);
+                    await executeCommand.Invoke(self.Handler, self.Command);
                     return new CommandResult();
                 }
                 catch (TargetInvocationException e)
