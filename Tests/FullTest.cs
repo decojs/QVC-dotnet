@@ -6,6 +6,7 @@ using Qvc;
 using Qvc.Constraints;
 using Qvc.Repository;
 using Qvc.Results;
+using Qvc.Steps;
 
 using Shouldly;
 
@@ -57,7 +58,37 @@ namespace Tests
         [Test]
         public async void ExecuteCommandThatThrows()
         {
-            var result = await Action.Command("CommandB", "{}")
+            var result = await Action.Command("CommandThatThrows", "{}")
+                .ThenFindCommand(_repo.FindCommand)
+                .ThenDeserializeCommand()
+                .ThenValidateCommand()
+                .ThenFindCommandHandler(_handlerRepo.FindCommandHandler)
+                .ThenCreateCommandHandler()
+                .ThenHandleCommand()
+                .Catch(CommandSteps.ExceptionToCommandResultDev)
+                .ThenSerializeResult();
+            result.ShouldStartWith("{\"success\":false,\"valid\":true,\"exception\":{\"ClassName\":\"System.NotImplementedException");
+        }
+
+        [Test]
+        public async void ExecuteQueryThatThrows()
+        {
+            var result = await Action.Query("QueryThatThrows", "{}")
+                .ThenFindQuery(_repo.FindQuery)
+                .ThenDeserializeQuery()
+                .ThenValidateQuery()
+                .ThenFindQueryHandler(_handlerRepo.FindQueryHandler)
+                .ThenCreateQueryHandler()
+                .ThenHandleQuery()
+                .Catch(QuerySteps.ExceptionToQueryResultDev)
+                .ThenSerializeResult();
+            result.ShouldStartWith("{\"result\":null,\"success\":false,\"valid\":true,\"exception\":{\"ClassName\":\"System.NotImplementedException");
+        }
+
+        [Test]
+        public async void ExecuteCommandThatThrowsInDev()
+        {
+            var result = await Action.Command("CommandThatThrows", "{}")
                 .ThenFindCommand(_repo.FindCommand)
                 .ThenDeserializeCommand()
                 .ThenValidateCommand()
@@ -65,13 +96,13 @@ namespace Tests
                 .ThenCreateCommandHandler()
                 .ThenHandleCommand()
                 .ThenSerializeResult();
-            result.ShouldStartWith("{\"success\":false,\"valid\":true,\"exception\":{\"ClassName\":\"System.NullReferenceException");
+            result.ShouldStartWith("{\"success\":false,\"valid\":true,\"exception\":null,\"violations\":[]}");
         }
 
         [Test]
-        public async void ExecuteQueryThatThrows()
+        public async void ExecuteQueryThatThrowsInDev()
         {
-            var result = await Action.Query("QueryB", "{}")
+            var result = await Action.Query("QueryThatThrows", "{}")
                 .ThenFindQuery(_repo.FindQuery)
                 .ThenDeserializeQuery()
                 .ThenValidateQuery()
@@ -79,7 +110,35 @@ namespace Tests
                 .ThenCreateQueryHandler()
                 .ThenHandleQuery()
                 .ThenSerializeResult();
-            result.ShouldStartWith("{\"result\":null,\"success\":false,\"valid\":true,\"exception\":{\"ClassName\":\"System.NullReferenceException");
+            result.ShouldStartWith("{\"result\":null,\"success\":false,\"valid\":true,\"exception\":null,\"violations\":[]}");
+        }
+
+        [Test]
+        public async void ExecuteCommandThatThrowsValidationException()
+        {
+            var result = await Action.Command("CommandThatThrowsValidationException", "{}")
+                .ThenFindCommand(_repo.FindCommand)
+                .ThenDeserializeCommand()
+                .ThenValidateCommand()
+                .ThenFindCommandHandler(_handlerRepo.FindCommandHandler)
+                .ThenCreateCommandHandler()
+                .ThenHandleCommand()
+                .ThenSerializeResult();
+            result.ShouldStartWith("{\"success\":false,\"valid\":false,\"exception\":null,\"violations\":[{\"fieldName\":\"\",\"message\":\"oops\"}]");
+        }
+
+        [Test]
+        public async void ExecuteQueryThatThrowsValidationException()
+        {
+            var result = await Action.Query("QueryThatThrowsValidationException", "{}")
+                .ThenFindQuery(_repo.FindQuery)
+                .ThenDeserializeQuery()
+                .ThenValidateQuery()
+                .ThenFindQueryHandler(_handlerRepo.FindQueryHandler)
+                .ThenCreateQueryHandler()
+                .ThenHandleQuery()
+                .ThenSerializeResult();
+            result.ShouldStartWith("{\"result\":null,\"success\":false,\"valid\":false,\"exception\":null,\"violations\":[{\"fieldName\":\"\",\"message\":\"oops\"}]");
         }
 
         [Test]

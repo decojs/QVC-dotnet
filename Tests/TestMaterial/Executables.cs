@@ -24,5 +24,13 @@ namespace Tests.TestMaterial
 
     class QueryFullTest : IQuery { }
 
+    class CommandThatThrows : ICommand { }
+
+    class QueryThatThrows : IQuery { }
+
+    class CommandThatThrowsValidationException : ICommand { }
+
+    class QueryThatThrowsValidationException : IQuery { }
+
     class TestCommand : ICommand { }
 }

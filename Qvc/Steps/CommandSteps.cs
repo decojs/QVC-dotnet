@@ -62,7 +62,7 @@ namespace Qvc.Steps
             return HandleCommand(self, Default.HandleCommand);
         }
 
-        public static CommandResult ExceptionToCommandResult(Exception exception)
+        public static CommandResult ExceptionToCommandResultDev(Exception exception)
         {
             if (exception is ValidationException)
             {
@@ -70,6 +70,16 @@ namespace Qvc.Steps
             }
 
             return new CommandResult(exception);
+        }
+
+        public static CommandResult ExceptionToCommandResult(Exception exception)
+        {
+            if (exception is ValidationException)
+            {
+                return new CommandResult(exception as ValidationException);
+            }
+
+            return new CommandResult(null as Exception);
         }
 
         public static string Serialize(CommandResult self, Func<CommandResult, string> serializeResult)

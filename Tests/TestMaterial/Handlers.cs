@@ -28,7 +28,11 @@ namespace Tests.TestMaterial
 
     class FullTestHandler :
         IHandleCommandAsync<CommandFullTest>,
-        IHandleQuery<QueryFullTest, string>
+        IHandleQuery<QueryFullTest, string>,
+        IHandleCommandAsync<CommandThatThrows>,
+        IHandleQueryAsync<QueryThatThrows, string>,
+        IHandleCommandAsync<CommandThatThrowsValidationException>,
+        IHandleQueryAsync<QueryThatThrowsValidationException, string>
     {
         public async Task Handle(CommandFullTest command)
         {
@@ -37,6 +41,26 @@ namespace Tests.TestMaterial
         public string Handle(QueryFullTest query)
         {
             return "hello";
+        }
+
+        public Task Handle(CommandThatThrows command)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> Handle(QueryThatThrows query)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Handle(CommandThatThrowsValidationException command)
+        {
+            throw new ValidationException("oops");
+        }
+
+        public Task<string> Handle(QueryThatThrowsValidationException query)
+        {
+            throw new ValidationException("oops");
         }
     }
 }
