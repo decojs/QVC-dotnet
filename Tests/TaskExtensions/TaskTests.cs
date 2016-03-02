@@ -15,7 +15,7 @@ namespace Tests.TaskExtensions
     public class TaskTests
     {
         [Test]
-        public async void TestThen()
+        public async Task TestThen()
         {
             var result = await Task.FromResult("hello")
                 .Then(r =>
@@ -28,7 +28,7 @@ namespace Tests.TaskExtensions
         }
 
         [Test]
-        public async void TestAsyncThen()
+        public async Task TestAsyncThen()
         {
             var result = await Task.FromResult("hello")
                 .Then(r =>
@@ -66,7 +66,7 @@ namespace Tests.TaskExtensions
         }
 
         [Test]
-        public async void TestCatchThrows()
+        public async Task TestCatchThrows()
         {
             var spy = Substitute.For<Func<string, string>>();
             var result = await Task.FromResult("hello")

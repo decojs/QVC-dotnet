@@ -28,7 +28,7 @@ namespace Tests.Steps
         }
 
         [Test]
-        public async void Test()
+        public async Task Test()
         {
             var result = await QuerySteps.HandleQuery(_step, (h, c) =>
             {

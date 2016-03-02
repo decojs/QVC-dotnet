@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Qvc;
 using Qvc.Constraints;
@@ -33,7 +33,7 @@ namespace Tests
         }
 
         [Test]
-        public async void ExecuteCommand()
+        public async Task ExecuteCommand()
         {
             var result = await Action.Command("CommandFullTest", "{}")
                 .ThenFindCommand(_repo.FindCommand)
@@ -47,7 +47,7 @@ namespace Tests
         }
 
         [Test]
-        public async void ExecuteQuery()
+        public async Task ExecuteQuery()
         {
             var result = await Action.Query("QueryFullTest", "{}")
                 .ThenFindQuery(_repo.FindQuery)
@@ -61,7 +61,7 @@ namespace Tests
         }
 
         [Test]
-        public async void ExecuteCommandThatThrows()
+        public async Task ExecuteCommandThatThrows()
         {
             var result = await Action.Command("CommandThatThrows", "{}")
                 .ThenFindCommand(_repo.FindCommand)
@@ -76,7 +76,7 @@ namespace Tests
         }
 
         [Test]
-        public async void ExecuteQueryThatThrows()
+        public async Task ExecuteQueryThatThrows()
         {
             var result = await Action.Query("QueryThatThrows", "{}")
                 .ThenFindQuery(_repo.FindQuery)
@@ -91,7 +91,7 @@ namespace Tests
         }
 
         [Test]
-        public async void ExecuteCommandThatThrowsInDev()
+        public async Task ExecuteCommandThatThrowsInDev()
         {
             var result = await Action.Command("CommandThatThrows", "{}")
                 .ThenFindCommand(_repo.FindCommand)
@@ -105,7 +105,7 @@ namespace Tests
         }
 
         [Test]
-        public async void ExecuteQueryThatThrowsInDev()
+        public async Task ExecuteQueryThatThrowsInDev()
         {
             var result = await Action.Query("QueryThatThrows", "{}")
                 .ThenFindQuery(_repo.FindQuery)
@@ -119,7 +119,7 @@ namespace Tests
         }
 
         [Test]
-        public async void ExecuteCommandThatThrowsValidationException()
+        public async Task ExecuteCommandThatThrowsValidationException()
         {
             var result = await Action.Command("CommandThatThrowsValidationException", "{}")
                 .ThenFindCommand(_repo.FindCommand)
@@ -133,7 +133,7 @@ namespace Tests
         }
 
         [Test]
-        public async void ExecuteQueryThatThrowsValidationException()
+        public async Task ExecuteQueryThatThrowsValidationException()
         {
             var result = await Action.Query("QueryThatThrowsValidationException", "{}")
                 .ThenFindQuery(_repo.FindQuery)
@@ -147,7 +147,7 @@ namespace Tests
         }
 
         [Test]
-        public async void GetConstraints()
+        public async Task GetConstraints()
         {
             var result = await Action.Constraints("QueryFullTest")
                 .ThenFindExecutable(_repo.FindExecutable)

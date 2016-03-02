@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-
 using NSubstitute;
 using NUnit.Framework;
 using Qvc.Handlers;
@@ -30,25 +29,25 @@ namespace Tests.Default
             _query = new QueryC();
 
             _queryHandler.Handle(_query).Returns("hello");
-            _asyncQueryHandler.Handle(_query).Returns(Task.FromResult("hello"));
+            _asyncQueryHandler.Handle(_query).Returns("hello");
         }
 
         [Test]
-        public async void TestCommand()
+        public async Task TestCommand()
         {
             await Qvc.Default.HandleCommand(_commandHandler, _command);
             _commandHandler.Received().Handle(_command);
         }
 
         [Test]
-        public async void TestAsyncCommand()
+        public async Task TestAsyncCommand()
         {
             await Qvc.Default.HandleCommand(_asyncCommandHandler, _command);
-            _asyncCommandHandler.Received().Handle(_command);
+            await _asyncCommandHandler.Received().Handle(_command);
         }
 
         [Test]
-        public async void TestQuery()
+        public async Task TestQuery()
         {
             var result = await Qvc.Default.HandleQuery(_queryHandler, _query);
             _queryHandler.Received().Handle(_query);
@@ -56,10 +55,10 @@ namespace Tests.Default
         }
 
         [Test]
-        public async void TestQueryAsync()
+        public async Task TestQueryAsync()
         {
             var result = await Qvc.Default.HandleQuery(_asyncQueryHandler, _query);
-            _asyncQueryHandler.Received().Handle(_query);
+            await _asyncQueryHandler.Received().Handle(_query);
             result.ShouldBe("hello");
         }
     }

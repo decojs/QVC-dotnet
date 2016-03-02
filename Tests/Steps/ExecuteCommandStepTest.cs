@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Qvc.Executables;
 using Qvc.Handlers;
@@ -25,7 +26,7 @@ namespace Tests.Steps
         }
 
         [Test]
-        public async void Test()
+        public async Task Test()
         {
             var result = await CommandSteps.HandleCommand(_step, async (h, c) =>
             {
