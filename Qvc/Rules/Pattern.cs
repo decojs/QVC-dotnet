@@ -10,6 +10,6 @@ namespace Qvc.Rules
 
         public IEnumerable<string> Flags { get; set; }
 
-        public string Regex { get; set; }
+        public string Regexp { get; set; }
     }
 }
